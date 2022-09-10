@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemies
+  - Objects
+  - Collectibles
+  - InGameUI
+  - PlayerHealthSystem
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - Player
+  - Enemies
+  - Objects
+  - Collectibles
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Floor
+    uniqueID: 2994966323
+    locked: 0
+  - name: Wall
+    uniqueID: 2103119419
+    locked: 0
+  - name: Objects
+    uniqueID: 3017788417
+    locked: 0
+  - name: Entities
+    uniqueID: 881013843
+    locked: 0
+  - name: Foreground
+    uniqueID: 198197573
+    locked: 0
+  - name: HUD
+    uniqueID: 3758633841
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
