@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 
 public class Slime2 : AbstractEnemy {
 
-    [Header("Enemy Settings")]
-    public float movementSpeed = 20f;
-    public float range = 10f;
-
+    [Header("Enemy Drops")]
     public int minCoinDrop = 1;
     public int maxCoinDrop = 3;
 
@@ -23,7 +19,7 @@ public class Slime2 : AbstractEnemy {
         contactDamageStrategy = new PhysicalDamage(transform, contactDamage, contactKnockback);
         invulnerableStrategy = new NullInvulnerable();
         monsterDropEmitter = new MonsterDropEmitter(transform, minCoinDrop, maxCoinDrop);
-        movementStrategy = new ChaseObjectMovement(player, gameObject, movementSpeed)
+        movementStrategy = new ChaseObjectMovement(player, gameObject, moveSpeed)
             .WithFaceDirection()
             .AddFacingDirectionListener(handleFacingDirectionChange);
     }
