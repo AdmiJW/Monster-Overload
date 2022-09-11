@@ -166,7 +166,7 @@
             ]
         },
         {
-            "name": "MenuControl",
+            "name": "DialogControl",
             "id": "829bd9ee-3e35-4a87-b732-9c5436a69ade",
             "actions": [
                 {

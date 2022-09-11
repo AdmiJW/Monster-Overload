@@ -8,4 +8,6 @@ public class UIAudioManager : MonoBehaviour {
 
     // Fields
     public AudioSource dialogBlip;
+    public AudioSource menuMove;
+    public AudioSource menuSelect;
 }
