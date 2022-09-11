@@ -27,7 +27,7 @@ public class MonsterDropEmitter {
 
 
     public void Activate() {
-        GameObject coinPrefab = PrefabManager.itemPrefabs.coin;
+        GameObject coinPrefab = ItemPrefab.instance.coinPrefab;
         int dropAmount = Random.Range(minDropAmount, maxDropAmount);
 
         for (int i = 0; i < dropAmount; i++) {

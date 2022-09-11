@@ -33,7 +33,7 @@ public class Slime2 : AbstractEnemy {
         rangeTriggerScript.onPlayerEnter += () => movementStrategy.Enabled = true;
         rangeTriggerScript.onPlayerExit += () => movementStrategy.Enabled = false;
 
-        healthStrategy.OnHurt += ()=> AudioManager.enemyAudio.slimeImpact.Play();
+        healthStrategy.OnHurt += ()=> EnemyAudioManager.instance.slimeImpact.Play();
         healthStrategy.OnDeath += OnDeath;
     }
 
@@ -48,7 +48,7 @@ public class Slime2 : AbstractEnemy {
 
 
     void OnDeath() {
-        AudioManager.enemyAudio.slimeImpact.Play();
+        EnemyAudioManager.instance.slimeImpact.Play();
 
         movementStrategy.Enabled = false;
         contactDamageStrategy.SetActive(false);
