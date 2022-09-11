@@ -13,7 +13,7 @@ public class PlayerHealthScript : MonoBehaviour, IHealth {
         GameObject healthBarGroup = GameObject
             .FindWithTag("InGameUI")
             .transform
-            .Find("UIHealthBar")
+            .Find("PlayerHealthBar")
             .gameObject;
         HealthStrategy = new BarHealth(maxHealth, healthBarGroup, true);
     }
