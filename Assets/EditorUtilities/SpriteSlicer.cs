@@ -26,7 +26,6 @@ public class SpriteSlicer : MonoBehaviour {
             ti.spriteImportMode = SpriteImportMode.Multiple;
 
             List<SpriteMetaData> newData = new List<SpriteMetaData>();
-            Debug.Log(texture.name);
             for (int i = 0; i < texture.width; i += SpriteSlicer.sliceWidth) {
                 for (int j = texture.height; j > 0; j -= SpriteSlicer.sliceHeight) {
                     SpriteMetaData smd = new SpriteMetaData();
