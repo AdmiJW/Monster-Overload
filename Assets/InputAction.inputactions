@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Attack/Interact",
+                    "name": "Attack Interact",
                     "type": "Button",
                     "id": "f4a518ce-0d29-4794-9247-fb1bfad5aa9a",
                     "expectedControlType": "Button",
@@ -148,7 +148,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack/Interact",
+                    "action": "Attack Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

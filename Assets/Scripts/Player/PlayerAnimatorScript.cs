@@ -1,8 +1,8 @@
 using UnityEngine;
 
 
-public class PlayerAnimatorScript : MonoBehaviour
-{
+public class PlayerAnimatorScript : MonoBehaviour {
+
     Animator animator;
     PlayerMovementScript playerMovementScript;
     PlayerHealthScript playerHealthScript;
@@ -14,12 +14,20 @@ public class PlayerAnimatorScript : MonoBehaviour
         playerHealthScript = GetComponent<PlayerHealthScript>();
     }
 
-    void Start() {
-        playerMovementScript.MovementStrategy.AddMovementStateListener(OnMovementStateChange);
-        playerMovementScript.MovementStrategy.AddFacingDirectionListener(OnFacingDirectionChange);
+    void OnEnable() {
+        playerMovementScript.MovementStrategy.onMovementStateChange += OnMovementStateChange;
+        playerMovementScript.MovementStrategy.faceDirection.onDirectionChange += OnFacingDirectionChange;
 
         playerHealthScript.HealthStrategy.OnDeath += OnDeath;
         playerHealthScript.HealthStrategy.OnHurt += OnHurt;
+    }
+
+    void OnDisable() {
+        playerMovementScript.MovementStrategy.onMovementStateChange -= OnMovementStateChange;
+        playerMovementScript.MovementStrategy.faceDirection.onDirectionChange -= OnFacingDirectionChange;
+
+        playerHealthScript.HealthStrategy.OnDeath -= OnDeath;
+        playerHealthScript.HealthStrategy.OnHurt -= OnHurt;
     }
 
     //==============================

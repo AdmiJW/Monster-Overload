@@ -24,6 +24,7 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
 
 
     protected Rigidbody2D rb;
+    protected Collider2D enemyCollider;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
     protected RangeTriggerScript rangeTriggerScript;
@@ -39,6 +40,7 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     protected virtual void Awake() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        enemyCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rangeTriggerScript = transform.Find("RangeTrigger")?.GetComponent<RangeTriggerScript>();
     }
@@ -53,6 +55,19 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     protected void OnCollisionStay2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Player")) 
             contactDamageStrategy.DealDamage(collision.gameObject);
+    }
+
+
+
+    // If an enemy is not physical, it cannot be collided and does not move.
+    // Primarily use is when an enemy is dead, but needs some death animation
+    protected void SetPhysical(bool isPhysical) {
+        movementStrategy.Enabled = isPhysical;
+        contactDamageStrategy.SetActive(isPhysical);
+
+        rb.isKinematic = !isPhysical;
+        if (!isPhysical) rb.velocity = Vector2.zero;
+        enemyCollider.enabled = isPhysical;
     }
 
 

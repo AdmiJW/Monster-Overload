@@ -1,21 +1,26 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 // Abstract movement class to represent all of the different types of movement
 // Like: PlayerInput, Computed, AI, or even no movement at all.
 //
-// It provides a FaceDirection composition to see whether if the movement affects the facing direction
-// If no faceDirection functionality is needed, simply put null.
+// Since the game is 2D topdown, we can't really rotate the sprites. A FaceDirection class is used to represent
+// the facing direction of any entities, which contain a normalized 2D vector. Defaults to Vector2.down.
 // 
 // It also provides a MovementState enum to represent the movement state - Run, Walk, Idle...
-// Event listeners are provided aswell
+// 
+// Event listeners are provided for
+//      1. MovementState change
+//      2. FacingDirection change
 public abstract class AbstractMovement {
 
+    // Whether movement will be done when Move() is called.
     public bool Enabled { get; set; } = true;
-    public FaceDirection FaceDirection { get; private set; } = null;
-    protected MovementState _movementState = MovementState.IDLE;
-    public MovementState MovementState { 
+    
+    public FaceDirection faceDirection;
+
+    protected MovementState _movementState;
+    public MovementState movementState { 
         get { return _movementState; }
         set {
             if (_movementState == value) return;
@@ -24,43 +29,17 @@ public abstract class AbstractMovement {
         } 
     }
 
-    protected event Action<MovementState> onMovementStateChange;
 
+    // Events
+    public event Action<MovementState> onMovementStateChange;
+
+    // Abstract methods
     public abstract void Move();
 
-    //==============================
-    // FaceDirection Methods
-    //==============================
-    // This method shall be chained on constructor, to provide flexibility to use faceDirection or not
-    // Like:
-    //      new AbstractMovement()
-    //          .WithFaceDirection(...);
-    public AbstractMovement WithFaceDirection() {
-        FaceDirection = new FaceDirection();
-        return this;
-    }
 
-    public AbstractMovement AddFacingDirectionListener(Action<Vector2> listener) {
-        FaceDirection.onFacingDirectionChange += listener;
-        return this;
-    }
-
-    public AbstractMovement RemoveFacingDirectionListener(Action<Vector2> listener) {
-        FaceDirection.onFacingDirectionChange -= listener;
-        return this;
-    }
-
-
-    //==============================
-    // MovementState Methods
-    //==============================
-    public AbstractMovement AddMovementStateListener(Action<MovementState> listener) {
-        onMovementStateChange += listener;
-        return this;
-    }
-
-    public AbstractMovement RemoveMovementStateListener(Action<MovementState> listener) {
-        onMovementStateChange -= listener;
-        return this;
+    // Constructors
+    public AbstractMovement() {
+        this.faceDirection = new FaceDirection();
+        this.movementState = MovementState.IDLE;
     }
 }

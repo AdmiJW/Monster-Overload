@@ -5,8 +5,7 @@ using UnityEngine;
 
 // Things to implement in your concrete melee:
 //      > Animation + Sound (as animation event?)
-public abstract class AbstractMeleeWeapon : AbstractWeapon
-{
+public abstract class AbstractMeleeWeapon : AbstractWeapon {
     [Header("Melee Weapon Settings")]
     public float attackDamage = 1f;
     public float attackKnockback = 1f;
@@ -14,20 +13,27 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon
 
     protected Collider2D hitbox;
     protected Collider2D[] enemyHits;
+    protected AbstractMovement playerMovement;
+
+    protected IDamage damageStrategy;
 
 
-    protected void Awake() {
+    protected virtual void Awake() {
         hitbox = GetComponent<Collider2D>();
         damageStrategy = new PhysicalDamage(transform, attackDamage, attackKnockback);
         enemyHits = new Collider2D[maxEnemiesToAttack];
+        playerMovement = player.GetComponent<PlayerMovementScript>().MovementStrategy;
     }
 
-    protected void Start() {
-        AbstractMovement movement = player.GetComponent<PlayerMovementScript>().MovementStrategy;
-        // Listen to direction change, since it is melee weapon
-        movement.AddFacingDirectionListener(UpdateDirection);
-        // Initialize melee hitbox with player's direction
-        UpdateDirection(movement.FaceDirection.FacingDirection);
+
+    protected virtual void OnEnable() {
+        playerMovement.faceDirection.onDirectionChange += UpdateDirection;
+        UpdateDirection(playerMovement.faceDirection.direction);
+    }
+
+
+    protected virtual void OnDisable() {
+        playerMovement.faceDirection.onDirectionChange -= UpdateDirection;
     }
 
     
@@ -49,9 +55,8 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon
     }
 
 
-    public void UpdateDirection(Vector2 direction)
-    {
-        // High school math: Positive x direction = 0 degrees
+    public void UpdateDirection(Vector2 direction) {
+        // uses positive x direction = 0 degrees
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         if (angle < 0) angle = 360f + angle;
         transform.rotation = Quaternion.Euler(0, 0, angle);

@@ -1,5 +1,4 @@
 
-public class NullMovement : AbstractMovement
-{
+public class NullMovement : AbstractMovement {
     public override void Move() {}
 }
