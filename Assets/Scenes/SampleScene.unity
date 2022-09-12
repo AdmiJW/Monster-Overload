@@ -8821,7 +8821,6 @@ MonoBehaviour:
   selectButton: {fileID: 2225881709697705280, guid: 468d96b008f04d64387163c5ef534271, type: 3}
   upButton: {fileID: 4623819490495433719, guid: 468d96b008f04d64387163c5ef534271, type: 3}
   downButton: {fileID: -3283967638152873479, guid: 468d96b008f04d64387163c5ef534271, type: 3}
-  testStory: {fileID: 4900000, guid: 61a9ab6ee325cf142a7e9b3a6e7caa84, type: 3}
 --- !u!1 &1842145764
 GameObject:
   m_ObjectHideFlags: 0
