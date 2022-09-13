@@ -34,11 +34,10 @@ public class ChaseObjectMovement : AbstractMovement
         chaserRigidbody.AddForce(direction * speed);
 
 
-        if (direction != Vector2.zero) {
-            MovementState = MovementState.MOVING;
-            if (FaceDirection != null) FaceDirection.FacingDirection = direction;
-        } else {
-            MovementState = MovementState.IDLE;
+        if (direction == Vector2.zero) movementState = MovementState.IDLE;
+        else {
+            movementState = MovementState.MOVING;
+            faceDirection.direction = direction;
         }
     }
 }

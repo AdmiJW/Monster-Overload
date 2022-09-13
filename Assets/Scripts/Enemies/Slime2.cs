@@ -12,6 +12,7 @@ public class Slime2 : AbstractEnemy {
 
     protected override void Awake() {
         base.Awake();
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         healthStrategy = new BarHealth(maxHealth, healthDisplayGroup, healthVisibleOnStart);
@@ -19,43 +20,44 @@ public class Slime2 : AbstractEnemy {
         contactDamageStrategy = new PhysicalDamage(transform, contactDamage, contactKnockback);
         invulnerableStrategy = new NullInvulnerable();
         monsterDropEmitter = new MonsterDropEmitter(transform, minCoinDrop, maxCoinDrop);
-        movementStrategy = new ChaseObjectMovement(player, gameObject, moveSpeed)
-            .WithFaceDirection()
-            .AddFacingDirectionListener(handleFacingDirectionChange);
+        movementStrategy = new ChaseObjectMovement(player, gameObject, moveSpeed);
     }
 
-
     void Start() {
-        if (rangeTriggerScript == null) return;
+        healthStrategy.OnHurt += ()=> EnemyAudioManager.instance.slimeImpact.Play();
+        healthStrategy.OnDeath += OnDeath;
 
         // Only chase player when in range
+        if (rangeTriggerScript == null) return;
         movementStrategy.Enabled = false;
         rangeTriggerScript.onPlayerEnter += () => movementStrategy.Enabled = true;
         rangeTriggerScript.onPlayerExit += () => movementStrategy.Enabled = false;
-
-        healthStrategy.OnHurt += ()=> EnemyAudioManager.instance.slimeImpact.Play();
-        healthStrategy.OnDeath += OnDeath;
     }
+
+    void OnEnable() {
+        movementStrategy.faceDirection.onDirectionChange += handleFacingDirectionChange;
+    }
+
+    void OnDisable() {
+        movementStrategy.faceDirection.onDirectionChange -= handleFacingDirectionChange;
+    }
+
+
+    
 
 
     // When the smoke effect ends
     void OnSmokeEffectEnd() {
         monsterDropEmitter.Activate();
-        // Delayed destroy for tween to complete
+        // Delayed destroy to wait for healthbar tween to complete
         gameObject.SetActive(false);
         Destroy(gameObject, 3f);
     }
 
 
     void OnDeath() {
+        SetPhysical(false);
         EnemyAudioManager.instance.slimeImpact.Play();
-
-        movementStrategy.Enabled = false;
-        contactDamageStrategy.SetActive(false);
-
-        rb.isKinematic = true;
-        rb.velocity = Vector2.zero;
-
         animator.SetTrigger("Death");
     }
 

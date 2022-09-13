@@ -25,7 +25,7 @@ public class NormalInputMovement : AbstractMovement {
         Rigidbody2D rb,
         float walkForce, 
         float runForce
-    ) {
+    ): base() {
         this.movementInput = movementInput;
         this.sprintInput = sprintInput;
         this.rb = rb;
@@ -35,8 +35,8 @@ public class NormalInputMovement : AbstractMovement {
         // Register local event listeners
         movementInput.action.performed += OnMovementChange;
         movementInput.action.canceled += OnMovementChange;
-        sprintInput.action.started += OnSprintChange;
-        sprintInput.action.canceled += OnSprintChange;
+        sprintInput.action.started += OnSprintButtonChange;
+        sprintInput.action.canceled += OnSprintButtonChange;
     }
 
 
@@ -45,8 +45,8 @@ public class NormalInputMovement : AbstractMovement {
     //==============================
     // Needs to be called in FixedUpdate()
     public override void Move() {
-        if (MovementState == MovementState.MOVING) rb.AddForce(inputDirection * walkForce);
-        else if (MovementState == MovementState.RUNNING) rb.AddForce(inputDirection * runForce);
+        if (movementState == MovementState.MOVING) rb.AddForce(inputDirection * walkForce);
+        else if (movementState == MovementState.RUNNING) rb.AddForce(inputDirection * runForce);
     }
 
 
@@ -57,7 +57,7 @@ public class NormalInputMovement : AbstractMovement {
     }
 
 
-    void OnSprintChange(InputAction.CallbackContext ctx) {
+    void OnSprintButtonChange(InputAction.CallbackContext ctx) {
         isSprintdown = ctx.ReadValueAsButton();
         UpdateState();
     }
@@ -65,11 +65,10 @@ public class NormalInputMovement : AbstractMovement {
 
     // Updates movement state and facing direction based on input values
     void UpdateState() {
-        if (inputDirection == Vector2.zero) {
-            MovementState = MovementState.IDLE;
-        } else {
-            MovementState = isSprintdown ? MovementState.RUNNING : MovementState.MOVING;
-            FaceDirection.FacingDirection = inputDirection;
+        if (inputDirection == Vector2.zero) movementState = MovementState.IDLE;
+        else {
+            movementState = (isSprintdown ? MovementState.RUNNING : MovementState.MOVING);
+            faceDirection.direction = inputDirection;
         }
     }
 }
