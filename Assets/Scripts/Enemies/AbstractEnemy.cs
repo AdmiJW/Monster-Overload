@@ -42,7 +42,7 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         animator = GetComponent<Animator>();
         enemyCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rangeTriggerScript = transform.Find("RangeTrigger")?.GetComponent<RangeTriggerScript>();
+        rangeTriggerScript = GetComponentInChildren<RangeTriggerScript>();
     }
 
 

@@ -140,6 +140,8 @@ public class DialogueManager : MonoBehaviour {
         dialogBoxComponent.GetComponent<Animator>().SetTrigger("Close");
         // Notify listeners
         onDialogEnd?.Invoke();
+        // Clear listeners.
+        onDialogEnd = null;
         // Change input mode
         dialogueActionMap.Disable();
         playerActionMap.Enable();

@@ -24,15 +24,14 @@ public class Slime2 : AbstractEnemy {
     }
 
     void Start() {
-        if (rangeTriggerScript == null) return;
+        healthStrategy.OnHurt += ()=> EnemyAudioManager.instance.slimeImpact.Play();
+        healthStrategy.OnDeath += OnDeath;
 
         // Only chase player when in range
+        if (rangeTriggerScript == null) return;
         movementStrategy.Enabled = false;
         rangeTriggerScript.onPlayerEnter += () => movementStrategy.Enabled = true;
         rangeTriggerScript.onPlayerExit += () => movementStrategy.Enabled = false;
-
-        healthStrategy.OnHurt += ()=> EnemyAudioManager.instance.slimeImpact.Play();
-        healthStrategy.OnDeath += OnDeath;
     }
 
     void OnEnable() {
