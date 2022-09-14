@@ -18,16 +18,16 @@ public class PlayerAnimatorScript : MonoBehaviour {
         playerMovementScript.MovementStrategy.onMovementStateChange += OnMovementStateChange;
         playerMovementScript.MovementStrategy.faceDirection.onDirectionChange += OnFacingDirectionChange;
 
-        playerHealthScript.HealthStrategy.OnDeath += OnDeath;
-        playerHealthScript.HealthStrategy.OnHurt += OnHurt;
+        playerHealthScript.healthStrategy.OnDeath += OnDeath;
+        playerHealthScript.healthStrategy.OnHurt += OnHurt;
     }
 
     void OnDisable() {
         playerMovementScript.MovementStrategy.onMovementStateChange -= OnMovementStateChange;
         playerMovementScript.MovementStrategy.faceDirection.onDirectionChange -= OnFacingDirectionChange;
 
-        playerHealthScript.HealthStrategy.OnDeath -= OnDeath;
-        playerHealthScript.HealthStrategy.OnHurt -= OnHurt;
+        playerHealthScript.healthStrategy.OnDeath -= OnDeath;
+        playerHealthScript.healthStrategy.OnHurt -= OnHurt;
     }
 
     //==============================
@@ -49,5 +49,6 @@ public class PlayerAnimatorScript : MonoBehaviour {
 
     void OnHurt() {
         animator.SetTrigger("Damage");
+        CameraManager.instance.ShakeCamera();
     }
 }

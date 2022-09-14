@@ -9,7 +9,7 @@ public class CoinScript : MonoBehaviour {
         if (!collision.gameObject.CompareTag("Player")) return;
 
         ItemAudioManager.instance.coin.Play();
-        collision.gameObject.GetComponent<PlayerCoinScript>().AddCoin(value);
+        collision.gameObject.GetComponent<PlayerCoinScript>().balance += value;
         Destroy(gameObject);
     }
 }

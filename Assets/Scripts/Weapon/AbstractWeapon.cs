@@ -1,24 +1,25 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 
 
-public abstract class AbstractWeapon : MonoBehaviour, IWeapon {
+public abstract class AbstractWeapon : MonoBehaviour {
 
     [Header("General Weapon Settings")]
     public float attackCooldown = 0.5f;
 
     protected GameObject player;
-    protected Animator animator;
+    protected Animator playerAnimator;
     protected ContactFilter2D ENEMY_CONTACT_FILTER;
 
     protected bool isInCooldown = false;
 
 
-    public void Initialize(GameObject player, ContactFilter2D enemyContactFilter) {
-        this.player = player;
-        this.animator = player.GetComponent<Animator>();
-        this.ENEMY_CONTACT_FILTER = enemyContactFilter;
+    protected virtual void Awake() {
+        player = PlayerManager.instance.player;
+        playerAnimator = player.GetComponent<Animator>();
+        ENEMY_CONTACT_FILTER = GameManager.instance.ENEMY_CONTACT_FILTER;
     }
 
 
@@ -32,4 +33,13 @@ public abstract class AbstractWeapon : MonoBehaviour, IWeapon {
     public abstract void TriggerAttack();
     public abstract void DealDamage();
     public abstract void PlayAttackAnimation();
+    public abstract WeaponData GetWeaponData();
+}
+
+
+
+[System.Serializable]
+public abstract class WeaponData {
+    public WeaponType name;
+    public float attackCooldown;
 }

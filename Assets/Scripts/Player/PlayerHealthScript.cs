@@ -1,41 +1,42 @@
-using System;
 using UnityEngine;
 
+
+// The design is to move the healthStrategy to the singleton, so player health is redirected to there.
 public class PlayerHealthScript : MonoBehaviour, IHealth {
 
-    [Header("Player Configuration")]
-    public float maxHealth = 100f;
-
-    public Health HealthStrategy { get; private set; }
+    [Header("Reference")]
+    public BarHealth healthStrategy;
 
 
     void Awake() {
-        GameObject healthBarGroup = GameObject
-            .FindWithTag("InGameUI")
-            .transform
-            .Find("PlayerHealthBar")
-            .gameObject;
-        HealthStrategy = new BarHealth(maxHealth, healthBarGroup, true);
-    }
+        if (PlayerManager.instance.healthBarGroup == null) return;
 
-    void Start() {
-        HealthStrategy.OnDeath += () => Time.timeScale = 0;
+        healthStrategy = new BarHealth(
+            PlayerManager.instance.playerMaxHealth,
+            PlayerManager.instance.playerCurrentHealth,
+            PlayerManager.instance.healthBarGroup,
+            true
+        );
     }
 
 
     public void Heal(float amount) {
-        HealthStrategy.Heal(amount);
+        healthStrategy.Heal(amount);
     }
 
-    public void SetMaxHealth(float maxHealth) {
-        HealthStrategy.SetMaxHealth(maxHealth);
+    public void SetMaxHealth(float maxHealth, bool healToFull = false) {
+        healthStrategy.SetMaxHealth(maxHealth, healToFull);
     }
 
     public void TakeDamage(float damage) {
-        HealthStrategy.TakeDamage(damage);
+        healthStrategy.TakeDamage(damage);
     }
 
     public float GetHealth() {
-        return HealthStrategy.GetHealth();
+        return healthStrategy.GetHealth();
+    }
+
+    public void SetHealth(float health) {
+        healthStrategy.SetHealth(health);
     }
 }

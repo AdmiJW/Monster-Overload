@@ -18,10 +18,13 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon {
     protected IDamage damageStrategy;
 
 
-    protected virtual void Awake() {
+    //===========================
+    //  Lifecycle
+    //===========================
+    protected override void Awake() {
+        base.Awake();
+
         hitbox = GetComponent<Collider2D>();
-        damageStrategy = new PhysicalDamage(transform, attackDamage, attackKnockback);
-        enemyHits = new Collider2D[maxEnemiesToAttack];
         playerMovement = player.GetComponent<PlayerMovementScript>().MovementStrategy;
     }
 
@@ -32,11 +35,21 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon {
     }
 
 
+    protected virtual void Start() {
+        damageStrategy = new PhysicalDamage(transform, attackDamage, attackKnockback);
+        enemyHits = new Collider2D[maxEnemiesToAttack];
+    }
+
+
     protected virtual void OnDisable() {
         playerMovement.faceDirection.onDirectionChange -= UpdateDirection;
     }
 
     
+
+    //===========================
+    // Logic
+    //===========================
     public override void TriggerAttack() {
         if (isInCooldown) return;
         PlayAttackAnimation();
@@ -61,4 +74,14 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon {
         if (angle < 0) angle = 360f + angle;
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
+}
+
+
+
+
+[System.Serializable]
+public class MeleeWeaponData : WeaponData {
+    public float attackDamage;
+    public float attackKnockback;
+    public int maxEnemiesToAttack;
 }
