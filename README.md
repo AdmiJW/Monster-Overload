@@ -48,3 +48,4 @@ Deep appreciation to the creators of these assets used in the game:
 1. 10th Sept - Implemented Enemies 
 1. 12th Sept - Completed Dialogue system with Ink's narrative scripting language
 1. 13th Sept - Implemented interactables: basic NPC dialogue and signboards
+1. 14th Sept - Improved Persistance of data, added Loading screen
