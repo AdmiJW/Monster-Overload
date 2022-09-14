@@ -26,11 +26,23 @@ public class SceneTeleporter : MonoBehaviour {
 
 
     IEnumerator LoadSceneAsync(int sceneIndex) {
+        LoadingScreen.instance.UpdateLoadingPercentage(0);
+        LoadingScreen.instance.ShowLoadingScreen();
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(0.5f);
+
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneIndex);
+        op.completed += OnSceneLoadComplete;
         
         while (!op.isDone) {
-            Debug.Log(op.progress);
+            LoadingScreen.instance.UpdateLoadingPercentage(op.progress * 100);
             yield return null;
         }
+    }
+
+
+    void OnSceneLoadComplete(AsyncOperation op) {
+        LoadingScreen.instance.HideLoadingScreen();
+        Time.timeScale = 1f;
     }
 }
