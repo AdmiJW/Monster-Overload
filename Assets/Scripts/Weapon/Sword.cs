@@ -1,9 +1,9 @@
 
-public class Punch : AbstractMeleeWeapon {
+public class Sword : AbstractMeleeWeapon {
 
     public override WeaponData GetWeaponData() {
         return new MeleeWeaponData {
-            name = WeaponType.PUNCH,
+            name = WeaponType.SWORD,
             attackCooldown = attackCooldown,
             attackDamage = attackDamage,
             attackKnockback = attackKnockback,
@@ -13,7 +13,7 @@ public class Punch : AbstractMeleeWeapon {
 
 
     public override void PlayAttackAnimation() {
-        playerAnimator.SetTrigger("Punch");
+        playerAnimator.SetTrigger("Sword");
     }
 
 
