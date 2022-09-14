@@ -23,6 +23,7 @@ Deep appreciation to the creators of these assets used in the game:
 
 1. [Free 16x16 Puny Character Sprites by Shade](https://merchant-shade.itch.io/16x16-puny-characters)
 1. [Ninja Adventure - Asset Pack by pixel-boy](https://pixel-boy.itch.io/ninja-adventure-asset-pack)
+1. [PIXEL ART METROIDVANIA ASSET PACK by o_lobster](https://o-lobster.itch.io/platformmetroidvania-pixel-art-asset-pack)
 
 
 ### Fonts
@@ -47,3 +48,4 @@ Deep appreciation to the creators of these assets used in the game:
 1. 10th Sept - Implemented Enemies 
 1. 12th Sept - Completed Dialogue system with Ink's narrative scripting language
 1. 13th Sept - Implemented interactables: basic NPC dialogue and signboards
+1. 14th Sept - Improved Persistance of data, added Loading screen

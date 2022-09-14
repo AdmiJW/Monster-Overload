@@ -11,14 +11,31 @@ public class BarHealth : Health {
 
 
     public BarHealth() {}
-    public BarHealth(float maxHealth, GameObject healthBarGroup, bool visibleOnStart) : base(maxHealth) {
+
+    public BarHealth(
+        float maxHealth, 
+        GameObject healthBarGroup,
+        bool visibleOnStart
+    ): this(maxHealth, maxHealth, healthBarGroup, visibleOnStart) {}
+
+    public BarHealth(
+        float maxHealth, 
+        float currHealth, 
+        GameObject healthBarGroup, 
+        bool visibleOnStart
+    ): base(
+        maxHealth, 
+        currHealth
+    ) {
         this.healthBar = healthBarGroup.transform.Find("Fill").gameObject;
         this.healthBarBackground = healthBarGroup.transform.Find("Background").gameObject;
 
         healthBar.SetActive(visibleOnStart);
         healthBarBackground.SetActive(visibleOnStart);
+
+        float healthPercentage = currentHealth / maxHealth;
+        healthBar.transform.localScale = new Vector3(healthPercentage, 1, 1);
     }
-    
 
 
     public override void TakeDamage(float damage) {
@@ -34,16 +51,22 @@ public class BarHealth : Health {
     }
 
 
-    public override void SetMaxHealth(float maxHealth) {
+    public override void SetMaxHealth(float maxHealth, bool healToFull = false) {
         base.SetMaxHealth(maxHealth);
         UpdateHealthBar();
     }
 
 
-    protected void UpdateHealthBar() {
+    public override void SetHealth(float health) {
+        base.SetHealth(health);
+        UpdateHealthBar();
+    }
+
+
+    public void UpdateHealthBar() {
         healthBar.SetActive(true);
         healthBarBackground.SetActive(true);
-
+        
         float healthPercentage = currentHealth / maxHealth;
         healthBar.transform.DOScaleX(healthPercentage, tweenTime).SetUpdate(true);
     }

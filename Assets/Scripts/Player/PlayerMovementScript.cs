@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 // ! Since other scripts may want to add event listeners to faceDirection in OnEnable() which may run out of order, 
 // ! move this script's execution order before default time.
 
+[DefaultExecutionOrder(-1)]
 public class PlayerMovementScript : MonoBehaviour {
 
     [Header("References")]

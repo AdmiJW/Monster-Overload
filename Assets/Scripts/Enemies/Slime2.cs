@@ -4,57 +4,47 @@ using UnityEngine;
 
 public class Slime2 : AbstractEnemy {
 
-    [Header("Enemy Drops")]
-    public int minCoinDrop = 1;
-    public int maxCoinDrop = 3;
-
-
-
+    //=============================
+    // Lifecycle
+    //=============================
     protected override void Awake() {
         base.Awake();
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        healthStrategy = new BarHealth(maxHealth, healthDisplayGroup, healthVisibleOnStart);
-        knockbackStrategy = new AddForceKnockback(rb, knockbackResistance);
+        health = new BarHealth(maxHealth, healthDisplayGroup, healthVisibleOnStart);
+        knockback = new AddForceKnockback(rb, knockbackResistance);
         contactDamageStrategy = new PhysicalDamage(transform, contactDamage, contactKnockback);
-        invulnerableStrategy = new NullInvulnerable();
-        monsterDropEmitter = new MonsterDropEmitter(transform, minCoinDrop, maxCoinDrop);
-        movementStrategy = new ChaseObjectMovement(player, gameObject, moveSpeed);
+        invulnerability = new NullInvulnerable();        
+        movement = new ChaseObjectMovement( PlayerManager.instance.player, gameObject, moveSpeed );
     }
+
 
     void Start() {
-        healthStrategy.OnHurt += ()=> EnemyAudioManager.instance.slimeImpact.Play();
-        healthStrategy.OnDeath += OnDeath;
-
-        // Only chase player when in range
-        if (rangeTriggerScript == null) return;
-        movementStrategy.Enabled = false;
-        rangeTriggerScript.onPlayerEnter += () => movementStrategy.Enabled = true;
-        rangeTriggerScript.onPlayerExit += () => movementStrategy.Enabled = false;
+        health.OnHurt += ()=> EnemyAudioManager.instance.slimeImpact.Play();
+        health.OnDeath += OnDeath;
+        movement.Enabled = false;
     }
 
+
     void OnEnable() {
-        movementStrategy.faceDirection.onDirectionChange += handleFacingDirectionChange;
+        movement.faceDirection.onDirectionChange += handleFacingDirectionChange;
+
+        if (rangeTriggerScript == null) return;
+        rangeTriggerScript.onPlayerEnter += OnPlayerEnterRange;
+        rangeTriggerScript.onPlayerExit += OnPlayerExitRange;
     }
 
     void OnDisable() {
-        movementStrategy.faceDirection.onDirectionChange -= handleFacingDirectionChange;
+        movement.faceDirection.onDirectionChange -= handleFacingDirectionChange;
+
+        if (rangeTriggerScript == null) return;
+        rangeTriggerScript.onPlayerEnter -= OnPlayerEnterRange;
+        rangeTriggerScript.onPlayerExit -= OnPlayerExitRange;
     }
-
-
     
 
-
-    // When the smoke effect ends
-    void OnSmokeEffectEnd() {
-        monsterDropEmitter.Activate();
-        // Delayed destroy to wait for healthbar tween to complete
-        gameObject.SetActive(false);
-        Destroy(gameObject, 3f);
-    }
-
-
+    //=================================
+    // Event Handlers
+    //=================================
     void OnDeath() {
         SetPhysical(false);
         EnemyAudioManager.instance.slimeImpact.Play();
@@ -62,9 +52,24 @@ public class Slime2 : AbstractEnemy {
     }
 
 
+    void OnSmokeEffectEnd() {
+        dropEmitter.Activate();
+        gameObject.SetActive(false);
+        Destroy(gameObject, 3f);
+    }
+
+
+    void OnPlayerEnterRange() {
+        movement.Enabled = true;
+    }
+
+    void OnPlayerExitRange() {
+        movement.Enabled = false;
+    }
+
+
     protected void handleFacingDirectionChange(Vector2 faceDirection) {
         animator.SetFloat("Horizontal", faceDirection.x);
         animator.SetFloat("Vertical", faceDirection.y);
-    }   
-
+    }
 }

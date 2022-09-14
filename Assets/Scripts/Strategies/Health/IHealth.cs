@@ -6,6 +6,7 @@
 public interface IHealth {
     public void TakeDamage(float damage);
     public void Heal(float amount);
-    public void SetMaxHealth(float maxHealth);
+    public void SetMaxHealth(float maxHealth, bool healToFull = false);
+    public void SetHealth(float health);
     public float GetHealth();
 }

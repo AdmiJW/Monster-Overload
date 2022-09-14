@@ -11,12 +11,11 @@ public class PlayerAttackScript : MonoBehaviour {
     [Header("Input References")]
     public InputActionReference attackInteractAction;
 
-    private GameObject weaponParent;
-    private List<GameObject> weapons = new List<GameObject>();
-    private GameObject activeWeapon = null;
+    public GameObject weaponParent { get; private set; }
+    public List<GameObject> weapons { get; private set; } = new List<GameObject>();
+    public GameObject activeWeapon { get; private set; } = null;
 
     private PlayerInteractScript playerInteractScript;
-    private static ContactFilter2D ENEMY_CONTACT_FILTER = new ContactFilter2D();
 
 
 
@@ -26,9 +25,16 @@ public class PlayerAttackScript : MonoBehaviour {
     void Awake() {
         playerInteractScript = GetComponent<PlayerInteractScript>();
         
-        ENEMY_CONTACT_FILTER.SetLayerMask(LayerMask.GetMask("Enemies"));
         weaponParent = transform.Find("WeaponParent").gameObject;
-        
+
+        // Load user's weapons from PlayerManager
+        if (PlayerManager.instance.playerWeapons != null) {
+            PlayerManager.instance.playerWeapons.ForEach(weaponData => {
+                GameObject weapon = WeaponLoader.instance.getWeapon(weaponData);
+                weapon.transform.parent = weaponParent.transform;
+            });
+        }
+
         ReloadAvailableWeapons();
     }
 
@@ -38,7 +44,7 @@ public class PlayerAttackScript : MonoBehaviour {
 
     void Start() {
         foreach (GameObject weapon in weapons) weapon.SetActive(false);
-        SetActiveWeapon(0);
+        SetActiveWeapon( PlayerManager.instance.activeWeaponIndex );
     }
 
     void OnDisable() {
@@ -51,11 +57,10 @@ public class PlayerAttackScript : MonoBehaviour {
     //===========================
     public void ReloadAvailableWeapons() {
         weapons.Clear();
-        foreach (Transform child in weaponParent.transform) {
+        foreach (Transform child in weaponParent.transform)
             weapons.Add(child.gameObject);
-            child.GetComponent<IWeapon>().Initialize(gameObject, ENEMY_CONTACT_FILTER);
-        }
     }
+
 
     public void SetActiveWeapon(int index) {
         if (index < 0 || index >= weapons.Count) return;
@@ -63,6 +68,7 @@ public class PlayerAttackScript : MonoBehaviour {
         activeWeapon = weapons[index];
         weapons[index].SetActive(true);
     }
+
 
     public void AddNewWeapon(GameObject weapon) {
         weapon.transform.SetParent(weaponParent.transform);
@@ -79,13 +85,13 @@ public class PlayerAttackScript : MonoBehaviour {
         if ( playerInteractScript.Interact() ) return;
 
         if (activeWeapon == null) return;
-        activeWeapon.GetComponent<IWeapon>().TriggerAttack();
+        activeWeapon.GetComponent<AbstractWeapon>().TriggerAttack();
     }
 
 
     // Called from the animation event
     void DealDamage() {
         if (activeWeapon == null) return;
-        activeWeapon.GetComponent<IWeapon>().DealDamage();
+        activeWeapon.GetComponent<AbstractWeapon>().DealDamage();
     }
 }

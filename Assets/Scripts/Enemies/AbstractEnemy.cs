@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 // Abstract enemy class, all enemies should inherit from this class and have it attached on them
 // What you have to do:
@@ -29,12 +28,12 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     protected SpriteRenderer spriteRenderer;
     protected RangeTriggerScript rangeTriggerScript;
     
-    protected Health healthStrategy;
-    protected IKnockback knockbackStrategy;
+    protected Health health;
+    protected IKnockback knockback;
     protected IDamage contactDamageStrategy;
-    protected IInvulnerable invulnerableStrategy;
-    protected AbstractMovement movementStrategy;
-    protected MonsterDropEmitter monsterDropEmitter;
+    protected IInvulnerable invulnerability;
+    protected AbstractMovement movement;
+    protected DropEmitter dropEmitter;
 
 
     protected virtual void Awake() {
@@ -43,11 +42,12 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         enemyCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rangeTriggerScript = GetComponentInChildren<RangeTriggerScript>();
+        dropEmitter = GetComponentInChildren<DropEmitter>();
     }
 
 
     protected virtual void FixedUpdate() {
-        movementStrategy.Move();
+        movement.Move();
     }
 
     
@@ -62,7 +62,7 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     // If an enemy is not physical, it cannot be collided and does not move.
     // Primarily use is when an enemy is dead, but needs some death animation
     protected void SetPhysical(bool isPhysical) {
-        movementStrategy.Enabled = isPhysical;
+        movement.Enabled = isPhysical;
         contactDamageStrategy.SetActive(isPhysical);
 
         rb.isKinematic = !isPhysical;
@@ -75,30 +75,35 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     // Interface methods
     //================================
     public void TakeDamage(float damage) { 
-        healthStrategy.TakeDamage(damage); 
+        health.TakeDamage(damage); 
+        CameraManager.instance.ShakeCamera();
     }
 
     public void Heal(float amount) { 
-        healthStrategy.Heal(amount); 
+        health.Heal(amount); 
     }
 
-    public void SetMaxHealth(float maxHealth) { 
-        healthStrategy.SetMaxHealth(maxHealth); 
+    public void SetMaxHealth(float maxHealth, bool healToFull = false) { 
+        health.SetMaxHealth(maxHealth, healToFull);
+    }
+
+    public void SetHealth(float health) { 
+        this.health.SetHealth(health); 
     }
 
     public float GetHealth() {
-        return healthStrategy.GetHealth(); 
+        return health.GetHealth(); 
     }
 
     public void Knockback(Vector2? origin = null, float knockback = 0) { 
-        knockbackStrategy.Knockback(origin, knockback); 
+        this.knockback.Knockback(origin, knockback); 
     }
 
     public bool IsInvulnerable() {
-        return invulnerableStrategy.IsInvulnerable(); 
+        return invulnerability.IsInvulnerable(); 
     }
 
     public void ActivateVulnerable() {
-        invulnerableStrategy.ActivateVulnerable(); 
+        invulnerability.ActivateVulnerable(); 
     }
 }

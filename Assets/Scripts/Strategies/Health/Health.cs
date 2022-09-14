@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Health : IHealth {
 
-    protected float maxHealth = 100f;
-    protected float currentHealth;
+    public float maxHealth { get; protected set; } = 100f;
+    public float currentHealth { get; protected set; }
 
     public event Action OnHurt;
     public event Action OnDeath;
@@ -14,10 +14,10 @@ public class Health : IHealth {
 
 
     public Health() {}
-    
-    public Health(float maxHealth) {
+    public Health(float maxHealth): this(maxHealth, maxHealth) {}
+    public Health(float maxHealth, float currHealth) {
         this.maxHealth = maxHealth;
-        this.currentHealth = maxHealth;
+        this.currentHealth = currHealth;
     }
 
 
@@ -38,9 +38,14 @@ public class Health : IHealth {
         OnHeal?.Invoke();
     }
 
-    public virtual void SetMaxHealth(float maxHealth) {
+    public virtual void SetHealth(float health) {
+        currentHealth = Mathf.Clamp(health, 0, maxHealth);
+    }
+
+    public virtual void SetMaxHealth(float maxHealth, bool healToFull = false) {
         this.maxHealth = maxHealth;
-        currentHealth = maxHealth;
+        if (healToFull) currentHealth = maxHealth;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
     }
 
     public float GetHealth() {
