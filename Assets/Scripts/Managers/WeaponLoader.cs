@@ -1,4 +1,4 @@
-
+using System;
 using UnityEngine;
 
 // Initialize weapon from weaponData and return the instantiated prefab
@@ -10,17 +10,17 @@ public class WeaponLoader : AbstractManager<WeaponLoader> {
 
 
     public GameObject getWeapon(WeaponData data) {
-        switch (data.name) {
+        switch (data.weaponType) {
             case WeaponType.PUNCH:
                 GameObject punch = Instantiate(punchPrefab);
-                punch.GetComponent<Punch>().LoadFromWeaponData( (MeleeWeaponData)data );
+                punch.GetComponent<Punch>().weaponData = (MeleeWeaponData)data;
                 return punch;
             case WeaponType.SWORD:
                 GameObject sword = Instantiate(swordPrefab);
-                sword.GetComponent<Sword>().LoadFromWeaponData( (MeleeWeaponData)data );
+                sword.GetComponent<Sword>().weaponData = (MeleeWeaponData)data;
                 return sword;
             default:
-                return null;
+                throw new NotImplementedException("WeaponLoader: Weapon type not found");
         }
     }
 

@@ -204,7 +204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924222d1682284e45be3abf054489857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponParent: {fileID: 8171031824528659897}
   attackInteractAction: {fileID: 4092611513977179484, guid: 468d96b008f04d64387163c5ef534271, type: 3}
+  switchToPunchAction: {fileID: 4890155473680598355, guid: 468d96b008f04d64387163c5ef534271, type: 3}
+  switchToSwordAction: {fileID: -3520436593464425307, guid: 468d96b008f04d64387163c5ef534271, type: 3}
 --- !u!114 &8171031824462169534
 MonoBehaviour:
   m_ObjectHideFlags: 0

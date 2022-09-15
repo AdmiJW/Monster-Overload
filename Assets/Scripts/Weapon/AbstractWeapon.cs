@@ -4,16 +4,16 @@ using UnityEngine;
 
 
 
-public abstract class AbstractWeapon : MonoBehaviour {
+public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: WeaponData {
 
-    [Header("General Weapon Settings")]
-    public float attackCooldown = 0.5f;
+    [Header("Weapon Data")]
+    public T weaponData;
 
     protected GameObject player;
     protected Animator playerAnimator;
     protected ContactFilter2D ENEMY_CONTACT_FILTER;
 
-    protected bool isInCooldown = false;
+    protected IEnumerator cooldownCoroutine = null;
 
 
     protected virtual void Awake() {
@@ -23,23 +23,24 @@ public abstract class AbstractWeapon : MonoBehaviour {
     }
 
 
+    // When weapon is switched, disable weapon cooldown immediately
+    protected virtual void OnDisable() {
+        if (cooldownCoroutine != null) StopCoroutine(cooldownCoroutine);
+        cooldownCoroutine = null;
+    }
+
+
     protected IEnumerator Cooldown() {
-        isInCooldown = true;
-        yield return new WaitForSeconds(attackCooldown);
-        isInCooldown = false;
+        yield return new WaitForSeconds(weaponData.attackCooldown);
+        cooldownCoroutine = null;
+    }
+
+    public WeaponData GetWeaponData() {
+        return weaponData;
     }
 
 
     public abstract void TriggerAttack();
     public abstract void DealDamage();
     public abstract void PlayAttackAnimation();
-    public abstract WeaponData GetWeaponData();
-}
-
-
-
-[System.Serializable]
-public abstract class WeaponData {
-    public WeaponType name;
-    public float attackCooldown;
 }

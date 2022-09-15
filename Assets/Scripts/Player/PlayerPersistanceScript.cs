@@ -35,9 +35,13 @@ public class PlayerPersistanceScript : MonoBehaviour {
 
         // Weapons
         PlayerAttackScript playerAttackScript = GetComponent<PlayerAttackScript>();
-        PlayerManager.instance.activeWeaponIndex = playerAttackScript.weapons.IndexOf(playerAttackScript.activeWeapon);
+        PlayerManager.instance.activeWeaponType = playerAttackScript.activeWeaponType;
         PlayerManager.instance.playerWeapons = new List<WeaponData>();
-        foreach (GameObject weapon in playerAttackScript.weapons)
-            PlayerManager.instance.playerWeapons.Add(weapon.GetComponent<AbstractWeapon>().GetWeaponData() );
+
+        foreach( GameObject weapon in playerAttackScript.weapons.Values ) {
+            if (weapon == null) continue;
+            WeaponData weaponData = weapon.GetComponent<IWeapon>().GetWeaponData();
+            PlayerManager.instance.playerWeapons.Add(weaponData);
+        }
     }
 }

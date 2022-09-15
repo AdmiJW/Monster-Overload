@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Attack Interact",
+                    "name": "Attack_Interact",
                     "type": "Button",
                     "id": "f4a518ce-0d29-4794-9247-fb1bfad5aa9a",
                     "expectedControlType": "Button",
@@ -25,6 +25,22 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "d3319d69-ffcd-43a8-b9e5-a5de75600bab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_Punch",
+                    "type": "Button",
+                    "id": "becb04e9-25fb-43ca-a470-bfc107395ce2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_Sword",
+                    "type": "Button",
+                    "id": "418c6383-be13-4f5a-a984-0d6531c3a167",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -148,7 +164,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack Interact",
+                    "action": "Attack_Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -160,6 +176,28 @@
                     "processors": "",
                     "groups": "Keyboard Mouse",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "495d7bfc-7b61-405f-b609-8b28846079f1",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch_Punch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b11392c-2d1f-424e-8d70-b0a8964e5e0d",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch_Sword",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

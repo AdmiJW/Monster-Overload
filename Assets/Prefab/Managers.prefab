@@ -963,6 +963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   punchPrefab: {fileID: 3956980993394558530, guid: 6d74894f611a8714ea9d3fa74a4cdaf2, type: 3}
+  swordPrefab: {fileID: 4477939006663127668, guid: 340436648fbf5c54995c2f66d596afe9, type: 3}
 --- !u!1 &4304947559261658971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1170,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -3564121736685440797, guid: 7756589ce5f732c49919b9c1723d354f, type: 2}
   m_audioClip: {fileID: 8300000, guid: a126b2da42abe1a4f8d725c8a1fa68d1, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2640,7 +2641,8 @@ MonoBehaviour:
   playerMaxHealth: 5
   playerCurrentHealth: 5
   playerCoins: 0
-  activeWeaponIndex: 0
+  playerWeapons: []
+  activeWeaponType: 0
   spawnPosition: {x: 0, y: 0}
   spawnFaceDirection: 1
-  startingWeapons: []
+  testWeaponData: []

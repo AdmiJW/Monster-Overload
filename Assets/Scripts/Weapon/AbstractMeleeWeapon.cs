@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 
 // Things to implement in your concrete melee:
 //      > Animation + Sound (as animation event?)
-public abstract class AbstractMeleeWeapon : AbstractWeapon {
-    [Header("Melee Weapon Settings")]
-    public float attackDamage = 1f;
-    public float attackKnockback = 1f;
-    public int maxEnemiesToAttack = 1;
+public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
 
     protected Collider2D hitbox;
     protected Collider2D[] enemyHits;
@@ -36,12 +31,13 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon {
 
 
     protected virtual void Start() {
-        damageStrategy = new PhysicalDamage(transform, attackDamage, attackKnockback);
-        enemyHits = new Collider2D[maxEnemiesToAttack];
+        damageStrategy = new PhysicalDamage(transform, weaponData.attackDamage, weaponData.attackKnockback);
+        enemyHits = new Collider2D[ weaponData.maxEnemiesToAttack ];
     }
 
 
-    protected virtual void OnDisable() {
+    protected override void OnDisable() {
+        base.OnDisable();
         playerMovement.faceDirection.onDirectionChange -= UpdateDirection;
     }
 
@@ -51,8 +47,9 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon {
     // Logic
     //===========================
     public override void TriggerAttack() {
-        if (isInCooldown) return;
+        if (cooldownCoroutine != null) return;
         PlayAttackAnimation();
+        cooldownCoroutine = Cooldown();
         StartCoroutine(Cooldown());
     }
 
@@ -74,14 +71,4 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon {
         if (angle < 0) angle = 360f + angle;
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
-}
-
-
-
-
-[System.Serializable]
-public class MeleeWeaponData : WeaponData {
-    public float attackDamage;
-    public float attackKnockback;
-    public int maxEnemiesToAttack;
 }

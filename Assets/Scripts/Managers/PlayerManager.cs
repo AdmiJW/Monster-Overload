@@ -26,24 +26,25 @@ public class PlayerManager : AbstractManager<PlayerManager> {
 
     [Space]
     public List<WeaponData> playerWeapons = new List<WeaponData>();
-    public int activeWeaponIndex = 0;        // So that player won't suddenly switch to another weapon
+    public WeaponType activeWeaponType;        
 
     [Header("Scene Initialization")]
     public Vector2 spawnPosition = new Vector2(0, 0);
     public Direction spawnFaceDirection = Direction.DOWN;
 
 
-
+    // * TESTING USE * //
     [Header("Debug Use")]
-    public List<GameObject> startingWeapons = new List<GameObject>();
+    public WeaponData[] testWeaponData;
     
-
+    // * TESTING USE * //
     protected override void Awake() {
         base.Awake();
         
-        foreach(GameObject weapon in startingWeapons) {
-            playerWeapons.Add(weapon.GetComponent<AbstractWeapon>().GetWeaponData());
-        }
+        // * Starting weapons is for testing use.
+        if (testWeaponData.Length == 0) return;
+        activeWeaponType = testWeaponData[0].weaponType;
+        playerWeapons.AddRange(testWeaponData);
     }
 
 }
