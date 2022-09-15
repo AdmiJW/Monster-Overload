@@ -26,6 +26,7 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     protected Collider2D enemyCollider;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
+    protected ParticleSystem hurtParticle;
     protected RangeTriggerScript rangeTriggerScript;
     
     protected Health health;
@@ -41,6 +42,7 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         animator = GetComponent<Animator>();
         enemyCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        hurtParticle = GetComponent<ParticleSystem>();
         rangeTriggerScript = GetComponentInChildren<RangeTriggerScript>();
         dropEmitter = GetComponentInChildren<DropEmitter>();
     }
@@ -75,7 +77,8 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     // Interface methods
     //================================
     public void TakeDamage(float damage) { 
-        health.TakeDamage(damage); 
+        health.TakeDamage(damage);
+        hurtParticle?.Play();
     }
 
     public void Heal(float amount) { 

@@ -4,12 +4,14 @@ using UnityEngine;
 public class PlayerAnimatorScript : MonoBehaviour {
 
     Animator animator;
+    ParticleSystem blood;
     PlayerMovementScript playerMovementScript;
     PlayerHealthScript playerHealthScript;
 
 
     void Awake() {
         animator = GetComponent<Animator>();
+        blood = GetComponent<ParticleSystem>();
         playerMovementScript = GetComponent<PlayerMovementScript>();
         playerHealthScript = GetComponent<PlayerHealthScript>();
     }
@@ -45,9 +47,11 @@ public class PlayerAnimatorScript : MonoBehaviour {
 
     void OnDeath() {
         animator.SetTrigger("Die");
+        blood.Play();
     }
 
     void OnHurt() {
         animator.SetTrigger("Damage");
+        blood.Play();
     }
 }

@@ -49,3 +49,4 @@ Deep appreciation to the creators of these assets used in the game:
 1. 12th Sept - Completed Dialogue system with Ink's narrative scripting language
 1. 13th Sept - Implemented interactables: basic NPC dialogue and signboards
 1. 14th Sept - Improved Persistance of data, added Loading screen
+1. 15th Sept - Bow weapon, particle system, weapon system revamped.

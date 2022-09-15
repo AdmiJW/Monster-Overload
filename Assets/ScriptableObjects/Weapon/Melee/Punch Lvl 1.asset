@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Punch Lvl 1
   m_EditorClassIdentifier: 
   weaponType: 0
+  weaponLevel: 1
   attackCooldown: 0.5
   attackDamage: 1
   attackKnockback: 10

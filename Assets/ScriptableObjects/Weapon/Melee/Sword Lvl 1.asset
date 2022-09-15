@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Sword Lvl 1
   m_EditorClassIdentifier: 
   weaponType: 1
-  attackCooldown: 0.5
+  weaponLevel: 1
+  attackCooldown: 0.7
   attackDamage: 3
   attackKnockback: 15
   maxEnemiesToAttack: 5
