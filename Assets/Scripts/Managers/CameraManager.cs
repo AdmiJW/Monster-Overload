@@ -8,14 +8,8 @@ public class CameraManager : AbstractManager<CameraManager> {
     public GameObject cameraObject;
     public Camera mainCamera;
 
-    [Header("Camera Shaking Configuration")]
-    public float shakeDuration = 0.3f;
-    public float shakeStrength = 0.2f;
-    public int shakeVibrato = 10;
 
-
-
-    public void ShakeCamera() {
+    public void ShakeCamera(float shakeDuration, float shakeStrength, int shakeVibrato) {
         mainCamera.DOShakePosition(shakeDuration, shakeStrength, shakeVibrato);
     }
 

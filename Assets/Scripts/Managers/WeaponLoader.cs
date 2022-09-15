@@ -7,6 +7,7 @@ public class WeaponLoader : AbstractManager<WeaponLoader> {
     [Header("Prefabs")]
     public GameObject punchPrefab;
     public GameObject swordPrefab;
+    public GameObject bowPrefab;
 
 
     public GameObject getWeapon(WeaponData data) {
@@ -19,6 +20,10 @@ public class WeaponLoader : AbstractManager<WeaponLoader> {
                 GameObject sword = Instantiate(swordPrefab);
                 sword.GetComponent<Sword>().weaponData = (MeleeWeaponData)data;
                 return sword;
+            case WeaponType.BOW:
+                GameObject bow = Instantiate(bowPrefab);
+                bow.GetComponent<Bow>().weaponData = (RangedWeaponData)data;
+                return bow;
             default:
                 throw new NotImplementedException("WeaponLoader: Weapon type not found");
         }

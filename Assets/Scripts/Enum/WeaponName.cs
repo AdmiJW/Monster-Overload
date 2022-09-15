@@ -1,5 +1,6 @@
 
 public enum WeaponType {
     PUNCH,
-    SWORD
+    SWORD,
+    BOW,
 }

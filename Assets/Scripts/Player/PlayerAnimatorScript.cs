@@ -49,6 +49,5 @@ public class PlayerAnimatorScript : MonoBehaviour {
 
     void OnHurt() {
         animator.SetTrigger("Damage");
-        CameraManager.instance.ShakeCamera();
     }
 }

@@ -46,15 +46,7 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
     //===========================
     // Logic
     //===========================
-    public override void TriggerAttack() {
-        if (cooldownCoroutine != null) return;
-        PlayAttackAnimation();
-        cooldownCoroutine = Cooldown();
-        StartCoroutine(Cooldown());
-    }
-
-
-    public override void DealDamage() {
+    public override void Attack() {
         for (int i = 0; i < enemyHits.Length; i++) enemyHits[i] = null;
         hitbox.OverlapCollider(ENEMY_CONTACT_FILTER, enemyHits);
 

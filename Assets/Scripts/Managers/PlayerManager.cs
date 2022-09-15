@@ -1,7 +1,8 @@
-
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 
 // Main idea:
@@ -14,6 +15,7 @@ public class PlayerManager : AbstractManager<PlayerManager> {
     public GameObject player;
     public GameObject healthBarGroup;
     public TMP_Text coinText;
+    public TMP_Text statusText;
 
 
 
@@ -33,18 +35,46 @@ public class PlayerManager : AbstractManager<PlayerManager> {
     public Direction spawnFaceDirection = Direction.DOWN;
 
 
-    // * TESTING USE * //
     [Header("Debug Use")]
     public WeaponData[] testWeaponData;
     
-    // * TESTING USE * //
+
+    private IEnumerator fadeStatusTextCoroutine = null;
+
+
+    //===========================
+    //  Lifecycle
+    //===========================
     protected override void Awake() {
         base.Awake();
         
-        // * Starting weapons is for testing use.
         if (testWeaponData.Length == 0) return;
+        Debug.LogWarning("PlayerManager: Test weapon data is not empty. This is for testing use only.");
         activeWeaponType = testWeaponData[0].weaponType;
         playerWeapons.AddRange(testWeaponData);
     }
 
+
+
+    //===========================
+    //  Public
+    //===========================
+    public void ShowStatusText(string text, float duration = 2f) {
+        statusText.alpha = 1;
+        statusText.text = text;
+        if (fadeStatusTextCoroutine != null) StopCoroutine(fadeStatusTextCoroutine);
+        statusText.DOKill();
+        fadeStatusTextCoroutine = HideStatusTextCoroutine(duration);
+        StartCoroutine(fadeStatusTextCoroutine);
+    }
+
+
+    //===========================
+    //  Coroutine
+    //===========================
+    IEnumerator HideStatusTextCoroutine(float delay) {
+        yield return new WaitForSecondsRealtime(delay);
+        statusText.DOFade(0, 1f);
+        fadeStatusTextCoroutine = null;
+    }
 }

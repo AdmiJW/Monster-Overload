@@ -5922,30 +5922,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
-    - target: {fileID: 4304947560805811150, guid: 680320390b1e3c8478f74add9ff4bc11, type: 3}
-      propertyPath: testWeaponData
-      value: 
-      objectReference: {fileID: 11400000, guid: e172bae3b80dddd4d8a65c263bf23902, type: 2}
-    - target: {fileID: 4304947560805811150, guid: 680320390b1e3c8478f74add9ff4bc11, type: 3}
-      propertyPath: testWeaponData.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4304947560805811150, guid: 680320390b1e3c8478f74add9ff4bc11, type: 3}
-      propertyPath: startingWeapons.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4304947560805811150, guid: 680320390b1e3c8478f74add9ff4bc11, type: 3}
-      propertyPath: testWeaponData.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: d670a9b326a301840b4b08e66c10a2fc, type: 2}
-    - target: {fileID: 4304947560805811150, guid: 680320390b1e3c8478f74add9ff4bc11, type: 3}
-      propertyPath: testWeaponData.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: e172bae3b80dddd4d8a65c263bf23902, type: 2}
-    - target: {fileID: 4304947560805811150, guid: 680320390b1e3c8478f74add9ff4bc11, type: 3}
-      propertyPath: startingWeapons.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 680320390b1e3c8478f74add9ff4bc11, type: 3}
 --- !u!1001 &4699427606738709490
@@ -6096,34 +6072,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4701027358577485070, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4701027358577485070, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4701027358577485070, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4701027358577485070, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4701027358577485070, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4701027358577485070, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4701027358577485296, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1033028282}
     - target: {fileID: 6757769401053289347, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
       propertyPath: m_Name
       value: Camera
@@ -6132,12 +6080,7 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1033028282}
-    - target: {fileID: 6880286688302801549, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
-      propertyPath: lerpFactor
-      value: 0.15
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4701027358577485296, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a0fc86951b32294faf8208139f413ef, type: 3}
 --- !u!1001 &8171031824701977974
 PrefabInstance:

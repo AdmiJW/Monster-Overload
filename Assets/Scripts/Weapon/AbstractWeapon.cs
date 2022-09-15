@@ -16,6 +16,9 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
     protected IEnumerator cooldownCoroutine = null;
 
 
+    //===========================
+    //  Lifecycle
+    //===========================
     protected virtual void Awake() {
         player = PlayerManager.instance.player;
         playerAnimator = player.GetComponent<Animator>();
@@ -30,6 +33,9 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
     }
 
 
+    //===========================
+    //  Logic
+    //===========================
     protected IEnumerator Cooldown() {
         yield return new WaitForSeconds(weaponData.attackCooldown);
         cooldownCoroutine = null;
@@ -40,7 +46,15 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
     }
 
 
-    public abstract void TriggerAttack();
-    public abstract void DealDamage();
+    // Cooldown + Animation
+    public virtual void OnAttackPerformed() {
+        if (cooldownCoroutine != null) return;
+        PlayAttackAnimation();
+        cooldownCoroutine = Cooldown();
+        StartCoroutine(Cooldown());
+    }
+
+
+    public abstract void Attack();
     public abstract void PlayAttackAnimation();
 }

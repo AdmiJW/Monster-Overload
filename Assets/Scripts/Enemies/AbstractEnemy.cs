@@ -76,7 +76,6 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     //================================
     public void TakeDamage(float damage) { 
         health.TakeDamage(damage); 
-        CameraManager.instance.ShakeCamera();
     }
 
     public void Heal(float amount) { 

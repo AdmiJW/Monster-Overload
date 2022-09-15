@@ -30,6 +30,22 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Switch_Next",
+                    "type": "Button",
+                    "id": "967b9852-de83-4c88-94f2-51da28e98362",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_Prev",
+                    "type": "Button",
+                    "id": "001d6165-4986-4587-bc7d-f8882cdedc2d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Switch_Punch",
                     "type": "Button",
                     "id": "becb04e9-25fb-43ca-a470-bfc107395ce2",
@@ -41,6 +57,14 @@
                     "name": "Switch_Sword",
                     "type": "Button",
                     "id": "418c6383-be13-4f5a-a984-0d6531c3a167",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_Bow",
+                    "type": "Button",
+                    "id": "698581d0-544d-4ace-b96f-10871ec36f9a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -198,6 +222,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Switch_Sword",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f41fd130-08d0-4836-8fc4-2c7e819b4199",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch_Bow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b23da10-e411-4a4b-9358-89e8160f8a14",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "Switch_Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64b81abb-ba3c-45d8-a41e-53a7fc414eff",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "Switch_Prev",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
