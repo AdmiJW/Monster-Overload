@@ -7,12 +7,14 @@ public abstract class AbstractRangedWeapon : AbstractWeapon<RangedWeaponData> {
     public GameObject projectilePrefab;
 
 
+    // Method to obtain a working projectile, must contain script Projectile
+    public abstract GameObject GetProjectile();
     //===========================
     // Logic
     //===========================
     public override void Attack() {
-        // Get player's direction
-        Vector2 direction = player.GetComponent<PlayerMovementScript>().MovementStrategy.faceDirection.direction;
-        Debug.Log("Shoot at direction: " + direction);
+        // Instantiate projectile
+        GameObject projectile = GetProjectile();
+        projectile.GetComponent<Projectile>().Shoot();
     }
 }

@@ -6,27 +6,35 @@ using UnityEngine;
 // The Vector2 facing direction is always normalized.
 public class FaceDirection {
     // Private fields
-    private Vector2 _direction;
+    private Vector2 _unitVector;
 
     // Public properties
-    public Vector2 direction { 
-        get { return _direction; }
+    public Vector2 unitVector { 
+        get { return _unitVector; }
         set {
-            if ( _direction.Equals(value) || value == Vector2.zero) return;
-            _direction = value.normalized;
-            onDirectionChange?.Invoke(_direction);
-        } 
+            if ( _unitVector.Equals(value) || value == Vector2.zero) return;
+            _unitVector = value.normalized;
+            onDirectionChange?.Invoke(this);
+        }
     }
 
     // Events
-    public event System.Action<Vector2> onDirectionChange;
-
+    public event System.Action<FaceDirection> onDirectionChange;
 
 
     // Constructor
     public FaceDirection(): this(Vector2.down) {}
 
     public FaceDirection(Vector2 direction) {
-        this.direction = direction;
+        this.unitVector = direction;
+    }
+
+
+    // Public methods
+    public float GetAngle() {
+        // uses positive x direction = 0 degrees
+        float angle = Mathf.Atan2(unitVector.y, unitVector.x) * Mathf.Rad2Deg;
+        if (angle < 0) angle = 360f + angle;
+        return angle;
     }
 }

@@ -20,7 +20,7 @@ public class PlayerPersistanceScript : MonoBehaviour {
         GetComponent<PlayerMovementScript>()
             .MovementStrategy
             .faceDirection
-            .direction = PlayerManager.instance.spawnFaceDirection.GetVector2(); 
+            .unitVector = PlayerManager.instance.spawnFaceDirection.GetVector2(); 
     }
 
 

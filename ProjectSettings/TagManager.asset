@@ -10,6 +10,8 @@ TagManager:
   - InGameUI
   - PlayerHealthSystem
   - Interactable
+  - Projectile
+  - Map
   layers:
   - Default
   - TransparentFX
@@ -17,13 +19,13 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Map
   - Player
   - Enemies
   - Objects
   - Collectibles
   - Interactable
-  - 
+  - Projectile
   - 
   - 
   - 

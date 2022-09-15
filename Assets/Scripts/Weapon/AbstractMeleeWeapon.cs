@@ -26,7 +26,7 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
 
     protected virtual void OnEnable() {
         playerMovement.faceDirection.onDirectionChange += UpdateDirection;
-        UpdateDirection(playerMovement.faceDirection.direction);
+        UpdateDirection(playerMovement.faceDirection);
     }
 
 
@@ -57,10 +57,7 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
     }
 
 
-    public void UpdateDirection(Vector2 direction) {
-        // uses positive x direction = 0 degrees
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        if (angle < 0) angle = 360f + angle;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+    public void UpdateDirection(FaceDirection direction) {
+        transform.rotation = Quaternion.Euler(0, 0, direction.GetAngle() );
     }
 }

@@ -68,8 +68,8 @@ public class Slime2 : AbstractEnemy {
     }
 
 
-    protected void handleFacingDirectionChange(Vector2 faceDirection) {
-        animator.SetFloat("Horizontal", faceDirection.x);
-        animator.SetFloat("Vertical", faceDirection.y);
+    protected void handleFacingDirectionChange(FaceDirection faceDirection) {
+        animator.SetFloat("Horizontal", faceDirection.unitVector.x);
+        animator.SetFloat("Vertical", faceDirection.unitVector.y);
     }
 }

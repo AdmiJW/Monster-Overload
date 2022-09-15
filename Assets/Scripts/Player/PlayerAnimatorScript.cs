@@ -33,9 +33,9 @@ public class PlayerAnimatorScript : MonoBehaviour {
     //==============================
     // Handler
     //==============================
-    void OnFacingDirectionChange(Vector2 direction) {
-        animator.SetFloat("Horizontal", direction.x);
-        animator.SetFloat("Vertical", direction.y);
+    void OnFacingDirectionChange(FaceDirection direction) {
+        animator.SetFloat("Horizontal", direction.unitVector.x);
+        animator.SetFloat("Vertical", direction.unitVector.y);
     }
 
     void OnMovementStateChange(MovementState movementState) {

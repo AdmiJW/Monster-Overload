@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6422997358635437084}
   - component: {fileID: 5702520965035759204}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: DropEmitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 6631467057011356066}
   - component: {fileID: 6631467057011356067}
   - component: {fileID: 6631467057011356064}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RangeTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

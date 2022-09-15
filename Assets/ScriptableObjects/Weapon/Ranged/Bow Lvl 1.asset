@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Bow Lvl 1
   m_EditorClassIdentifier: 
   weaponType: 2
-  attackCooldown: 0.5
-  projectileSpeed: 1
+  attackCooldown: 0.8
+  projectileSpeed: 8
   projectileAttack: 1
   projectileKnockback: 10
   isPiercing: 0
