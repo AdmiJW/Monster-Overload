@@ -8,13 +8,12 @@ public abstract class AbstractRangedWeapon : AbstractWeapon<RangedWeaponData> {
 
 
     // Method to obtain a working projectile, must contain script Projectile
-    public abstract GameObject GetProjectile();
+    public abstract Projectile GetProjectile();
     //===========================
     // Logic
     //===========================
     public override void Attack() {
         // Instantiate projectile
-        GameObject projectile = GetProjectile();
-        projectile.GetComponent<Projectile>().Shoot();
+        GetProjectile().Shoot();
     }
 }

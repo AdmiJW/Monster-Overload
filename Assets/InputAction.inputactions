@@ -68,6 +68,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Switch_FireStaff",
+                    "type": "Button",
+                    "id": "a13d544e-9277-4829-aff9-77af925b6145",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -255,6 +263,17 @@
                     "processors": "",
                     "groups": "Keyboard Mouse",
                     "action": "Switch_Prev",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2893778-1fb6-43a7-be69-a0db925074cd",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch_FireStaff",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

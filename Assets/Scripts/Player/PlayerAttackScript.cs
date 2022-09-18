@@ -20,6 +20,7 @@ public class PlayerAttackScript : MonoBehaviour {
     public InputActionReference switchToPunchAction;
     public InputActionReference switchToSwordAction;
     public InputActionReference switchToBowAction;
+    public InputActionReference switchToFireStaffAction;
 
     //===========================
     public WeaponType activeWeaponType { get; private set; }
@@ -54,6 +55,7 @@ public class PlayerAttackScript : MonoBehaviour {
         switchToPunchAction.action.performed += SwitchToPunch;
         switchToSwordAction.action.performed += SwitchToSword;
         switchToBowAction.action.performed += SwitchToBow;
+        switchToFireStaffAction.action.performed += SwitchToFireStaff;
     }
 
     void Start() {
@@ -68,6 +70,7 @@ public class PlayerAttackScript : MonoBehaviour {
         switchToPunchAction.action.performed -= SwitchToPunch;
         switchToSwordAction.action.performed -= SwitchToSword;
         switchToBowAction.action.performed -= SwitchToBow;
+        switchToFireStaffAction.action.performed -= SwitchToFireStaff;
     }
 
 
@@ -96,10 +99,9 @@ public class PlayerAttackScript : MonoBehaviour {
         activeWeapon = weapons[type];
         activeWeapon.SetActive(true);
 
-        if (notify) {
-            PlayerManager.instance.ShowStatusText( Enum.GetName(typeof(WeaponType), type) + " equipped" );
-            PlayerAudioManager.instance.switchWeapon.Play();
-        }
+        if (!notify) return;
+        PlayerManager.instance.ShowStatusText( type.Name() + " equipped" );
+        PlayerAudioManager.instance.switchWeapon.Play();
     }
 
 
@@ -151,6 +153,10 @@ public class PlayerAttackScript : MonoBehaviour {
 
     void SwitchToBow(InputAction.CallbackContext ctx) {
         SwitchActiveWeapon(WeaponType.BOW, true, true);
+    }
+
+    void SwitchToFireStaff(InputAction.CallbackContext ctx) {
+        SwitchActiveWeapon(WeaponType.FIRE_STAFF, true, true);
     }
 
 

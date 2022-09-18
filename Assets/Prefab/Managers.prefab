@@ -962,6 +962,7 @@ MonoBehaviour:
   punchPrefab: {fileID: 3956980993394558530, guid: 6d74894f611a8714ea9d3fa74a4cdaf2, type: 3}
   swordPrefab: {fileID: 4477939006663127668, guid: 340436648fbf5c54995c2f66d596afe9, type: 3}
   bowPrefab: {fileID: 9193531928344751361, guid: 879585834f6e77b4ba055cd1bf6a4942, type: 3}
+  fireStaffPrefab: {fileID: 3128143945841098488, guid: 7f8c52fa89a1a56488ac38ba30855087, type: 3}
 --- !u!1 &4304947559261658971
 GameObject:
   m_ObjectHideFlags: 0
@@ -2661,6 +2662,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d670a9b326a301840b4b08e66c10a2fc, type: 2}
   - {fileID: 11400000, guid: e172bae3b80dddd4d8a65c263bf23902, type: 2}
   - {fileID: 11400000, guid: 6ce50234e4f0f6345b2a22cebdfeed7d, type: 2}
+  - {fileID: 11400000, guid: 2134a561412e7a3419d812a2fc184529, type: 2}
 --- !u!1 &4738721058644312554
 GameObject:
   m_ObjectHideFlags: 0

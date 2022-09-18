@@ -6,17 +6,19 @@ public class Bow : AbstractRangedWeapon {
         playerAnimator.SetTrigger("Bow");
     }
 
-    public override GameObject GetProjectile() {
+    public override Projectile GetProjectile() {
         FaceDirection direction = player.GetComponent<PlayerMovementScript>().MovementStrategy.faceDirection;
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        IDamage damage = new PhysicalDamage(projectile.transform, weaponData.projectileAttack, weaponData.projectileKnockback);
 
-        projectile.GetComponent<Projectile>()
-            .SetWeaponData(weaponData)
-            .SetImpactSound(ItemAudioManager.instance.arrowImpact)
-            .OrientProjectile(direction)
-            .SetTargetLayerMask(GameManager.instance.ENEMY_LAYER_MASK)
-            .UsePhysicalDamageStrategy();
+        Projectile p = projectile.GetComponent<Projectile>();
+        p.IncludeTarget( GameManager.instance.ENEMY_LAYER_MASK );
+        p.IncludeSelfDestroyTarget( GameManager.instance.MAP_LAYER_MASK );
+        p.SetWeaponData(weaponData);
+        p.SetImpactSound( ItemAudioManager.instance.arrowImpact );
+        p.OrientProjectile(direction);
+        p.SetDamageStrategy( damage );
 
-        return projectile;
+        return p;
     }
 }
