@@ -4,18 +4,21 @@ using UnityEngine;
 
 
 
-public abstract class AbstractWeapon : MonoBehaviour {
+public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: WeaponData {
 
-    [Header("General Weapon Settings")]
-    public float attackCooldown = 0.5f;
+    [Header("Weapon Data")]
+    public T weaponData;
 
     protected GameObject player;
     protected Animator playerAnimator;
     protected ContactFilter2D ENEMY_CONTACT_FILTER;
 
-    protected bool isInCooldown = false;
+    protected IEnumerator cooldownCoroutine = null;
 
 
+    //===========================
+    //  Lifecycle
+    //===========================
     protected virtual void Awake() {
         player = PlayerManager.instance.player;
         playerAnimator = player.GetComponent<Animator>();
@@ -23,23 +26,35 @@ public abstract class AbstractWeapon : MonoBehaviour {
     }
 
 
-    protected IEnumerator Cooldown() {
-        isInCooldown = true;
-        yield return new WaitForSeconds(attackCooldown);
-        isInCooldown = false;
+    // When weapon is switched, disable weapon cooldown immediately
+    protected virtual void OnDisable() {
+        if (cooldownCoroutine != null) StopCoroutine(cooldownCoroutine);
+        cooldownCoroutine = null;
     }
 
 
-    public abstract void TriggerAttack();
-    public abstract void DealDamage();
+    //===========================
+    //  Logic
+    //===========================
+    protected IEnumerator Cooldown() {
+        yield return new WaitForSeconds(weaponData.attackCooldown);
+        cooldownCoroutine = null;
+    }
+
+    public WeaponData GetWeaponData() {
+        return weaponData;
+    }
+
+
+    // Cooldown + Animation
+    public virtual void OnAttackPerformed() {
+        if (cooldownCoroutine != null) return;
+        PlayAttackAnimation();
+        cooldownCoroutine = Cooldown();
+        StartCoroutine(Cooldown());
+    }
+
+
+    public abstract void Attack();
     public abstract void PlayAttackAnimation();
-    public abstract WeaponData GetWeaponData();
-}
-
-
-
-[System.Serializable]
-public abstract class WeaponData {
-    public WeaponType name;
-    public float attackCooldown;
 }

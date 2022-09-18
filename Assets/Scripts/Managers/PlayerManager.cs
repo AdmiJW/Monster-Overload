@@ -1,7 +1,8 @@
-
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 
 // Main idea:
@@ -14,6 +15,7 @@ public class PlayerManager : AbstractManager<PlayerManager> {
     public GameObject player;
     public GameObject healthBarGroup;
     public TMP_Text coinText;
+    public TMP_Text statusText;
 
 
 
@@ -26,24 +28,53 @@ public class PlayerManager : AbstractManager<PlayerManager> {
 
     [Space]
     public List<WeaponData> playerWeapons = new List<WeaponData>();
-    public int activeWeaponIndex = 0;        // So that player won't suddenly switch to another weapon
+    public WeaponType activeWeaponType;        
 
     [Header("Scene Initialization")]
     public Vector2 spawnPosition = new Vector2(0, 0);
     public Direction spawnFaceDirection = Direction.DOWN;
 
 
-
     [Header("Debug Use")]
-    public List<GameObject> startingWeapons = new List<GameObject>();
+    public WeaponData[] testWeaponData;
     
 
+    private IEnumerator fadeStatusTextCoroutine = null;
+
+
+    //===========================
+    //  Lifecycle
+    //===========================
     protected override void Awake() {
         base.Awake();
         
-        foreach(GameObject weapon in startingWeapons) {
-            playerWeapons.Add(weapon.GetComponent<AbstractWeapon>().GetWeaponData());
-        }
+        if (testWeaponData.Length == 0) return;
+        Debug.LogWarning("PlayerManager: Test weapon data is not empty. This is for testing use only.");
+        activeWeaponType = testWeaponData[0].weaponType;
+        playerWeapons.AddRange(testWeaponData);
     }
 
+
+
+    //===========================
+    //  Public
+    //===========================
+    public void ShowStatusText(string text, float duration = 2f) {
+        statusText.alpha = 1;
+        statusText.text = text;
+        if (fadeStatusTextCoroutine != null) StopCoroutine(fadeStatusTextCoroutine);
+        statusText.DOKill();
+        fadeStatusTextCoroutine = HideStatusTextCoroutine(duration);
+        StartCoroutine(fadeStatusTextCoroutine);
+    }
+
+
+    //===========================
+    //  Coroutine
+    //===========================
+    IEnumerator HideStatusTextCoroutine(float delay) {
+        yield return new WaitForSecondsRealtime(delay);
+        statusText.DOFade(0, 1f);
+        fadeStatusTextCoroutine = null;
+    }
 }

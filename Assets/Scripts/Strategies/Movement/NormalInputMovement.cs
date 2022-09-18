@@ -68,7 +68,7 @@ public class NormalInputMovement : AbstractMovement {
         if (inputDirection == Vector2.zero) movementState = MovementState.IDLE;
         else {
             movementState = (isSprintdown ? MovementState.RUNNING : MovementState.MOVING);
-            faceDirection.direction = inputDirection;
+            faceDirection.unitVector = inputDirection;
         }
     }
 }

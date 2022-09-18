@@ -19,7 +19,7 @@ public class PlayerInteractScript : MonoBehaviour {
     
     // Returns true if there is something interacting, else false
     public bool Interact() {
-        Vector2 direction = playerMovement.MovementStrategy.faceDirection.direction;
+        Vector2 direction = playerMovement.MovementStrategy.faceDirection.unitVector;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactRange, interactableLayer);
         
         if (hit.collider != null) hit.collider.GetComponent<IInteractable>().Interact(gameObject);

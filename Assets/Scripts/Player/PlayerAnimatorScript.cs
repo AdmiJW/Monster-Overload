@@ -4,12 +4,14 @@ using UnityEngine;
 public class PlayerAnimatorScript : MonoBehaviour {
 
     Animator animator;
+    ParticleSystem blood;
     PlayerMovementScript playerMovementScript;
     PlayerHealthScript playerHealthScript;
 
 
     void Awake() {
         animator = GetComponent<Animator>();
+        blood = GetComponent<ParticleSystem>();
         playerMovementScript = GetComponent<PlayerMovementScript>();
         playerHealthScript = GetComponent<PlayerHealthScript>();
     }
@@ -33,9 +35,9 @@ public class PlayerAnimatorScript : MonoBehaviour {
     //==============================
     // Handler
     //==============================
-    void OnFacingDirectionChange(Vector2 direction) {
-        animator.SetFloat("Horizontal", direction.x);
-        animator.SetFloat("Vertical", direction.y);
+    void OnFacingDirectionChange(FaceDirection direction) {
+        animator.SetFloat("Horizontal", direction.unitVector.x);
+        animator.SetFloat("Vertical", direction.unitVector.y);
     }
 
     void OnMovementStateChange(MovementState movementState) {
@@ -45,10 +47,11 @@ public class PlayerAnimatorScript : MonoBehaviour {
 
     void OnDeath() {
         animator.SetTrigger("Die");
+        blood.Play();
     }
 
     void OnHurt() {
         animator.SetTrigger("Damage");
-        CameraManager.instance.ShakeCamera();
+        blood.Play();
     }
 }

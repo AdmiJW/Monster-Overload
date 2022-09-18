@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Attack Interact",
+                    "name": "Attack_Interact",
                     "type": "Button",
                     "id": "f4a518ce-0d29-4794-9247-fb1bfad5aa9a",
                     "expectedControlType": "Button",
@@ -25,6 +25,54 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "d3319d69-ffcd-43a8-b9e5-a5de75600bab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_Next",
+                    "type": "Button",
+                    "id": "967b9852-de83-4c88-94f2-51da28e98362",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_Prev",
+                    "type": "Button",
+                    "id": "001d6165-4986-4587-bc7d-f8882cdedc2d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_Punch",
+                    "type": "Button",
+                    "id": "becb04e9-25fb-43ca-a470-bfc107395ce2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_Sword",
+                    "type": "Button",
+                    "id": "418c6383-be13-4f5a-a984-0d6531c3a167",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_Bow",
+                    "type": "Button",
+                    "id": "698581d0-544d-4ace-b96f-10871ec36f9a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Switch_FireStaff",
+                    "type": "Button",
+                    "id": "a13d544e-9277-4829-aff9-77af925b6145",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -148,7 +196,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack Interact",
+                    "action": "Attack_Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -160,6 +208,72 @@
                     "processors": "",
                     "groups": "Keyboard Mouse",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "495d7bfc-7b61-405f-b609-8b28846079f1",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch_Punch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b11392c-2d1f-424e-8d70-b0a8964e5e0d",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch_Sword",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f41fd130-08d0-4836-8fc4-2c7e819b4199",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch_Bow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b23da10-e411-4a4b-9358-89e8160f8a14",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "Switch_Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64b81abb-ba3c-45d8-a41e-53a7fc414eff",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "Switch_Prev",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2893778-1fb6-43a7-be69-a0db925074cd",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch_FireStaff",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

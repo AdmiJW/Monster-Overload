@@ -23,7 +23,7 @@ public class StationaryNPC : DialogInteractable {
 
     protected virtual void Start() {
         movement.faceDirection.onDirectionChange += OnFacingDirectionChange;
-        movement.faceDirection.direction = faceDirection.GetVector2();
+        movement.faceDirection.unitVector = faceDirection.GetVector2();
     }
 
 
@@ -36,11 +36,11 @@ public class StationaryNPC : DialogInteractable {
         
         // Set npc to face player
         AbstractMovement playerMovement = player.GetComponent<PlayerMovementScript>().MovementStrategy;
-        movement.faceDirection.direction = playerMovement.faceDirection.direction * -1;
+        movement.faceDirection.unitVector = playerMovement.faceDirection.unitVector * -1;
         
         // On finish dialogue, set NPC back to original direction
         DialogueManager.instance.onDialogEnd += ()=> {
-            movement.faceDirection.direction = faceDirection.GetVector2();
+            movement.faceDirection.unitVector = faceDirection.GetVector2();
         };
 
         DialogueManager.instance.StartStory( GetStory() );
@@ -50,8 +50,8 @@ public class StationaryNPC : DialogInteractable {
     //==================================
     // Event listeners
     //==================================
-    protected virtual void OnFacingDirectionChange(Vector2 direction) {
-        animator.SetFloat("Horizontal", direction.x);
-        animator.SetFloat("Vertical", direction.y);
+    protected virtual void OnFacingDirectionChange(FaceDirection direction) {
+        animator.SetFloat("Horizontal", direction.unitVector.x);
+        animator.SetFloat("Vertical", direction.unitVector.y);
     }
 }

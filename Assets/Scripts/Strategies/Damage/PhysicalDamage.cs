@@ -41,6 +41,8 @@ public class PhysicalDamage : IDamage {
         healthComp?.TakeDamage(damage);
         knockbackComp?.Knockback(source.position, knockback);
         if (healthComp.GetHealth() != 0) invulnerableComp?.ActivateVulnerable();
+
+        CameraManager.instance.ShakeCamera(0.3f, 0.3f, 150);
     }
 
 

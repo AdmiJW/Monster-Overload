@@ -37,7 +37,7 @@ public class ChaseObjectMovement : AbstractMovement
         if (direction == Vector2.zero) movementState = MovementState.IDLE;
         else {
             movementState = MovementState.MOVING;
-            faceDirection.direction = direction;
+            faceDirection.unitVector = direction;
         }
     }
 }
