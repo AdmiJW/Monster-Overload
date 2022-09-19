@@ -15,6 +15,6 @@ public class HeartScript : MonoBehaviour {
         GameObject player = collision.gameObject.transform.parent.gameObject;
         player.GetComponent<PlayerHealthScript>().Heal( heartType.GetHealValue() );
 
-        PoolManager.instance.heartPool[heartType].Release(gameObject);
+        HeartPool.instance.heartPool[heartType].Release(gameObject);
     }
 }

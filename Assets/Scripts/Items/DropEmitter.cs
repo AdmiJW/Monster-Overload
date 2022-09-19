@@ -42,10 +42,10 @@ public class DropEmitter: MonoBehaviour {
 
         GameObject[] coins = new GameObject[platinumCount + goldCount + silverCount + copperCount];
         int index = 0;
-        for (int i = 0; i < platinumCount; i++) coins[index++] = PoolManager.instance.coinPool[Coin.PLATINUM].Get();
-        for (int i = 0; i < goldCount; i++) coins[index++] = PoolManager.instance.coinPool[Coin.GOLD].Get();
-        for (int i = 0; i < silverCount; i++) coins[index++] = PoolManager.instance.coinPool[Coin.SILVER].Get();
-        for (int i = 0; i < copperCount; i++) coins[index++] = PoolManager.instance.coinPool[Coin.COPPER].Get();
+        for (int i = 0; i < platinumCount; i++) coins[index++] = CoinPool.instance.coinPool[Coin.PLATINUM].Get();
+        for (int i = 0; i < goldCount; i++) coins[index++] = CoinPool.instance.coinPool[Coin.GOLD].Get();
+        for (int i = 0; i < silverCount; i++) coins[index++] = CoinPool.instance.coinPool[Coin.SILVER].Get();
+        for (int i = 0; i < copperCount; i++) coins[index++] = CoinPool.instance.coinPool[Coin.COPPER].Get();
 
         return coins;
     }
@@ -63,9 +63,9 @@ public class DropEmitter: MonoBehaviour {
 
         GameObject[] hearts = new GameObject[goldenCount + greenCount + redCount];
         int index = 0;
-        for (int i = 0; i < goldenCount; i++) hearts[index++] = PoolManager.instance.heartPool[Heart.GOLDEN].Get();
-        for (int i = 0; i < greenCount; i++) hearts[index++] = PoolManager.instance.heartPool[Heart.GREEN].Get();
-        for (int i = 0; i < redCount; i++) hearts[index++] = PoolManager.instance.heartPool[Heart.RED].Get();
+        for (int i = 0; i < goldenCount; i++) hearts[index++] = HeartPool.instance.heartPool[Heart.GOLDEN].Get();
+        for (int i = 0; i < greenCount; i++) hearts[index++] = HeartPool.instance.heartPool[Heart.GREEN].Get();
+        for (int i = 0; i < redCount; i++) hearts[index++] = HeartPool.instance.heartPool[Heart.RED].Get();
 
         return hearts;
     }

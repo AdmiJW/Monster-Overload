@@ -23,13 +23,69 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496078650150210351}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5363011182617289795}
-  m_RootOrder: 5
+  m_Father: {fileID: 545480357687036606}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &939392477751623151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2583261073066747343}
+  - component: {fileID: 9017842555690269684}
+  m_Layer: 0
+  m_Name: CoinPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2583261073066747343
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939392477751623151}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5363011182640977592}
+  - {fileID: 5363011183693272069}
+  - {fileID: 5363011184125319882}
+  - {fileID: 5363011182933113694}
+  m_Father: {fileID: 5363011182617289795}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9017842555690269684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939392477751623151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2adafa274b2e0df4dbb63491170ab956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  copperCoinPrefab: {fileID: 8249173963290118286, guid: ce35daf37677a3e4f9980471c84f537a, type: 3}
+  silverCoinPrefab: {fileID: 793697559863662620, guid: 9d3a1919b2959954390a21a8e8bb3830, type: 3}
+  goldCoinPrefab: {fileID: 675480704929309684, guid: a8ff7bd75fc6740459014ebfb831b6ac, type: 3}
+  platinumCoinPrefab: {fileID: 3732904593795843444, guid: 3803919bc05143d46b6274c93afe221a, type: 3}
+  copperCoinParent: {fileID: 5363011182640977599}
+  silverCoinParent: {fileID: 5363011183693272068}
+  goldCoinParent: {fileID: 5363011184125319881}
+  platinumCoinParent: {fileID: 5363011182933113693}
+  startingCoinPoolSize: 20
 --- !u!1 &1940061387275705103
 GameObject:
   m_ObjectHideFlags: 0
@@ -53,13 +109,66 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1940061387275705103}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5363011182617289795}
-  m_RootOrder: 6
+  m_Father: {fileID: 545480357687036606}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3236180097392123385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 545480357687036606}
+  - component: {fileID: 4651609293770875774}
+  m_Layer: 0
+  m_Name: HeartPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &545480357687036606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3236180097392123385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4430437818592600719}
+  - {fileID: 6331776069508160938}
+  - {fileID: 6143731927424600927}
+  m_Father: {fileID: 5363011182617289795}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4651609293770875774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3236180097392123385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4a104012b8a5640ae97c8a7832853e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redHeartPrefab: {fileID: 2011892957106121636, guid: 6b7a256eaded32e4d9c43a61151adae9, type: 3}
+  greenHeartPrefab: {fileID: 3272830543088340252, guid: 37132ab599ad70e458435c974cf6bb2d, type: 3}
+  goldenHeartPrefab: {fileID: 7049363618024034733, guid: 0acc0224fbfa9544396eed447066b086, type: 3}
+  redHeartParent: {fileID: 8347197801892064746}
+  greenHeartParent: {fileID: 496078650150210351}
+  goldenHeartParent: {fileID: 1940061387275705103}
+  startingHeartPoolSize: 10
 --- !u!1 &5363011182617289793
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,13 +197,8 @@ Transform:
   m_LocalPosition: {x: -5.1674514, y: -0.60074157, z: -0.26158452}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5363011182640977592}
-  - {fileID: 5363011183693272069}
-  - {fileID: 5363011184125319882}
-  - {fileID: 5363011182933113694}
-  - {fileID: 4430437818592600719}
-  - {fileID: 6331776069508160938}
-  - {fileID: 6143731927424600927}
+  - {fileID: 2583261073066747343}
+  - {fileID: 545480357687036606}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -110,22 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a32355217ffc242aca0ea6c9a634cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  copperCoinPrefab: {fileID: 8249173963290118286, guid: ce35daf37677a3e4f9980471c84f537a, type: 3}
-  silverCoinPrefab: {fileID: 793697559863662620, guid: 9d3a1919b2959954390a21a8e8bb3830, type: 3}
-  goldCoinPrefab: {fileID: 675480704929309684, guid: a8ff7bd75fc6740459014ebfb831b6ac, type: 3}
-  platinumCoinPrefab: {fileID: 3732904593795843444, guid: 3803919bc05143d46b6274c93afe221a, type: 3}
-  copperCoinParent: {fileID: 5363011182640977599}
-  silverCoinParent: {fileID: 5363011183693272068}
-  goldCoinParent: {fileID: 5363011184125319881}
-  platinumCoinParent: {fileID: 5363011182933113693}
-  startingCoinPoolSize: 20
-  redHeartPrefab: {fileID: 2011892957106121636, guid: 6b7a256eaded32e4d9c43a61151adae9, type: 3}
-  greenHeartPrefab: {fileID: 3272830543088340252, guid: 37132ab599ad70e458435c974cf6bb2d, type: 3}
-  goldenHeartPrefab: {fileID: 7049363618024034733, guid: 0acc0224fbfa9544396eed447066b086, type: 3}
-  redHeartParent: {fileID: 8347197801892064746}
-  greenHeartParent: {fileID: 496078650150210351}
-  goldenHeartParent: {fileID: 1940061387275705103}
-  startingHeartPoolSize: 10
+  coinPoolScript: {fileID: 9017842555690269684}
+  heartPoolScript: {fileID: 4651609293770875774}
 --- !u!1 &5363011182640977599
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,11 +239,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5363011182640977599}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5363011182617289795}
+  m_Father: {fileID: 2583261073066747343}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5363011182933113693
@@ -179,11 +269,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5363011182933113693}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5363011182617289795}
+  m_Father: {fileID: 2583261073066747343}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5363011183693272068
@@ -209,11 +299,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5363011183693272068}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5363011182617289795}
+  m_Father: {fileID: 2583261073066747343}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5363011184125319881
@@ -239,11 +329,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5363011184125319881}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5363011182617289795}
+  m_Father: {fileID: 2583261073066747343}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8347197801892064746
@@ -269,10 +359,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8347197801892064746}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5363011182617289795}
-  m_RootOrder: 4
+  m_Father: {fileID: 545480357687036606}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

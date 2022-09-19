@@ -15,6 +15,6 @@ public class CoinScript : MonoBehaviour {
         GameObject player = collision.gameObject.transform.parent.gameObject;
         player.GetComponent<PlayerCoinScript>().balance += coinType.GetCoinValue();
         
-        PoolManager.instance.coinPool[coinType].Release(gameObject);
+        CoinPool.instance.coinPool[coinType].Release(gameObject);
     }
 }
