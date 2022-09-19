@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 4304947558900667393}
   m_Layer: 5
   m_Name: Text (TMP)
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 4304947559025132939}
   m_Layer: 5
   m_Name: LoadingScreen
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1398,7 +1398,7 @@ GameObject:
   - component: {fileID: 4304947559833462727}
   m_Layer: 5
   m_Name: Skuriken
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2288,7 +2288,7 @@ GameObject:
   - component: {fileID: 4304947560455813506}
   m_Layer: 5
   m_Name: Background
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

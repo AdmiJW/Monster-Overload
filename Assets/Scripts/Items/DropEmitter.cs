@@ -27,8 +27,6 @@ public class DropEmitter: MonoBehaviour {
 
         // Apply force to each coin
         foreach (GameObject coin in coins) {
-            coin.SetActive(true);
-
             Rigidbody2D rb = coin.GetComponent<Rigidbody2D>();
             rb.MovePosition(transform.position);
 

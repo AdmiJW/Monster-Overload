@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PoolManager : AbstractManager<PoolManager> {
 
-    [Header("References")]
+    [Header("Coin Pools")]
     [SerializeField]
     private GameObject copperCoinPrefab;
     [SerializeField]
@@ -13,8 +13,6 @@ public class PoolManager : AbstractManager<PoolManager> {
     private GameObject goldCoinPrefab;
     [SerializeField]
     private GameObject platinumCoinPrefab;
-    
-    [Header("Storage GameObject")]
     [SerializeField]
     private GameObject copperCoinParent;
     [SerializeField]
@@ -23,6 +21,9 @@ public class PoolManager : AbstractManager<PoolManager> {
     private GameObject goldCoinParent;
     [SerializeField]
     private GameObject platinumCoinParent;
+    [SerializeField]
+    private int startingCoinPoolSize = 20;
+
 
 
     public Dictionary<Coin, ObjectPool<GameObject>> coinPool;
@@ -36,15 +37,39 @@ public class PoolManager : AbstractManager<PoolManager> {
     }
 
 
+    //===================================
+    // Public
+    //===================================
+    // Deactivates all pooled object. Use in scene transitions
+    public void ReleaseAll() {
+        foreach (ObjectPool<GameObject> coinPool in coinPool.Values ) coinPool.ReleaseAll();
+    }
+
     //===========================================
     // Coin Pools
     //===========================================
     void InitializeCoinPools() {
         coinPool = new Dictionary<Coin, ObjectPool<GameObject>>();
-        coinPool[Coin.COPPER] = new ObjectPool<GameObject>(CopperCoinCreateFunc, true, 20);
-        coinPool[Coin.SILVER] = new ObjectPool<GameObject>(SilverCoinCreateFunc, true, 20);
-        coinPool[Coin.GOLD] = new ObjectPool<GameObject>(GoldCoinCreateFunc, true, 20);
-        coinPool[Coin.PLATINUM] = new ObjectPool<GameObject>(PlatinumCoinCreateFunc, true, 20);
+
+        coinPool[Coin.COPPER] = new ObjectPool<GameObject>(CopperCoinCreateFunc, true, startingCoinPoolSize)
+            .SetDestroyFunc(Destroy)
+            .SetGetFunc(SetActive)
+            .SetReleaseFunc(SetInactive);
+
+        coinPool[Coin.SILVER] = new ObjectPool<GameObject>(SilverCoinCreateFunc, true, startingCoinPoolSize)
+            .SetDestroyFunc(Destroy)
+            .SetGetFunc(SetActive)
+            .SetReleaseFunc(SetInactive);
+        
+        coinPool[Coin.GOLD] = new ObjectPool<GameObject>(GoldCoinCreateFunc, true, startingCoinPoolSize)
+            .SetDestroyFunc(Destroy)
+            .SetGetFunc(SetActive)
+            .SetReleaseFunc(SetInactive);
+        
+        coinPool[Coin.PLATINUM] = new ObjectPool<GameObject>(PlatinumCoinCreateFunc, true, startingCoinPoolSize)
+            .SetDestroyFunc(Destroy)
+            .SetGetFunc(SetActive)
+            .SetReleaseFunc(SetInactive);
     }
 
 
@@ -71,4 +96,22 @@ public class PoolManager : AbstractManager<PoolManager> {
         coin.SetActive(false);
         return coin;
     }
+
+
+
+    //===========================================
+    // GameObject functions
+    //===========================================
+    public void Destroy(GameObject gameObject) {
+        Destroy(gameObject);
+    }
+
+    public void SetActive(GameObject gameObject) {
+        gameObject.SetActive(true);
+    }
+
+    public void SetInactive(GameObject gameObject) {
+        gameObject.SetActive(false);
+    }
+
 }

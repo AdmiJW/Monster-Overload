@@ -33,6 +33,7 @@ public class SceneTeleporter : MonoBehaviour {
         Time.timeScale = 0f;
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneIndex);
+        PoolManager.instance.ReleaseAll();
         
         while (!op.isDone) {
             LoadingScreen.instance.UpdateLoadingPercentage(op.progress * 100);

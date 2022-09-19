@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 8249173963290118276}
   - component: {fileID: 8249173963290118275}
   - component: {fileID: 8249173963290118274}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: CopperCoin
-  m_TagString: Untagged
+  m_TagString: Pickups
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

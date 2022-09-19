@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
+
 
 public class CoinScript : MonoBehaviour {
     
@@ -8,13 +8,13 @@ public class CoinScript : MonoBehaviour {
     public Coin coinType;
 
 
-    void OnCollisionEnter2D(Collision2D collision) {
-        if (!collision.gameObject.CompareTag("Player")) return;
+    void OnTriggerEnter2D(Collider2D collision) {
+        if (!collision.gameObject.CompareTag("PlayerCollector")) return;
 
         ItemAudioManager.instance.coin.Play();
-        collision.gameObject.GetComponent<PlayerCoinScript>().balance += coinType.GetCoinValue();
+        GameObject player = collision.gameObject.transform.parent.gameObject;
+        player.GetComponent<PlayerCoinScript>().balance += coinType.GetCoinValue();
         
-        gameObject.SetActive(false);
         PoolManager.instance.coinPool[coinType].Release(gameObject);
     }
 }

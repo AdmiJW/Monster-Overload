@@ -44,10 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0901418c02b0df54bb1bd11fd38493a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 0.5
-  attackDamage: 1
-  attackKnockback: 10
-  maxEnemiesToAttack: 1
+  weaponData: {fileID: 0}
 --- !u!61 &3956980993394558528
 BoxCollider2D:
   m_ObjectHideFlags: 0
