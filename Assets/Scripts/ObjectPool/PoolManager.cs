@@ -25,8 +25,25 @@ public class PoolManager : AbstractManager<PoolManager> {
     private int startingCoinPoolSize = 20;
 
 
+    [Header("Heart Pools")]
+    [SerializeField]
+    private GameObject redHeartPrefab;
+    [SerializeField]
+    private GameObject greenHeartPrefab;
+    [SerializeField]
+    private GameObject goldenHeartPrefab;
+    [SerializeField]
+    private GameObject redHeartParent;
+    [SerializeField]
+    private GameObject greenHeartParent;
+    [SerializeField]
+    private GameObject goldenHeartParent;
+    [SerializeField]
+    private int startingHeartPoolSize = 10;
+
 
     public Dictionary<Coin, ObjectPool<GameObject>> coinPool;
+    public Dictionary<Heart, ObjectPool<GameObject>> heartPool;
 
 
     protected override void Awake() {
@@ -34,6 +51,7 @@ public class PoolManager : AbstractManager<PoolManager> {
         DontDestroyOnLoad(this);
 
         InitializeCoinPools();
+        InitializeHeartPools();
     }
 
 
@@ -43,7 +61,10 @@ public class PoolManager : AbstractManager<PoolManager> {
     // Deactivates all pooled object. Use in scene transitions
     public void ReleaseAll() {
         foreach (ObjectPool<GameObject> coinPool in coinPool.Values ) coinPool.ReleaseAll();
+        foreach (ObjectPool<GameObject> heartPool in heartPool.Values ) heartPool.ReleaseAll();
     }
+
+
 
     //===========================================
     // Coin Pools
@@ -100,17 +121,58 @@ public class PoolManager : AbstractManager<PoolManager> {
 
 
     //===========================================
+    // Heart Pools
+    //===========================================
+    void InitializeHeartPools() {
+        heartPool = new Dictionary<Heart, ObjectPool<GameObject>>();
+
+        heartPool[Heart.RED] = new ObjectPool<GameObject>(RedHeartCreateFunc, true, startingHeartPoolSize)
+            .SetDestroyFunc(Destroy)
+            .SetGetFunc(SetActive)
+            .SetReleaseFunc(SetInactive);
+
+        heartPool[Heart.GREEN] = new ObjectPool<GameObject>(GreenHeartCreateFunc, true, startingHeartPoolSize)
+            .SetDestroyFunc(Destroy)
+            .SetGetFunc(SetActive)
+            .SetReleaseFunc(SetInactive);
+        
+        heartPool[Heart.GOLDEN] = new ObjectPool<GameObject>(GoldenHeartCreateFunc, true, startingHeartPoolSize)
+            .SetDestroyFunc(Destroy)
+            .SetGetFunc(SetActive)
+            .SetReleaseFunc(SetInactive);
+    }
+
+
+    GameObject RedHeartCreateFunc() {
+        GameObject heart = Instantiate(redHeartPrefab, redHeartParent.transform);
+        heart.SetActive(false);
+        return heart;
+    }
+
+    GameObject GreenHeartCreateFunc() {
+        GameObject heart = Instantiate(greenHeartPrefab, greenHeartParent.transform);
+        heart.SetActive(false);
+        return heart;
+    }
+
+    GameObject GoldenHeartCreateFunc() {
+        GameObject heart = Instantiate(goldenHeartPrefab, goldenHeartParent.transform);
+        heart.SetActive(false);
+        return heart;
+    }
+
+    //===========================================
     // GameObject functions
     //===========================================
-    public void Destroy(GameObject gameObject) {
+    public static void Destroy(GameObject gameObject) {
         Destroy(gameObject);
     }
 
-    public void SetActive(GameObject gameObject) {
+    public static void SetActive(GameObject gameObject) {
         gameObject.SetActive(true);
     }
 
-    public void SetInactive(GameObject gameObject) {
+    public static void SetInactive(GameObject gameObject) {
         gameObject.SetActive(false);
     }
 

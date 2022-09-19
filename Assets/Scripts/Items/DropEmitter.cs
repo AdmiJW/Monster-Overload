@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class DropEmitter: MonoBehaviour {
 
-    [Header("References")]
-    public GameObject copperCoinPrefab;
-    public GameObject silverCoinPrefab;
-    public GameObject goldCoinPrefab;
-    public GameObject platinumCoinPrefab;
-
-
     [Header("Monster Drop")]
     public int minCoinDrop = 1;
     public int maxCoinDrop = 1;
+
+    [Range(0f, 1f)]
+    public float heartDropChance = 0.083f;
+    public int minHeartDrop = 1;
+    public int maxHeartDrop = 1;
+
     
     public float minInitialForce = 20f;
     public float maxInitialForce = 20f;
@@ -22,30 +20,25 @@ public class DropEmitter: MonoBehaviour {
 
 
     public void Activate() {
-        int dropAmount = Random.Range(minCoinDrop, maxCoinDrop);
-        GameObject[] coins = GetCoinDrops(dropAmount);
+        GameObject[] coins = GetCoinDrops();
+        GameObject[] hearts = GetHeartDrops();
 
-        // Apply force to each coin
-        foreach (GameObject coin in coins) {
-            Rigidbody2D rb = coin.GetComponent<Rigidbody2D>();
-            rb.MovePosition(transform.position);
-
-            Vector2 randomDirection = Random.insideUnitCircle.normalized;
-            float initialForce = Random.Range(minInitialForce, maxInitialForce);
-            rb.AddForce(randomDirection * initialForce, ForceMode2D.Impulse);
-        }
+        foreach (GameObject coin in coins) ShootPickup(coin);
+        foreach (GameObject heart in hearts) ShootPickup(heart);
     }
 
 
-    GameObject[] GetCoinDrops(int value) {
-        int platinumCount = value / Coin.PLATINUM.GetCoinValue();
-        value -= platinumCount * Coin.PLATINUM.GetCoinValue();
-        int goldCount = value / Coin.GOLD.GetCoinValue();
-        value -= goldCount * Coin.GOLD.GetCoinValue();
-        int silverCount = value / Coin.SILVER.GetCoinValue();
-        value -= silverCount * Coin.SILVER.GetCoinValue();
-        int copperCount = value / Coin.COPPER.GetCoinValue();
-        value -= copperCount * Coin.COPPER.GetCoinValue();
+    GameObject[] GetCoinDrops() {
+        int dropAmount = Random.Range(minCoinDrop, maxCoinDrop+1);
+
+        int platinumCount = dropAmount / Coin.PLATINUM.GetCoinValue();
+        dropAmount -= platinumCount * Coin.PLATINUM.GetCoinValue();
+        int goldCount = dropAmount / Coin.GOLD.GetCoinValue();
+        dropAmount -= goldCount * Coin.GOLD.GetCoinValue();
+        int silverCount = dropAmount / Coin.SILVER.GetCoinValue();
+        dropAmount -= silverCount * Coin.SILVER.GetCoinValue();
+        int copperCount = dropAmount / Coin.COPPER.GetCoinValue();
+        dropAmount -= copperCount * Coin.COPPER.GetCoinValue();
 
         GameObject[] coins = new GameObject[platinumCount + goldCount + silverCount + copperCount];
         int index = 0;
@@ -55,5 +48,35 @@ public class DropEmitter: MonoBehaviour {
         for (int i = 0; i < copperCount; i++) coins[index++] = PoolManager.instance.coinPool[Coin.COPPER].Get();
 
         return coins;
+    }
+
+
+    GameObject[] GetHeartDrops() {
+        if (Random.value > heartDropChance) return new GameObject[0];
+        int dropAmount = Random.Range(minHeartDrop, maxHeartDrop+1);
+
+        int goldenCount = dropAmount / Heart.GOLDEN.GetHealValue();
+        dropAmount -= goldenCount * Heart.GOLDEN.GetHealValue();
+        int greenCount = dropAmount / Heart.GREEN.GetHealValue();
+        dropAmount -= greenCount * Heart.GREEN.GetHealValue();
+        int redCount = dropAmount / Heart.RED.GetHealValue();
+
+        GameObject[] hearts = new GameObject[goldenCount + greenCount + redCount];
+        int index = 0;
+        for (int i = 0; i < goldenCount; i++) hearts[index++] = PoolManager.instance.heartPool[Heart.GOLDEN].Get();
+        for (int i = 0; i < greenCount; i++) hearts[index++] = PoolManager.instance.heartPool[Heart.GREEN].Get();
+        for (int i = 0; i < redCount; i++) hearts[index++] = PoolManager.instance.heartPool[Heart.RED].Get();
+
+        return hearts;
+    }
+
+
+    void ShootPickup(GameObject pickup) {
+        Rigidbody2D rb = pickup.GetComponent<Rigidbody2D>();
+        rb.MovePosition(transform.position);
+
+        Vector2 randomDirection = Random.insideUnitCircle.normalized;
+        float initialForce = Random.Range(minInitialForce, maxInitialForce);
+        rb.AddForce(randomDirection * initialForce, ForceMode2D.Impulse);
     }
 }

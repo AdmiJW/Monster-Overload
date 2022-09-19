@@ -5134,6 +5134,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DropEmitter
       objectReference: {fileID: 0}
+    - target: {fileID: 3119452246601174417, guid: 227b26859854b1d4fb2e31754cb1e617, type: 3}
+      propertyPath: maxHeartDrop
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119452246601174417, guid: 227b26859854b1d4fb2e31754cb1e617, type: 3}
+      propertyPath: minHeartDrop
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119452246601174417, guid: 227b26859854b1d4fb2e31754cb1e617, type: 3}
+      propertyPath: heartDropChance
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 4416619194760910825, guid: 227b26859854b1d4fb2e31754cb1e617, type: 3}
       propertyPath: m_RootOrder
       value: 2
