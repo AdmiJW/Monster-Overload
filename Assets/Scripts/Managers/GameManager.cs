@@ -15,6 +15,11 @@ public class GameManager : AbstractManager<GameManager> {
         base.Awake();
         DontDestroyOnLoad(gameObject);
 
+        InitializeLayerMaskAndFilters();
+    }
+
+
+    void InitializeLayerMaskAndFilters() {
         PLAYER_LAYER_MASK = LayerMask.GetMask("Player");
         ENEMY_LAYER_MASK = LayerMask.GetMask("Enemies");
         MAP_LAYER_MASK = LayerMask.GetMask("Map");

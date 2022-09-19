@@ -1,4 +1,5 @@
-using System.Collections;
+
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +14,7 @@ public class SceneTeleporter : MonoBehaviour {
 
     
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag != "Player") return;
+        if ( !other.gameObject.CompareTag("Player") ) return;
 
         // Save player's data to PlayerManager
         PlayerPersistanceScript persistance = other.gameObject.GetComponent<PlayerPersistanceScript>();
@@ -21,28 +22,24 @@ public class SceneTeleporter : MonoBehaviour {
         PlayerManager.instance.spawnPosition = spawnPosition;
         PlayerManager.instance.spawnFaceDirection = spawnFaceDirection;
 
-        StartCoroutine(LoadSceneAsync(sceneIndex));
+        LoadSceneAsync(sceneIndex);
     }
 
 
-    IEnumerator LoadSceneAsync(int sceneIndex) {
+    // Activates loading screen and start the loading process
+    async void LoadSceneAsync(int sceneIndex) {
         LoadingScreen.instance.UpdateLoadingPercentage(0);
-        LoadingScreen.instance.ShowLoadingScreen();
+        await LoadingScreen.instance.ShowLoadingScreen();
         Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(0.5f);
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneIndex);
-        op.completed += OnSceneLoadComplete;
         
         while (!op.isDone) {
             LoadingScreen.instance.UpdateLoadingPercentage(op.progress * 100);
-            yield return null;
+            await Task.Delay(100);
         }
-    }
 
-
-    void OnSceneLoadComplete(AsyncOperation op) {
-        LoadingScreen.instance.HideLoadingScreen();
+        await LoadingScreen.instance.HideLoadingScreen();
         Time.timeScale = 1f;
     }
 }

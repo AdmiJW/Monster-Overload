@@ -72,6 +72,15 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         enemyCollider.enabled = isPhysical;
     }
 
+    
+
+    protected void OnDeathAnimationEnd() {
+        dropEmitter.Activate();
+        gameObject.SetActive(false);
+        Destroy(gameObject, 3f);
+    }
+
+
 
     //================================
     // Interface methods

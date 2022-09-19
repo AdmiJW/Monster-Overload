@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-
+// An DialogInteractable with a facing direction, allowing it to face the hero when interacted
 public class StationaryNPC : DialogInteractable {
     
     [Header("NPC")]
@@ -32,7 +32,7 @@ public class StationaryNPC : DialogInteractable {
     // Interactions
     //==================================
     public override void Interact(GameObject player) {
-        if (dialoguesQueue.Count == 0) return;
+        if (dialogues.Count == 0) return;
         
         // Set npc to face player
         AbstractMovement playerMovement = player.GetComponent<PlayerMovementScript>().MovementStrategy;

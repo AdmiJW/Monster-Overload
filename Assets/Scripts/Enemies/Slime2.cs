@@ -52,13 +52,6 @@ public class Slime2 : AbstractEnemy {
     }
 
 
-    void OnSmokeEffectEnd() {
-        dropEmitter.Activate();
-        gameObject.SetActive(false);
-        Destroy(gameObject, 3f);
-    }
-
-
     void OnPlayerEnterRange() {
         movement.Enabled = true;
     }
