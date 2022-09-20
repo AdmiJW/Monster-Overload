@@ -22,25 +22,6 @@ public class SceneTeleporter : MonoBehaviour {
         PlayerManager.instance.spawnPosition = spawnPosition;
         PlayerManager.instance.spawnFaceDirection = spawnFaceDirection;
 
-        LoadSceneAsync(sceneIndex);
-    }
-
-
-    // Activates loading screen and start the loading process
-    async void LoadSceneAsync(int sceneIndex) {
-        LoadingScreen.instance.UpdateLoadingPercentage(0);
-        await LoadingScreen.instance.ShowLoadingScreen();
-        Time.timeScale = 0f;
-
-        AsyncOperation op = SceneManager.LoadSceneAsync(sceneIndex);
-        PoolManager.instance.ReleaseAll();
-        
-        while (!op.isDone) {
-            LoadingScreen.instance.UpdateLoadingPercentage(op.progress * 100);
-            await Task.Delay(100);
-        }
-
-        await LoadingScreen.instance.HideLoadingScreen();
-        Time.timeScale = 1f;
+        GameManager.instance.LoadScene(sceneIndex);
     }
 }

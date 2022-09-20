@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,15 +11,6 @@ using UnityEngine.InputSystem;
 public class PlayerAttackScript : MonoBehaviour {
     [Header("Reference")]
     public GameObject weaponParent;
-
-    [Header("Input References")]
-    public InputActionReference attackInteractAction;
-    public InputActionReference switchNextWeaponAction;
-    public InputActionReference switchPrevWeaponAction;
-    public InputActionReference switchToPunchAction;
-    public InputActionReference switchToSwordAction;
-    public InputActionReference switchToBowAction;
-    public InputActionReference switchToFireStaffAction;
 
     //===========================
     public WeaponType activeWeaponType { get; private set; }
@@ -49,13 +39,13 @@ public class PlayerAttackScript : MonoBehaviour {
     }
 
     void OnEnable() {
-        attackInteractAction.action.performed += OnAttackInteractPerformed;
-        switchNextWeaponAction.action.performed += SwitchToNextWeapon;
-        switchPrevWeaponAction.action.performed += SwitchToPrevWeapon;
-        switchToPunchAction.action.performed += SwitchToPunch;
-        switchToSwordAction.action.performed += SwitchToSword;
-        switchToBowAction.action.performed += SwitchToBow;
-        switchToFireStaffAction.action.performed += SwitchToFireStaff;
+        InputManager.instance.player.attackOrInteract.action.performed += OnAttackInteractPerformed;
+        InputManager.instance.player.switchNext.action.performed += SwitchToNextWeapon;
+        InputManager.instance.player.switchPrevious.action.performed += SwitchToPrevWeapon;
+        InputManager.instance.player.switchPunch.action.performed += SwitchToPunch;
+        InputManager.instance.player.switchSword.action.performed += SwitchToSword;
+        InputManager.instance.player.switchBow.action.performed += SwitchToBow;
+        InputManager.instance.player.switchFireStaff.action.performed += SwitchToFireStaff;
     }
 
     void Start() {
@@ -64,13 +54,13 @@ public class PlayerAttackScript : MonoBehaviour {
     }
 
     void OnDisable() {
-        attackInteractAction.action.performed -= OnAttackInteractPerformed;
-        switchNextWeaponAction.action.performed -= SwitchToNextWeapon;
-        switchPrevWeaponAction.action.performed -= SwitchToPrevWeapon;
-        switchToPunchAction.action.performed -= SwitchToPunch;
-        switchToSwordAction.action.performed -= SwitchToSword;
-        switchToBowAction.action.performed -= SwitchToBow;
-        switchToFireStaffAction.action.performed -= SwitchToFireStaff;
+        InputManager.instance.player.attackOrInteract.action.performed -= OnAttackInteractPerformed;
+        InputManager.instance.player.switchNext.action.performed -= SwitchToNextWeapon;
+        InputManager.instance.player.switchPrevious.action.performed -= SwitchToPrevWeapon;
+        InputManager.instance.player.switchPunch.action.performed -= SwitchToPunch;
+        InputManager.instance.player.switchSword.action.performed -= SwitchToSword;
+        InputManager.instance.player.switchBow.action.performed -= SwitchToBow;
+        InputManager.instance.player.switchFireStaff.action.performed -= SwitchToFireStaff;
     }
 
 

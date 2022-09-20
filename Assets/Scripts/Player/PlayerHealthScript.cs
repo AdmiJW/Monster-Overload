@@ -17,6 +17,8 @@ public class PlayerHealthScript : MonoBehaviour, IHealth {
             PlayerManager.instance.healthBarGroup,
             true
         );
+
+        healthStrategy.OnDeath += GameOverScreen.instance.GameOver;
     }
 
 

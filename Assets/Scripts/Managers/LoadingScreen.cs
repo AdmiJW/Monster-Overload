@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
@@ -10,18 +9,26 @@ public class LoadingScreen : AbstractManager<LoadingScreen> {
     public Animator animator;
 
 
-    public async Task ShowLoadingScreen() {
+    public async void ShowLoadingScreen() {
+        await ShowLoadingScreenAsync();
+    }
+
+    public async void HideLoadingScreen() {
+        await HideLoadingScreenAsync();
+    }
+
+    public async Task ShowLoadingScreenAsync() {
         animator.SetTrigger("Show");
         await Task.Delay(500);
     }
 
-    public async Task HideLoadingScreen() {
+    public async Task HideLoadingScreenAsync() {
         animator.SetTrigger("Hide");
         await Task.Delay(500);
     }
 
     public void UpdateLoadingPercentage(float percentage) {
-        loadingText.text = "Loading " + percentage + "%";
+        loadingText.text = "Loading " + percentage.ToString("0.##") + "%";
     }
 
 }
