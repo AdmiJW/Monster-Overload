@@ -8,23 +8,24 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
 
     [Header("Weapon Data")]
     public T weaponData;
+    public LayerMask[] targetLayerMasks;
 
-    protected GameObject player;
-    protected Animator playerAnimator;
-    protected ContactFilter2D ENEMY_CONTACT_FILTER;
-
-    protected IEnumerator cooldownCoroutine = null;
+    protected LayerMask compositeTargetLayerMask = 0;
+    protected ContactFilter2D targetContactFilter; 
+    
+    private IEnumerator cooldownCoroutine = null;
 
 
     //===========================
     //  Lifecycle
     //===========================
     protected virtual void Awake() {
-        player = PlayerManager.instance.player;
-        playerAnimator = player.GetComponent<Animator>();
-        ENEMY_CONTACT_FILTER = GameManager.instance.ENEMY_CONTACT_FILTER;
-    }
+        foreach (LayerMask layerMask in targetLayerMasks) 
+            compositeTargetLayerMask |= layerMask;
 
+        targetContactFilter = new ContactFilter2D();
+        targetContactFilter.SetLayerMask(compositeTargetLayerMask);
+    }
 
     // When weapon is switched, disable weapon cooldown immediately
     protected virtual void OnDisable() {
@@ -49,6 +50,7 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
     // Cooldown + Animation
     public virtual void OnAttackPerformed() {
         if (cooldownCoroutine != null) return;
+
         PlayAttackAnimation();
         cooldownCoroutine = Cooldown();
         StartCoroutine(Cooldown());

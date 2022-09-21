@@ -2,12 +2,32 @@ using UnityEngine;
 
 
 public class Bow : AbstractRangedWeapon {
-    public override void PlayAttackAnimation() {
-        playerAnimator.SetTrigger("Bow");
+
+    private Animator animator;
+    private FaceDirection playerFaceDirection;
+
+
+    //===========================
+    //  Lifecycle
+    //===========================
+    protected override void Awake() {
+        base.Awake();
+
+        GameObject player = PlayerManager.instance.player;
+        animator = player.GetComponent<Animator>();
+        playerFaceDirection = player.GetComponent<PlayerMovementScript>().MovementStrategy.faceDirection;
     }
 
+
+    //===========================
+    //  Logic
+    //===========================
+    public override void PlayAttackAnimation() {
+        animator.SetTrigger("Bow");
+    }
+
+
     public override Projectile GetProjectile() {
-        FaceDirection direction = player.GetComponent<PlayerMovementScript>().MovementStrategy.faceDirection;
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         IDamage damage = new PhysicalDamage(projectile.transform, weaponData.projectileAttack, weaponData.projectileKnockback);
 
@@ -16,7 +36,7 @@ public class Bow : AbstractRangedWeapon {
         p.IncludeSelfDestroyTarget( GameManager.instance.MAP_LAYER_MASK );
         p.SetWeaponData(weaponData);
         p.SetImpactSound( ItemAudioManager.instance.arrowImpact );
-        p.OrientProjectile(direction);
+        p.OrientProjectile( playerFaceDirection.GetAngle() );
         p.SetDamageStrategy( damage );
 
         return p;

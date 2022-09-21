@@ -6,6 +6,7 @@ public enum WeaponType {
     SWORD,
     BOW,
     FIRE_STAFF,
+    ENEMY,
 }
 
 
@@ -17,6 +18,7 @@ public static class WeaponTypeExtMethods {
         {WeaponType.SWORD, "Sword"},
         {WeaponType.BOW, "Bow"},
         {WeaponType.FIRE_STAFF, "Fire Staff"},
+        {WeaponType.ENEMY, "Enemie's Weapon"},
     };
 
 

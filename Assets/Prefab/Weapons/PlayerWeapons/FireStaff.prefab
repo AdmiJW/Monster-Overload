@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 0}
+  targetLayerMasks:
+  - serializedVersion: 2
+    m_Bits: 256
   spellPrefab: {fileID: 351882271740364076, guid: 30e14cd923da9d04e9d1ee46668ffec6, type: 3}
 --- !u!58 &6402034986044158556
 CircleCollider2D:

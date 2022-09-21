@@ -61,9 +61,7 @@ public class DialogueManager : AbstractManager<DialogueManager> {
     //=====================================================
     // Lifecycle
     //=====================================================
-    protected override void Awake() {
-        base.Awake();
-
+    void Start() {
         // Register event handler
         InputManager.instance.menu.select.action.performed += OnSelectButtonPressed;
         InputManager.instance.menu.up.action.performed += OnUpButtonPressed;

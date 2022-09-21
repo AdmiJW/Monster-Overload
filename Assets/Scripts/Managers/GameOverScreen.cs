@@ -25,7 +25,9 @@ public class GameOverScreen : AbstractManager<GameOverScreen> {
     protected override void Awake() {
         base.Awake();
         this.canvasGroup = GetComponent<CanvasGroup>();
+    }
 
+    void Start() {
         this.respawnAction = InputManager.instance.menu.respawn.action;
     }
 

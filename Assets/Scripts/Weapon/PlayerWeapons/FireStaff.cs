@@ -1,10 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+
 public class FireStaff : AbstractMagicWeapon {
+
+    private Animator animator;
+
+    //===========================
+    //  Lifecycle
+    //===========================
+    protected override void Awake() {
+        base.Awake();
+
+        GameObject player = PlayerManager.instance.player;
+        animator = player.GetComponent<Animator>();
+    }
+
+
+    //===========================
+    //  Logic
+    //===========================
     public override void PlayAttackAnimation() {
-        playerAnimator.SetTrigger("Magic");
+        animator.SetTrigger("Magic");
     }
 
 

@@ -4,6 +4,7 @@ A 2D Topdown Game project made with Unity.
 
 ![Game Demo](./static/Game.gif)
 ![Game Demo2](./static/Game2.gif)
+![Game Demo3](./static/Game3.gif)
 
 
 ---
@@ -57,3 +58,4 @@ Deep appreciation to the creators of these assets used in the game:
 1. 18th Sept - Added Fire Staff weapon.
 1. 19th Sept - Added heart pickups, object pooling
 1. 20th Sept - Game Over screen and respawning. Centralized input manager.
+1. 21th Sept - Ranged enemies are now possible. Reworked weapon structure.

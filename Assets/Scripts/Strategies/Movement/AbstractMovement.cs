@@ -20,7 +20,7 @@ public abstract class AbstractMovement {
     public FaceDirection faceDirection;
 
     protected MovementState _movementState;
-    public MovementState movementState { 
+    public MovementState movementState {
         get { return _movementState; }
         set {
             if (_movementState == value) return;

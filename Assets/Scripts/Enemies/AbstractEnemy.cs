@@ -32,11 +32,15 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     protected Health health;
     protected IKnockback knockback;
     protected IDamage contactDamageStrategy;
+    protected IWeapon weapon;
     protected IInvulnerable invulnerability;
     protected AbstractMovement movement;
     protected DropEmitter dropEmitter;
 
 
+    //=============================
+    // Lifecycle
+    //=============================
     protected virtual void Awake() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -45,22 +49,70 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         hurtParticle = GetComponent<ParticleSystem>();
         rangeTriggerScript = GetComponentInChildren<RangeTriggerScript>();
         dropEmitter = GetComponentInChildren<DropEmitter>();
+        weapon = GetComponentInChildren<IWeapon>();
     }
 
+    protected virtual void OnEnable() {
+        movement.faceDirection.onDirectionChange += handleFacingDirectionChange;
+        movement.onMovementStateChange += handleMovementStateChange;
+
+        rangeTriggerScript.onPlayerEnter += OnPlayerEnterRange;
+        rangeTriggerScript.onPlayerExit += OnPlayerExitRange;
+    }
+
+    protected virtual void Start() {
+        health.OnHurt += OnHurt;
+        health.OnDeath += OnDeath;
+        movement.Enabled = false;
+    }
 
     protected virtual void FixedUpdate() {
         movement.Move();
     }
 
-    
+    protected virtual void OnDisable() {
+        movement.faceDirection.onDirectionChange -= handleFacingDirectionChange;
+        movement.onMovementStateChange -= handleMovementStateChange;
 
-    protected void OnCollisionStay2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Player")) 
-            contactDamageStrategy.DealDamage(collision.gameObject);
+        rangeTriggerScript.onPlayerEnter -= OnPlayerEnterRange;
+        rangeTriggerScript.onPlayerExit -= OnPlayerExitRange;
     }
 
 
+    
+    //=============================
+    // Event Handlers
+    //=============================
+    protected void OnCollisionStay2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Player")) 
+            OnPlayerContact(collision.gameObject);
+    }
 
+    // Override if required
+    protected virtual void handleFacingDirectionChange(FaceDirection faceDirection) {}
+    protected virtual void handleMovementStateChange(MovementState movementState) {}
+    protected virtual void OnPlayerEnterRange() {}
+    protected virtual void OnPlayerExitRange() {}
+    protected virtual void OnHurt() {}
+
+    protected virtual void OnDeath() {
+        SetPhysical(false);
+    }
+
+    protected virtual void OnPlayerContact(GameObject player) {
+        contactDamageStrategy.DealDamage(player);
+    }
+
+    protected virtual void OnDeathAnimationEnd() {
+        dropEmitter.Activate();
+        gameObject.SetActive(false);
+        Destroy(gameObject, 3f);
+    }
+
+
+    //=============================
+    // Logic
+    //=============================
     // If an enemy is not physical, it cannot be collided and does not move.
     // Primarily use is when an enemy is dead, but needs some death animation
     protected void SetPhysical(bool isPhysical) {
@@ -73,15 +125,6 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     }
 
     
-
-    protected void OnDeathAnimationEnd() {
-        dropEmitter.Activate();
-        gameObject.SetActive(false);
-        Destroy(gameObject, 3f);
-    }
-
-
-
     //================================
     // Interface methods
     //================================

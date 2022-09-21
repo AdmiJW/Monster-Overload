@@ -9,6 +9,7 @@ public abstract class AbstractRangedWeapon : AbstractWeapon<RangedWeaponData> {
 
     // Method to obtain a working projectile, must contain script Projectile
     public abstract Projectile GetProjectile();
+    
     //===========================
     // Logic
     //===========================

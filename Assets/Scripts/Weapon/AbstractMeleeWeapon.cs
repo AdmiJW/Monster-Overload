@@ -1,4 +1,4 @@
-
+using System;
 using UnityEngine;
 
 
@@ -8,9 +8,13 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
 
     protected Collider2D hitbox;
     protected Collider2D[] enemyHits;
-    protected AbstractMovement playerMovement;
+    protected AbstractMovement entityMovement;
 
     protected IDamage damageStrategy;
+
+
+    // Events
+    public event Action<GameObject> onHitboxEnter;
 
 
     //===========================
@@ -18,15 +22,13 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
     //===========================
     protected override void Awake() {
         base.Awake();
-
         hitbox = GetComponent<Collider2D>();
-        playerMovement = player.GetComponent<PlayerMovementScript>().MovementStrategy;
     }
 
 
     protected virtual void OnEnable() {
-        playerMovement.faceDirection.onDirectionChange += UpdateDirection;
-        UpdateDirection(playerMovement.faceDirection);
+        entityMovement.faceDirection.onDirectionChange += UpdateDirection;
+        UpdateDirection(entityMovement.faceDirection);
     }
 
 
@@ -38,7 +40,15 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
 
     protected override void OnDisable() {
         base.OnDisable();
-        playerMovement.faceDirection.onDirectionChange -= UpdateDirection;
+        entityMovement.faceDirection.onDirectionChange -= UpdateDirection;
+    }
+
+
+    //===========================
+    //  Handlers
+    //===========================
+    protected virtual void OnTriggerEnter2D(Collider2D other) {
+        onHitboxEnter?.Invoke(other.gameObject);
     }
 
     
@@ -48,7 +58,7 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
     //===========================
     public override void Attack() {
         for (int i = 0; i < enemyHits.Length; i++) enemyHits[i] = null;
-        hitbox.OverlapCollider(ENEMY_CONTACT_FILTER, enemyHits);
+        hitbox.OverlapCollider( targetContactFilter, enemyHits);
 
         foreach (Collider2D enemyHit in enemyHits) {
             if (enemyHit == null) continue;
