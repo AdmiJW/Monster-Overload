@@ -32,9 +32,6 @@ public class FaceDirection {
 
     // Public methods
     public float GetAngle() {
-        // uses positive x direction = 0 degrees
-        float angle = Mathf.Atan2(unitVector.y, unitVector.x) * Mathf.Rad2Deg;
-        if (angle < 0) angle = 360f + angle;
-        return angle;
+        return Util.GetAngle(unitVector);
     }
 }

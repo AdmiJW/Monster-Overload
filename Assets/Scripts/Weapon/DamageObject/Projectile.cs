@@ -15,8 +15,8 @@ public class Projectile : DamageObject {
     protected AudioSource impactSound;
 
     protected ParticleSystem particle;
+    protected Animator animator;
     protected SpriteRenderer spriteRenderer;
-    protected LayerMask destroyLayerMask;
     
 
 
@@ -26,6 +26,7 @@ public class Projectile : DamageObject {
     protected virtual void Awake() {
         particle = GetComponent<ParticleSystem>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
 
@@ -41,13 +42,11 @@ public class Projectile : DamageObject {
         impactSound = sound;
     }
 
-    public virtual void OrientProjectile(FaceDirection direction) {
-        transform.rotation = Quaternion.Euler(0, 0, direction.GetAngle() );
+    public virtual void OrientProjectile(float angle) {
+        transform.rotation = Quaternion.Euler(0, 0, angle );
     }
 
     public virtual Projectile Shoot() {
-        if (damage == null) throw new Exception("Projectile damage strategy not set");
-
         GetComponent<Rigidbody2D>().velocity = transform.right * data.projectileSpeed;
         StartCoroutine( Lifetime() );
         return this;
@@ -59,6 +58,8 @@ public class Projectile : DamageObject {
     //========================
     protected override void DestroyHandler(int layer) {
         if ( (selfDestroyLayerMask & (1 << layer) ) == 0 ) return;
+        
+        if (animator != null) animator.enabled = false;
         impactSound.Play();
         spriteRenderer.enabled = false;
         particle?.Play();

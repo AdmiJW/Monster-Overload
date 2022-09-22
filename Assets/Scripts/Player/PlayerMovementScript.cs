@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 
 // ! Since other scripts may want to add event listeners to faceDirection in OnEnable() which may run out of order, 
@@ -10,10 +7,6 @@ using UnityEngine.InputSystem;
 
 [DefaultExecutionOrder(-1)]
 public class PlayerMovementScript : MonoBehaviour {
-
-    [Header("References")]
-    public InputActionReference movementInput;
-    public InputActionReference sprintInput;
 
     [Header("Movement Settings")]
     public float walkForce = 1f;
@@ -42,8 +35,8 @@ public class PlayerMovementScript : MonoBehaviour {
     void SetNormalInputMovementStrategy() {
         MovementStrategy = 
             new NormalInputMovement(
-                movementInput, 
-                sprintInput,
+                InputManager.instance.player.movement,
+                InputManager.instance.player.sprint,
                 rb,
                 walkForce, 
                 runForce

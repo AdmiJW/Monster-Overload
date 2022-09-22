@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 
@@ -29,12 +28,9 @@ public abstract class AbstractMagicWeapon : AbstractWeapon<MagicWeaponData> {
 
 
     public override void Attack() {
-        for(int i = 0; i < weaponData.targetNumber; i++) overlapTargets[i] = null;
-        range.OverlapCollider( GameManager.instance.ENEMY_CONTACT_FILTER, overlapTargets );
+        int hits = range.OverlapCollider( targetContactFilter, overlapTargets );
         
-        foreach (Collider2D target in overlapTargets) {
-            if (target == null) continue;
-            CastSpell(target);
-        }
+        for ( int i = Math.Min( overlapTargets.Length, hits ) - 1; i >= 0; --i ) 
+            CastSpell( overlapTargets[i] );
     }
 }

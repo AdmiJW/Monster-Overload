@@ -8,6 +8,8 @@
  * This dialogue system mainly uses ink's tags (Prefix #) to register commands to the system, eg: Setting
  * the name of the actor.
  *
+ * The controls are binded through InputManager singleton instance, which contains the action maps and actions
+ *
  * Tag commands:
  * -    # ACTOR: <name>
  * -    
@@ -32,14 +34,6 @@ public class DialogueManager : AbstractManager<DialogueManager> {
     [Header("Configuration")]
     public float textSpeed = 0.05f;
     
-    // Input binding
-    [Header("Controls")]
-    public InputActionAsset controls;
-    public InputActionReference selectButton;
-    public InputActionReference upButton;
-    public InputActionReference downButton;
-
-
     // Events
     public event Action onDialogEnd;
 
@@ -52,10 +46,6 @@ public class DialogueManager : AbstractManager<DialogueManager> {
     public TMP_Text actorNameTextComponent;
     [NonSerialized]
     public GameObject[] choicesComponent;
-
-
-    private InputActionMap dialogueActionMap;
-    private InputActionMap playerActionMap;
 
     //======================
     // States
@@ -71,17 +61,11 @@ public class DialogueManager : AbstractManager<DialogueManager> {
     //=====================================================
     // Lifecycle
     //=====================================================
-    protected override void Awake() {
-        base.Awake();
-
-        
-        // Find Action maps
-        dialogueActionMap = controls.FindActionMap("DialogControl");
-        playerActionMap = controls.FindActionMap("PlayerControl");
+    void Start() {
         // Register event handler
-        selectButton.action.performed += OnSelectButtonPressed;
-        upButton.action.performed += OnUpButtonPressed;
-        downButton.action.performed += OnDownButtonPressed;
+        InputManager.instance.menu.select.action.performed += OnSelectButtonPressed;
+        InputManager.instance.menu.up.action.performed += OnUpButtonPressed;
+        InputManager.instance.menu.down.action.performed += OnDownButtonPressed;
     }
 
 
@@ -129,8 +113,7 @@ public class DialogueManager : AbstractManager<DialogueManager> {
         // Dialog box Animation
         dialogBoxComponent.GetComponent<Animator>().SetTrigger("Open");
         // Change input mode
-        dialogueActionMap.Enable();
-        playerActionMap.Disable();
+        InputManager.instance.EnableOnlyActionMap( InputManager.instance.menu.actionMap );
     }
 
 
@@ -144,8 +127,7 @@ public class DialogueManager : AbstractManager<DialogueManager> {
         // Clear listeners.
         onDialogEnd = null;
         // Change input mode
-        dialogueActionMap.Disable();
-        playerActionMap.Enable();
+        InputManager.instance.EnableOnlyActionMap( InputManager.instance.player.actionMap );
     }
 
 

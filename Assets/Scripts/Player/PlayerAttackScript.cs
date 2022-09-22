@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,18 +8,9 @@ using UnityEngine.InputSystem;
 // ! Since we are binding attack action and interact action to the same button,
 // ! We have to perform check first: If interactable, no attacking should be done.
 
-public class PlayerAttackScript : MonoBehaviour {
+public class PlayerAttackScript : MonoBehaviour, IWeapon {
     [Header("Reference")]
     public GameObject weaponParent;
-
-    [Header("Input References")]
-    public InputActionReference attackInteractAction;
-    public InputActionReference switchNextWeaponAction;
-    public InputActionReference switchPrevWeaponAction;
-    public InputActionReference switchToPunchAction;
-    public InputActionReference switchToSwordAction;
-    public InputActionReference switchToBowAction;
-    public InputActionReference switchToFireStaffAction;
 
     //===========================
     public WeaponType activeWeaponType { get; private set; }
@@ -49,13 +39,13 @@ public class PlayerAttackScript : MonoBehaviour {
     }
 
     void OnEnable() {
-        attackInteractAction.action.performed += OnAttackInteractPerformed;
-        switchNextWeaponAction.action.performed += SwitchToNextWeapon;
-        switchPrevWeaponAction.action.performed += SwitchToPrevWeapon;
-        switchToPunchAction.action.performed += SwitchToPunch;
-        switchToSwordAction.action.performed += SwitchToSword;
-        switchToBowAction.action.performed += SwitchToBow;
-        switchToFireStaffAction.action.performed += SwitchToFireStaff;
+        InputManager.instance.player.attackOrInteract.action.performed += OnAttackInteractPerformed;
+        InputManager.instance.player.switchNext.action.performed += SwitchToNextWeapon;
+        InputManager.instance.player.switchPrevious.action.performed += SwitchToPrevWeapon;
+        InputManager.instance.player.switchPunch.action.performed += SwitchToPunch;
+        InputManager.instance.player.switchSword.action.performed += SwitchToSword;
+        InputManager.instance.player.switchBow.action.performed += SwitchToBow;
+        InputManager.instance.player.switchFireStaff.action.performed += SwitchToFireStaff;
     }
 
     void Start() {
@@ -64,13 +54,13 @@ public class PlayerAttackScript : MonoBehaviour {
     }
 
     void OnDisable() {
-        attackInteractAction.action.performed -= OnAttackInteractPerformed;
-        switchNextWeaponAction.action.performed -= SwitchToNextWeapon;
-        switchPrevWeaponAction.action.performed -= SwitchToPrevWeapon;
-        switchToPunchAction.action.performed -= SwitchToPunch;
-        switchToSwordAction.action.performed -= SwitchToSword;
-        switchToBowAction.action.performed -= SwitchToBow;
-        switchToFireStaffAction.action.performed -= SwitchToFireStaff;
+        InputManager.instance.player.attackOrInteract.action.performed -= OnAttackInteractPerformed;
+        InputManager.instance.player.switchNext.action.performed -= SwitchToNextWeapon;
+        InputManager.instance.player.switchPrevious.action.performed -= SwitchToPrevWeapon;
+        InputManager.instance.player.switchPunch.action.performed -= SwitchToPunch;
+        InputManager.instance.player.switchSword.action.performed -= SwitchToSword;
+        InputManager.instance.player.switchBow.action.performed -= SwitchToBow;
+        InputManager.instance.player.switchFireStaff.action.performed -= SwitchToFireStaff;
     }
 
 
@@ -81,7 +71,8 @@ public class PlayerAttackScript : MonoBehaviour {
     // Adds a weapon prefab into the player's weapon system. If the same weapon type already exists, it will be replaced.
     public void SetWeapon(GameObject weapon) {
         IWeapon weaponScript = weapon.GetComponent<IWeapon>();
-        if (weaponScript == null) throw new ArgumentException("PlayerAttackScript: Weapon does not have IWeapon script");
+
+        weapon.transform.parent = weaponParent.transform;
 
         WeaponType weaponType = weaponScript.GetWeaponData().weaponType;
         if (weapons.ContainsKey(weaponType)) Destroy( weapons[weaponType] );
@@ -108,21 +99,34 @@ public class PlayerAttackScript : MonoBehaviour {
     
 
     //===========================
-    //  Handler
+    //  Interface Methods
     //==========================
-    void OnAttackInteractPerformed(InputAction.CallbackContext ctx) {
-        // Only perform attack if there is no interactable in range
-        if ( playerInteractScript.Interact() ) return;
-        if ( activeWeapon == null ) return;
+    public void OnAttackStart() {
+        activeWeapon.GetComponent<IWeapon>().OnAttackStart();
+    }
 
-        activeWeapon.GetComponent<IWeapon>().OnAttackPerformed();
+    public void OnAttackEnd() {
+        activeWeapon.GetComponent<IWeapon>().OnAttackEnd();
+    }
+
+    public void OnAttackPerform() {
+        activeWeapon.GetComponent<IWeapon>().OnAttackPerform();
+    }
+
+    public WeaponData GetWeaponData() {
+        if (activeWeapon == null) return null;
+        return activeWeapon.GetComponent<IWeapon>().GetWeaponData();
     }
 
 
-    // Called from the animation event
-    void DealDamage() {
-        if ( activeWeapon == null) return;
-        activeWeapon.GetComponent<IWeapon>().Attack();
+    //===========================
+    //  Handlers
+    //===========================
+    void OnAttackInteractPerformed(InputAction.CallbackContext ctx) {
+        // Only perform attack if there is no interactions
+        if ( playerInteractScript.Interact() ) return;
+        if ( activeWeapon == null ) return;
+        OnAttackStart();
     }
 
 
@@ -171,4 +175,5 @@ public class PlayerAttackScript : MonoBehaviour {
         }
         return weaponTypes;
     }
+
 }

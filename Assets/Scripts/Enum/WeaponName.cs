@@ -6,17 +6,19 @@ public enum WeaponType {
     SWORD,
     BOW,
     FIRE_STAFF,
+    ENEMY,
 }
 
 
 
 // extension methods
-public static class WeaponTypeExtension {
-    public static Dictionary<WeaponType, string> weaponTypeToName = new Dictionary<WeaponType, string>() {
+public static class WeaponTypeExtMethods {
+    private static Dictionary<WeaponType, string> weaponTypeToName = new Dictionary<WeaponType, string>() {
         {WeaponType.PUNCH, "Punch"},
         {WeaponType.SWORD, "Sword"},
         {WeaponType.BOW, "Bow"},
         {WeaponType.FIRE_STAFF, "Fire Staff"},
+        {WeaponType.ENEMY, "Enemie's Weapon"},
     };
 
 

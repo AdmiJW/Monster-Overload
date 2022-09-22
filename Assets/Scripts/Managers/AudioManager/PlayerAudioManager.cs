@@ -10,4 +10,5 @@ public class PlayerAudioManager : AbstractManager<PlayerAudioManager> {
     public AudioSource magic;
     public AudioSource death;
     public AudioSource switchWeapon;
+    public AudioSource heal;
 }

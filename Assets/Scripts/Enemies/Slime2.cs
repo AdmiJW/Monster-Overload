@@ -1,6 +1,4 @@
 
-using UnityEngine;
-
 
 public class Slime2 : AbstractEnemy {
 
@@ -18,58 +16,29 @@ public class Slime2 : AbstractEnemy {
     }
 
 
-    void Start() {
-        health.OnHurt += ()=> EnemyAudioManager.instance.slimeImpact.Play();
-        health.OnDeath += OnDeath;
-        movement.Enabled = false;
-    }
-
-
-    void OnEnable() {
-        movement.faceDirection.onDirectionChange += handleFacingDirectionChange;
-
-        if (rangeTriggerScript == null) return;
-        rangeTriggerScript.onPlayerEnter += OnPlayerEnterRange;
-        rangeTriggerScript.onPlayerExit += OnPlayerExitRange;
-    }
-
-    void OnDisable() {
-        movement.faceDirection.onDirectionChange -= handleFacingDirectionChange;
-
-        if (rangeTriggerScript == null) return;
-        rangeTriggerScript.onPlayerEnter -= OnPlayerEnterRange;
-        rangeTriggerScript.onPlayerExit -= OnPlayerExitRange;
-    }
-    
-
     //=================================
     // Event Handlers
     //=================================
-    void OnDeath() {
-        SetPhysical(false);
+    protected override void OnHurt() {
+        EnemyAudioManager.instance.slimeImpact.Play();
+    }
+
+    protected override void OnDeath() {
+        base.OnDeath();
         EnemyAudioManager.instance.slimeImpact.Play();
         animator.SetTrigger("Death");
     }
 
-
-    void OnSmokeEffectEnd() {
-        dropEmitter.Activate();
-        gameObject.SetActive(false);
-        Destroy(gameObject, 3f);
+    protected override void handleFacingDirectionChange(FaceDirection faceDirection) {
+        animator.SetFloat("Horizontal", faceDirection.unitVector.x);
+        animator.SetFloat("Vertical", faceDirection.unitVector.y);
     }
 
-
-    void OnPlayerEnterRange() {
+    protected override void OnPlayerEnterRange() {
         movement.Enabled = true;
     }
 
-    void OnPlayerExitRange() {
+    protected override void OnPlayerExitRange() {
         movement.Enabled = false;
-    }
-
-
-    protected void handleFacingDirectionChange(FaceDirection faceDirection) {
-        animator.SetFloat("Horizontal", faceDirection.unitVector.x);
-        animator.SetFloat("Vertical", faceDirection.unitVector.y);
     }
 }

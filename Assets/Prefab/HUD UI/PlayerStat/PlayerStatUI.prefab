@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 4699427604806937385}
   m_Layer: 5
   m_Name: PlayerCoinUI
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 4699427604940164604}
   m_Layer: 5
   m_Name: CoinText
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 4699427606591703601}
   m_Layer: 5
   m_Name: PlayerHealthBar
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 4699427605278732152}
   m_Layer: 5
   m_Name: Background
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 4699427605724224461}
   m_Layer: 5
   m_Name: Fill
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 6030134837967404884}
   m_Layer: 5
   m_Name: PlayerStatUI
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 4699427605813145990}
   m_Layer: 5
   m_Name: CoinImage
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3338749442709606003, guid: 23f4d8b002534b24bb60032af8a2824c, type: 3}
+  m_Sprite: {fileID: -8171958947958391838, guid: 085b4959bff67f64e98c40f8f04612f1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -697,7 +697,7 @@ Animator:
   m_GameObject: {fileID: 4699427605813145984}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 174d62c98ec1eff409fa8ed4e4ed8224, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0849243947a11e04db74f115ecd48374, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -719,7 +719,7 @@ GameObject:
   - component: {fileID: 4699427606058433718}
   m_Layer: 5
   m_Name: Background
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

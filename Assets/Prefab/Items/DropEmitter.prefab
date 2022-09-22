@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2436964564733551204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4416619194760910825}
+  - component: {fileID: 3119452246601174417}
+  m_Layer: 0
+  m_Name: DropEmitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4416619194760910825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2436964564733551204}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3119452246601174417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2436964564733551204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433aebee1eb69fe4a9956ce41abdcf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  copperCoinPrefab: {fileID: 8249173963290118286, guid: ce35daf37677a3e4f9980471c84f537a, type: 3}
+  silverCoinPrefab: {fileID: 793697559863662620, guid: 9d3a1919b2959954390a21a8e8bb3830, type: 3}
+  goldCoinPrefab: {fileID: 675480704929309684, guid: a8ff7bd75fc6740459014ebfb831b6ac, type: 3}
+  platinumCoinPrefab: {fileID: 3732904593795843444, guid: 3803919bc05143d46b6274c93afe221a, type: 3}
+  minCoinDrop: 1
+  maxCoinDrop: 1
+  minInitialForce: 20
+  maxInitialForce: 20

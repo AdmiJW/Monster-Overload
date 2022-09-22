@@ -4,6 +4,7 @@ A 2D Topdown Game project made with Unity.
 
 ![Game Demo](./static/Game.gif)
 ![Game Demo2](./static/Game2.gif)
+![Game Demo3](./static/Game3.gif)
 
 
 ---
@@ -40,6 +41,10 @@ Deep appreciation to the creators of these assets used in the game:
 1. [ink - inkle's narrative scripting language - Inkle Studios](https://www.inklestudios.com/ink/)
 
 
+### Musics
+
+1. [8-Bit Fantasy & Adventure Music Pack by xDeviruchi](https://xdeviruchi.itch.io/8-bit-fantasy-adventure-music-pack)
+1. [[Music Assets] FREE Chiptune Music Loops - Tallbeard Studios](https://tallbeard.itch.io/three-red-hearts-prepare-to-dev)
 
 ---
 <br>
@@ -51,3 +56,6 @@ Deep appreciation to the creators of these assets used in the game:
 1. 14th Sept - Improved Persistance of data, added Loading screen
 1. 15th Sept - Bow weapon, particle system, weapon system revamped.
 1. 18th Sept - Added Fire Staff weapon.
+1. 19th Sept - Added heart pickups, object pooling
+1. 20th Sept - Game Over screen and respawning. Centralized input manager.
+1. 21th Sept - Ranged enemies are now possible. Reworked weapon structure.

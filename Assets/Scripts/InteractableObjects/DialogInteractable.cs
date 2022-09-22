@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 
+
+// An interactable object which when interacted, display dialogues
+// Contains a optional interactIndicator to give the hero a visual cue that the object is interactable, when close enough
 public class DialogInteractable : MonoBehaviour, IInteractable {
 
     [Header("References")]
     public SpriteRenderer interactIndicator;
 
     [Space]
-    public TextAsset[] dialogues;
+    public List<TextAsset> dialogues;
 
 
     protected RangeTriggerScript interactIndicatorScript;
-    protected Queue<TextAsset> dialoguesQueue;
 
 
 
@@ -21,7 +23,7 @@ public class DialogInteractable : MonoBehaviour, IInteractable {
     // Lifecycle
     //==================================
     protected virtual void Awake() {
-        dialoguesQueue = new Queue<TextAsset>( dialogues );
+        dialogues.Reverse();
         if (interactIndicator != null) interactIndicatorScript = GetComponentInChildren<RangeTriggerScript>();
     }
 
@@ -42,14 +44,14 @@ public class DialogInteractable : MonoBehaviour, IInteractable {
     // Interactions
     //==================================
     public virtual void Interact(GameObject player) {
-        if (dialoguesQueue.Count == 0) return;
+        if (dialogues.Count == 0) return;
         DialogueManager.instance.StartStory( GetStory() );
     }
 
 
     // Prepares a story to be passed into dialogue system, with functions binded
     protected virtual Story GetStory() {
-        Story story = new Story(dialoguesQueue.Peek().text);
+        Story story = new Story( dialogues[ dialogues.Count - 1].text );
         BindExternalFunction(story);
         return story;
     }
@@ -60,7 +62,7 @@ public class DialogInteractable : MonoBehaviour, IInteractable {
 
 
     protected virtual void PopStory() {
-        dialoguesQueue.Dequeue();
+        dialogues.RemoveAt( dialogues.Count - 1 );
     }
 
 
