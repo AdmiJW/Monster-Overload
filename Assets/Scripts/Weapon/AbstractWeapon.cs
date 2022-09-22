@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using NaughtyAttributes;
 
 
 
@@ -10,8 +11,10 @@ using UnityEngine;
 
 public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: WeaponData {
 
-    [Header("Weapon Data")]
+    [BoxGroup("References")]
     public T weaponData;
+
+    [Space(20)]
     [SerializeField]
     private LayerMask[] targetLayerMasks;
 

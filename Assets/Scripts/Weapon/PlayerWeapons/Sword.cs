@@ -13,6 +13,11 @@ public class Sword : AbstractMeleeWeapon {
         entityMovement = player.GetComponent<PlayerMovementScript>().MovementStrategy;
     }
 
+    protected override void Start() {
+        base.Start();
+        damageStrategy = new PhysicalDamage(transform, weaponData.attackDamage, weaponData.attackKnockback);
+    }
+
 
     public override void PlayAttackAnimation() {
         animator.SetTrigger("Sword");

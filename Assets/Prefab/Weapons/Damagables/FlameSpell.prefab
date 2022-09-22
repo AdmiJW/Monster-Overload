@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 351882271740364083}
   - component: {fileID: 351882271740364082}
   - component: {fileID: 351882271740364077}
-  - component: {fileID: 351882271740364080}
   - component: {fileID: 555295312083126207}
+  - component: {fileID: 351882271740364080}
   m_Layer: 12
   m_Name: FlameSpell
   m_TagString: Untagged
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 198197573
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 403208247147482157, guid: fc3a386766b6ccf4d9a8b8e23c722ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -104,18 +104,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &351882271740364080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351882271740364076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34e4c742f397ac547a52b9372779d118, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &555295312083126207
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -142,3 +130,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &351882271740364080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351882271740364076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e4c742f397ac547a52b9372779d118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initializeFromInspector: 0
+  targetLayerMasks: []
+  selfDestroyLayerMasks: []
+  contactDamage: 2
+  contactKnockback: 20
+  maxColliders: 3
+  spellStartSound: {fileID: 0}
+  spellDamageSound: {fileID: 0}

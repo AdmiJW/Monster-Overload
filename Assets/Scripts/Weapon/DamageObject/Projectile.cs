@@ -9,7 +9,7 @@ using UnityEngine;
 //      3. Damage strategy
 //      4. Orientation, Impact sound
 // Then call shoot() to fire the projectile with rigidbody
-public class Projectile : DamageObject {
+public class Projectile : ContactDamageObject {
 
     protected RangedWeaponData data;
     protected AudioSource impactSound;
@@ -23,7 +23,9 @@ public class Projectile : DamageObject {
     //===========================
     // Lifecycle
     //===========================
-    protected virtual void Awake() {
+    protected override void Awake() {
+        base.Awake();
+        
         particle = GetComponent<ParticleSystem>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();

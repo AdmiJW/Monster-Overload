@@ -169,15 +169,15 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     }
 
     // IWeapon
-    public void OnAttackStart() {
+    public virtual void OnAttackStart() {
         weapon?.OnAttackStart();
     }
 
-    public void OnAttackPerform() {
+    public virtual void OnAttackPerform() {
         weapon?.OnAttackPerform();
     }
 
-    public void OnAttackEnd() {
+    public virtual void OnAttackEnd() {
         weapon?.OnAttackEnd();
     }
 

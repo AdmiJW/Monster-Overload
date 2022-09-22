@@ -1,13 +1,27 @@
 using UnityEngine;
+using NaughtyAttributes;
 
+// A script for gameobjects that will deal damage to other gameobjects. 
+// Eg: Traps, spells, or even enemies.
+public abstract class DamageObject : MonoBehaviour {
 
-// Attach to a gameobject with a collider/trigger, and given a layermask, will deal damage to the
-// collided object.
-// Use in weapon projectiles like weapon, traps, spells, etc.
-//
-// Also handles self destruct on collision with colliders in the destroyLayerMask
-public class DamageObject : MonoBehaviour {
     
+    [BoxGroup("Initialize")]
+    public bool initializeFromInspector = false;
+
+    // Initialize from inspector
+    [SerializeField]
+    [ShowIf("initializeFromInspector")]
+    [BoxGroup("Initialize")]
+    private LayerMask[] targetLayerMasks, selfDestroyLayerMasks;
+    [ShowIf("initializeFromInspector")]
+    [BoxGroup("Initialize")]
+    public float contactDamage;
+    [ShowIf("initializeFromInspector")]
+    [BoxGroup("Initialize")]
+    public float contactKnockback;
+    
+
     protected IDamage damage;
     protected LayerMask targetLayerMask = 0;
     protected LayerMask selfDestroyLayerMask = 0;
@@ -15,6 +29,10 @@ public class DamageObject : MonoBehaviour {
     //===========================
     // Public 
     //===========================
+    protected virtual void Awake() {
+        InitializeFromInspector();
+    }
+
     public void IncludeTarget(LayerMask layerMask) {
         targetLayerMask |= layerMask;
     }
@@ -37,32 +55,14 @@ public class DamageObject : MonoBehaviour {
 
 
 
-    //===========================
-    // Event Listener
-    //===========================
-    protected virtual void OnCollisionEnter2D(Collision2D collision) {
-        DamageHandler(collision.gameObject.layer, collision.gameObject);
-        DestroyHandler(collision.gameObject.layer);
-    }
+    //====================================
+    // Initialize from inspector
+    //====================================
+    void InitializeFromInspector() {
+        if (!initializeFromInspector) return;
 
-
-    protected virtual void OnTriggerEnter2D(Collider2D collider) {
-        DamageHandler(collider.gameObject.layer, collider.gameObject);
-        DestroyHandler(collider.gameObject.layer);
-    }
-
-
-    //===========================
-    //  Handler
-    //===========================
-    protected virtual void DamageHandler(int layer, GameObject obj) {
-        if ( (targetLayerMask & (1 << layer) ) == 0 ) return;
-        damage.DealDamage(obj);
-    }
-
-
-    protected virtual void DestroyHandler(int layer) {
-        if ( (selfDestroyLayerMask & (1 << layer) ) == 0 ) return;
-        Destroy(gameObject);
+        foreach (LayerMask mask in targetLayerMasks) IncludeTarget(mask);
+        foreach (LayerMask mask in selfDestroyLayerMasks) IncludeSelfDestroyTarget(mask);
+        damage = new PhysicalDamage(transform, contactDamage, contactKnockback);
     }
 }

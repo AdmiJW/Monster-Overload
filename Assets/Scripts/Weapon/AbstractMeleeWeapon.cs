@@ -33,7 +33,6 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
 
 
     protected virtual void Start() {
-        damageStrategy = new PhysicalDamage(transform, weaponData.attackDamage, weaponData.attackKnockback);
         enemyHits = new Collider2D[ weaponData.maxEnemiesToAttack ];
     }
 
@@ -59,7 +58,7 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
     public override void Attack() {
         int hits = hitbox.OverlapCollider( targetContactFilter, enemyHits);
 
-        for ( int i = Math.Min( enemyHits.Length, hits ) - 1; i >= 0; --i ) 
+        for ( int i = 0; i < hits; ++i ) 
             damageStrategy.DealDamage( enemyHits[i].gameObject);
     }
 

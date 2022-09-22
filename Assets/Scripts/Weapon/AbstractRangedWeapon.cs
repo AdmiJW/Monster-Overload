@@ -1,9 +1,10 @@
 using UnityEngine;
+using NaughtyAttributes;
 
 
 public abstract class AbstractRangedWeapon : AbstractWeapon<RangedWeaponData> {
 
-    [Header("References")]
+    [BoxGroup("References")]
     public GameObject projectilePrefab;
 
     //==============================

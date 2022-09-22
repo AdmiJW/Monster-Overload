@@ -32,8 +32,11 @@ public class FireStaff : AbstractMagicWeapon {
     protected override void CastSpell(Collider2D target) {
         GameObject spell = Instantiate(spellPrefab, target.transform.position, Quaternion.identity);
         IDamage damage = new PhysicalDamage(spell.transform, weaponData.spellDamage, weaponData.spellKnockback);
-        StaticSpell s = spell.GetComponent<StaticSpell>();
+
+        Spell s = spell.GetComponent<Spell>();
+
         s.IncludeTarget( GameManager.instance.ENEMY_LAYER_MASK );
         s.SetDamageStrategy(damage);
+        s.SetSpellDamageSound( ItemAudioManager.instance.fire );
     }
 }
