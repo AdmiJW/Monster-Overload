@@ -57,13 +57,10 @@ public abstract class AbstractMeleeWeapon : AbstractWeapon<MeleeWeaponData> {
     // Logic
     //===========================
     public override void Attack() {
-        for (int i = 0; i < enemyHits.Length; i++) enemyHits[i] = null;
-        hitbox.OverlapCollider( targetContactFilter, enemyHits);
+        int hits = hitbox.OverlapCollider( targetContactFilter, enemyHits);
 
-        foreach (Collider2D enemyHit in enemyHits) {
-            if (enemyHit == null) continue;
-            damageStrategy.DealDamage(enemyHit.gameObject);
-        }
+        for ( int i = Math.Min( enemyHits.Length, hits ) - 1; i >= 0; --i ) 
+            damageStrategy.DealDamage( enemyHits[i].gameObject);
     }
 
 

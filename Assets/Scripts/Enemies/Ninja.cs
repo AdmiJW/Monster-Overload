@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Ninja : AbstractEnemy {
+public class Ninja : AbstractEnemy, IWeapon {
 
     private IEnumerator attackCoroutine;
 
@@ -61,15 +61,11 @@ public class Ninja : AbstractEnemy {
     //  Attack coroutine
     //=============================
     IEnumerator AttackCoroutine() {
-        float cooldown = weapon.GetWeaponData().attackCooldown + 0.1f;
+        float cooldown = GetWeaponData().attackCooldown + 0.1f;
 
         while (true) {
             yield return new WaitForSeconds( cooldown );
-            weapon.OnAttackPerformed();
+            OnAttackStart();
         }
-    }
-
-    void Attack() {
-        weapon.Attack();
     }
 }

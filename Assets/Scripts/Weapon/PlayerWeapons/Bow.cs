@@ -26,6 +26,10 @@ public class Bow : AbstractRangedWeapon {
         animator.SetTrigger("Bow");
     }
 
+    public override void PlayAttackSound() {
+        PlayerAudioManager.instance.bow.Play();
+    }
+
 
     public override Projectile GetProjectile() {
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);

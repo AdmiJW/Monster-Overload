@@ -17,5 +17,9 @@ public class Sword : AbstractMeleeWeapon {
     public override void PlayAttackAnimation() {
         animator.SetTrigger("Sword");
     }
+
+    public override void PlayAttackSound() {
+        PlayerAudioManager.instance.sword.Play();
+    }
 }
 

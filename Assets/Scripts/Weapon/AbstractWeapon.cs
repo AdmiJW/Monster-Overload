@@ -1,19 +1,34 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 
 
+// * Base class that contains weapon data and target layer masks.
+// *
+// * This abstract class implements weapon cooldown behavior to prevent rapid firing, and also
+// * prevents weapon from firing twice due to animation blend tree running 2+ animation clips
+
 public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: WeaponData {
 
     [Header("Weapon Data")]
     public T weaponData;
-    public LayerMask[] targetLayerMasks;
+    [SerializeField]
+    private LayerMask[] targetLayerMasks;
 
     protected LayerMask compositeTargetLayerMask = 0;
     protected ContactFilter2D targetContactFilter; 
     
+    private bool attackLock = false;
     private IEnumerator cooldownCoroutine = null;
+
+
+    //=========================================================================
+    // Abstract method - Every subclass must implement the weapon behaviour
+    //=========================================================================
+    public abstract void Attack();               
+    public abstract void PlayAttackAnimation();  
+    public abstract void PlayAttackSound();
+
 
 
     //===========================
@@ -27,7 +42,7 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
         targetContactFilter.SetLayerMask(compositeTargetLayerMask);
     }
 
-    // When weapon is switched, disable weapon cooldown immediately
+    // When weapon is disabled (player switching weapon), disable weapon cooldown immediately
     protected virtual void OnDisable() {
         if (cooldownCoroutine != null) StopCoroutine(cooldownCoroutine);
         cooldownCoroutine = null;
@@ -47,8 +62,7 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
     }
 
 
-    // Cooldown + Animation
-    public virtual void OnAttackPerformed() {
+    public virtual void OnAttackStart() {
         if (cooldownCoroutine != null) return;
 
         PlayAttackAnimation();
@@ -56,7 +70,15 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
         StartCoroutine(Cooldown());
     }
 
+    public virtual void OnAttackPerform() {
+        if (attackLock) return;
+        attackLock = true;
 
-    public abstract void Attack();
-    public abstract void PlayAttackAnimation();
+        Attack();
+        PlayAttackSound();
+    }
+
+    public virtual void OnAttackEnd() {
+        attackLock = false;
+    }
 }

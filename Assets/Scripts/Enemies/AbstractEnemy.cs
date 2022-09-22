@@ -9,17 +9,23 @@ using UnityEngine;
 //          > onHurt, onDeath in IHealth
 //          > facingDirectionChange in AbstractMovement
 //          > Player enter and exit event from RangeTriggerScript.
-public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvulnerable {
+public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvulnerable, IWeapon {
     [Header("Enemy Settings")]
     public float maxHealth = 100f;
     public float moveSpeed = 1f;
     public float contactDamage = 1f;
     public float contactKnockback = 1f;
     public float knockbackResistance = 0f;
-    
-    [Header("Health")]
-    public GameObject healthDisplayGroup;
     public bool healthVisibleOnStart = false;
+
+
+    [Header("References")]
+    public GameObject healthDisplayGroup;
+    [SerializeField]
+
+    private GameObject weaponGameObject = null;
+    public RangeTriggerScript rangeTrigger;
+    public DropEmitter dropEmitter;
 
 
     protected Rigidbody2D rb;
@@ -27,15 +33,13 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
     protected ParticleSystem hurtParticle;
-    protected RangeTriggerScript rangeTriggerScript;
     
     protected Health health;
     protected IKnockback knockback;
     protected IDamage contactDamageStrategy;
-    protected IWeapon weapon;
     protected IInvulnerable invulnerability;
     protected AbstractMovement movement;
-    protected DropEmitter dropEmitter;
+    protected IWeapon weapon;
 
 
     //=============================
@@ -47,17 +51,16 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         enemyCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         hurtParticle = GetComponent<ParticleSystem>();
-        rangeTriggerScript = GetComponentInChildren<RangeTriggerScript>();
-        dropEmitter = GetComponentInChildren<DropEmitter>();
-        weapon = GetComponentInChildren<IWeapon>();
+
+        weapon = weaponGameObject.GetComponent<IWeapon>();
     }
 
     protected virtual void OnEnable() {
         movement.faceDirection.onDirectionChange += handleFacingDirectionChange;
         movement.onMovementStateChange += handleMovementStateChange;
 
-        rangeTriggerScript.onPlayerEnter += OnPlayerEnterRange;
-        rangeTriggerScript.onPlayerExit += OnPlayerExitRange;
+        rangeTrigger.onPlayerEnter += OnPlayerEnterRange;
+        rangeTrigger.onPlayerExit += OnPlayerExitRange;
     }
 
     protected virtual void Start() {
@@ -74,8 +77,8 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         movement.faceDirection.onDirectionChange -= handleFacingDirectionChange;
         movement.onMovementStateChange -= handleMovementStateChange;
 
-        rangeTriggerScript.onPlayerEnter -= OnPlayerEnterRange;
-        rangeTriggerScript.onPlayerExit -= OnPlayerExitRange;
+        rangeTrigger.onPlayerEnter -= OnPlayerEnterRange;
+        rangeTrigger.onPlayerExit -= OnPlayerExitRange;
     }
 
 
@@ -128,6 +131,8 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     //================================
     // Interface methods
     //================================
+
+    // IHealth
     public void TakeDamage(float damage) { 
         health.TakeDamage(damage);
         hurtParticle?.Play();
@@ -149,15 +154,34 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         return health.GetHealth(); 
     }
 
+    // IKnockback
     public void Knockback(Vector2? origin = null, float knockback = 0) { 
         this.knockback.Knockback(origin, knockback); 
     }
 
+    // IInvulnerability 
     public bool IsInvulnerable() {
         return invulnerability.IsInvulnerable(); 
     }
 
     public void ActivateVulnerable() {
         invulnerability.ActivateVulnerable(); 
+    }
+
+    // IWeapon
+    public void OnAttackStart() {
+        weapon?.OnAttackStart();
+    }
+
+    public void OnAttackPerform() {
+        weapon?.OnAttackPerform();
+    }
+
+    public void OnAttackEnd() {
+        weapon?.OnAttackEnd();
+    }
+
+    public WeaponData GetWeaponData() {
+        return weapon?.GetWeaponData();
     }
 }

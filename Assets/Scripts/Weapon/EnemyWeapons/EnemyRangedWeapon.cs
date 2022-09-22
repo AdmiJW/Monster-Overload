@@ -1,20 +1,32 @@
 using UnityEngine;
 
 
-public class EnemyRangedWeapon : AbstractRangedWeapon {
+public abstract class EnemyRangedWeapon : AbstractRangedWeapon {
 
     [Header("References")]
     public Animator animator;
+    
+    private AudioSource projectileImpactSound;
 
 
-    //===========================
-    //  Logic
-    //===========================
-    public override void PlayAttackAnimation() {
-        animator.SetTrigger("Attack");
+    //========================
+    // Abstract methods
+    //========================
+    public abstract AudioSource GetProjectileImpactSound();
+
+
+    //========================
+    // Lifecycle
+    //========================
+    protected override void Awake() {
+        base.Awake();
+        projectileImpactSound = GetProjectileImpactSound();
     }
 
 
+    //========================
+    // Logic
+    //========================
     public override Projectile GetProjectile() {
         Vector2 direction = (PlayerManager.instance.player.transform.position - transform.position).normalized;
 
@@ -25,7 +37,7 @@ public class EnemyRangedWeapon : AbstractRangedWeapon {
         p.IncludeTarget( GameManager.instance.PLAYER_LAYER_MASK );
         p.IncludeSelfDestroyTarget( GameManager.instance.MAP_LAYER_MASK );
         p.SetWeaponData(weaponData);
-        p.SetImpactSound( ItemAudioManager.instance.arrowImpact );      // TODO: Impact sound varies
+        p.SetImpactSound( projectileImpactSound );
         p.OrientProjectile( Util.GetAngle(direction) );
         p.SetDamageStrategy( damage );
 

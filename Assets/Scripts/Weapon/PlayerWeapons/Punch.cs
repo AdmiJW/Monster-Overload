@@ -17,5 +17,9 @@ public class Punch : AbstractMeleeWeapon {
     public override void PlayAttackAnimation() {
         animator.SetTrigger("Punch");
     }
+
+    public override void PlayAttackSound() {
+        PlayerAudioManager.instance.punch.Play();
+    }
 }
 

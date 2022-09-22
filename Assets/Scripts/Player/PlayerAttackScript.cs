@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 // ! Since we are binding attack action and interact action to the same button,
 // ! We have to perform check first: If interactable, no attacking should be done.
 
-public class PlayerAttackScript : MonoBehaviour {
+public class PlayerAttackScript : MonoBehaviour, IWeapon {
     [Header("Reference")]
     public GameObject weaponParent;
 
@@ -71,7 +71,8 @@ public class PlayerAttackScript : MonoBehaviour {
     // Adds a weapon prefab into the player's weapon system. If the same weapon type already exists, it will be replaced.
     public void SetWeapon(GameObject weapon) {
         IWeapon weaponScript = weapon.GetComponent<IWeapon>();
-        if (weaponScript == null) throw new ArgumentException("PlayerAttackScript: Weapon does not have IWeapon script");
+
+        weapon.transform.parent = weaponParent.transform;
 
         WeaponType weaponType = weaponScript.GetWeaponData().weaponType;
         if (weapons.ContainsKey(weaponType)) Destroy( weapons[weaponType] );
@@ -98,21 +99,34 @@ public class PlayerAttackScript : MonoBehaviour {
     
 
     //===========================
-    //  Handler
+    //  Interface Methods
     //==========================
-    void OnAttackInteractPerformed(InputAction.CallbackContext ctx) {
-        // Only perform attack if there is no interactable in range
-        if ( playerInteractScript.Interact() ) return;
-        if ( activeWeapon == null ) return;
+    public void OnAttackStart() {
+        activeWeapon.GetComponent<IWeapon>().OnAttackStart();
+    }
 
-        activeWeapon.GetComponent<IWeapon>().OnAttackPerformed();
+    public void OnAttackEnd() {
+        activeWeapon.GetComponent<IWeapon>().OnAttackEnd();
+    }
+
+    public void OnAttackPerform() {
+        activeWeapon.GetComponent<IWeapon>().OnAttackPerform();
+    }
+
+    public WeaponData GetWeaponData() {
+        if (activeWeapon == null) return null;
+        return activeWeapon.GetComponent<IWeapon>().GetWeaponData();
     }
 
 
-    // Called from the animation event
-    void DealDamage() {
-        if ( activeWeapon == null) return;
-        activeWeapon.GetComponent<IWeapon>().Attack();
+    //===========================
+    //  Handlers
+    //===========================
+    void OnAttackInteractPerformed(InputAction.CallbackContext ctx) {
+        // Only perform attack if there is no interactions
+        if ( playerInteractScript.Interact() ) return;
+        if ( activeWeapon == null ) return;
+        OnAttackStart();
     }
 
 
@@ -161,4 +175,5 @@ public class PlayerAttackScript : MonoBehaviour {
         }
         return weaponTypes;
     }
+
 }

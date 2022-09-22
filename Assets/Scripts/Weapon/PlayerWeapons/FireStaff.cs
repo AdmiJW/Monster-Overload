@@ -23,6 +23,10 @@ public class FireStaff : AbstractMagicWeapon {
         animator.SetTrigger("Magic");
     }
 
+    public override void PlayAttackSound() {
+        PlayerAudioManager.instance.magic.Play();
+    }
+
 
 
     protected override void CastSpell(Collider2D target) {
