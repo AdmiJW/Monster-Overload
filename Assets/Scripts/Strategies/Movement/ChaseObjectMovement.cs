@@ -1,8 +1,8 @@
 
 using UnityEngine;
 
-public class ChaseObjectMovement : AbstractMovement
-{
+public class ChaseObjectMovement : AbstractMovement {
+
     private GameObject toChase;
     private Rigidbody2D chaserRigidbody;
     
@@ -27,7 +27,7 @@ public class ChaseObjectMovement : AbstractMovement
     //==========================
     // Logic
     //==========================
-    public override void Move() {
+    public override void Move(float fixedDeltaTime) {
         if (!Enabled) return;
         
         Vector2 direction = ( (Vector2)toChase.transform.position - chaserRigidbody.position).normalized;

@@ -35,7 +35,7 @@ public abstract class AbstractMovement {
     public event Action<MovementState> onMovementStateChange;
 
     // Abstract methods
-    public abstract void Move();
+    public abstract void Move(float fixedDeltaTime);
 
     // Override when necessary
     public virtual void OnCollisionEnter2D(Collision2D collision) {}

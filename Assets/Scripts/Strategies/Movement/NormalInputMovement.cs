@@ -44,7 +44,7 @@ public class NormalInputMovement : AbstractMovement {
     // Logic
     //==============================
     // Needs to be called in FixedUpdate()
-    public override void Move() {
+    public override void Move(float fixedDeltaTime) {
         if (movementState == MovementState.MOVING) rb.AddForce(inputDirection * walkForce);
         else if (movementState == MovementState.RUNNING) rb.AddForce(inputDirection * runForce);
     }

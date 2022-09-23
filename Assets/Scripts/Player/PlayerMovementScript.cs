@@ -24,7 +24,7 @@ public class PlayerMovementScript : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        MovementStrategy.Move();
+        MovementStrategy.Move( Time.fixedDeltaTime );
     }
 
 

@@ -5,7 +5,6 @@ using UnityEngine;
 public class RandomContinuousMovement : AbstractMovement {
 
     private Rigidbody2D chaserRigidbody;
-    private Collider2D chaserCollider;
     private float speed;
     private Vector2 direction;
 
@@ -19,7 +18,6 @@ public class RandomContinuousMovement : AbstractMovement {
     ) {
         this.speed = speed;
         this.chaserRigidbody = entity.GetComponent<Rigidbody2D>();
-        this.chaserCollider = entity.GetComponent<Collider2D>();
 
         // Start off in random direction.
         direction = Random.insideUnitCircle.normalized;
@@ -32,7 +30,7 @@ public class RandomContinuousMovement : AbstractMovement {
     //==========================
     // Logic
     //==========================
-    public override void Move() {
+    public override void Move(float fixedDeltaTime) {
         if (!Enabled) return;
         chaserRigidbody.AddForce( faceDirection.unitVector * speed );
     }

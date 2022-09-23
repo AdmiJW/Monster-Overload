@@ -77,7 +77,7 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     }
 
     protected virtual void FixedUpdate() {
-        movement.Move();
+        movement.Move( Time.fixedDeltaTime );
     }
 
     protected virtual void OnDisable() {

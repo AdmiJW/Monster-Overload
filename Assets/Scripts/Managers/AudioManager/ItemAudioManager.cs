@@ -9,4 +9,5 @@ public class ItemAudioManager : AbstractManager<ItemAudioManager> {
     public AudioSource heavyImpact;
     public AudioSource fire;
     public AudioSource spellCharging;
+    public AudioSource dash;
 }
