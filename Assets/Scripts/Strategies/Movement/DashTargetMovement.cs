@@ -4,14 +4,6 @@ using UnityEngine;
 // A movement that starts off random direction, and bounces off when hitting a collider
 public class DashTargetMovement : AbstractMovement {
 
-    // Enum for local use
-    public enum DashTargetMovementState {
-        IDLE,
-        WARNING,
-        DASHING
-    };
-
-
     private GameObject target;
     private Rigidbody2D chaserRigidbody;
 
@@ -20,11 +12,7 @@ public class DashTargetMovement : AbstractMovement {
     private float warningDuration;
     private float dashDuration;
 
-    private DashTargetMovementState state;
     private float countDown;
-
-
-    public event Action<DashTargetMovementState> onStateChange;
 
 
 
@@ -49,16 +37,6 @@ public class DashTargetMovement : AbstractMovement {
         TransitionToIdle();
     }
 
-    public DashTargetMovement AddStateListener(Action<DashTargetMovementState> listener) {
-        onStateChange += listener;
-        return this;
-    }
-
-    public DashTargetMovement RemoveStateListener(Action<DashTargetMovementState> listener) {
-        onStateChange -= listener;
-        return this;
-    }
-
 
 
     //==========================
@@ -69,7 +47,7 @@ public class DashTargetMovement : AbstractMovement {
 
         UpdateState(fixedDeltaTime);
 
-        if (state == DashTargetMovementState.DASHING) {
+        if (movementState == MovementState.MOVING) {
             chaserRigidbody.AddForce(faceDirection.unitVector * speed);
         } else {
             faceDirection.unitVector = (target.transform.position - chaserRigidbody.transform.position);
@@ -78,7 +56,7 @@ public class DashTargetMovement : AbstractMovement {
 
 
     public override void OnCollisionEnter2D(Collision2D collision) {
-        if (state == DashTargetMovementState.DASHING) TransitionToIdle();
+        if (movementState == MovementState.MOVING) TransitionToIdle();
     }
 
 
@@ -87,28 +65,23 @@ public class DashTargetMovement : AbstractMovement {
         countDown -= fixedDeltaTime;
         if (countDown > 0) return;
 
-        if (state == DashTargetMovementState.IDLE) TransitionToWarning();
-        else if (state == DashTargetMovementState.WARNING) TransitionToDashing();
+        if (movementState == MovementState.IDLE) TransitionToWarning();
+        else if (movementState == MovementState.WARNING) TransitionToDashing();
         else TransitionToIdle();
     }
 
     void TransitionToIdle() {
-        state = DashTargetMovementState.IDLE;
         movementState = MovementState.IDLE;
         countDown = idleDuration;
-        onStateChange?.Invoke(state);
     }
 
     void TransitionToWarning() {
-        state = DashTargetMovementState.WARNING;
+        movementState = MovementState.WARNING;
         countDown = warningDuration;
-        onStateChange?.Invoke(state);
     }
 
     void TransitionToDashing() {
-        state = DashTargetMovementState.DASHING;
         movementState = MovementState.MOVING;
         countDown = dashDuration;
-        onStateChange?.Invoke(state);
     }
 }

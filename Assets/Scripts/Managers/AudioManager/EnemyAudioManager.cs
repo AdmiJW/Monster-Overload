@@ -8,4 +8,5 @@ public class EnemyAudioManager : AbstractManager<EnemyAudioManager> {
     public AudioSource humanDeath;
     public AudioSource rat;
     public AudioSource dragonDeath;
+    public AudioSource lizard;
 }

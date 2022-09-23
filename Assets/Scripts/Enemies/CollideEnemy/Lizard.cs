@@ -1,11 +1,12 @@
 using UnityEngine;
 using NaughtyAttributes;
 
-
-public class RusherDragon : AbstractEnemy {
+public class Lizard : AbstractEnemy {
 
     [BoxGroup("Enemy Settings")]
-    public float idleDuration, warningDuration, dashDuration;
+    public float idleMinDuration, idleMaxDuration;
+    [BoxGroup("Enemy Settings")]
+    public float moveMinDuration, moveMaxDuration;
 
 
     //=============================
@@ -17,15 +18,15 @@ public class RusherDragon : AbstractEnemy {
         health = new BarHealth(maxHealth, healthDisplayGroup, healthVisibleOnStart);
         knockback = new AddForceKnockback(rb, knockbackResistance);
         contactDamageStrategy = new PhysicalDamage(transform, contactDamage, contactKnockback);
-        invulnerability = new NullInvulnerable();
-
-        movement = new DashTargetMovement(
+        invulnerability = new NullInvulnerable();        
+        
+        movement = new RandomIntervalMovement(
             gameObject, 
-            PlayerManager.instance.player, 
             moveSpeed, 
-            idleDuration, 
-            warningDuration, 
-            dashDuration
+            idleMinDuration, 
+            idleMaxDuration, 
+            moveMinDuration, 
+            moveMaxDuration
         );
     }
 
@@ -34,46 +35,31 @@ public class RusherDragon : AbstractEnemy {
     protected override void Start() {
         base.Start();
         handleFacingDirectionChange(movement.faceDirection);
-        handleMovementStateChange(movement.movementState);
     }
 
 
     //=================================
     // Event Handlers
     //=================================
-    protected override void handleMovementStateChange(MovementState movementState) {
-        if (movementState == MovementState.IDLE) {
-            animator.SetTrigger("Idle");
-        }
-        else if (movementState == MovementState.WARNING) {
-            ItemAudioManager.instance.spellCharging.Play();
-            animator.SetTrigger("Warning");
-        } 
-        else {
-            ItemAudioManager.instance.dash.Play();
-            animator.SetTrigger("Dashing");
-        }
-    }
-
-
     protected void OnCollisionEnter2D(Collision2D collision) {
-        if ( movement.movementState == MovementState.MOVING ) {
-            ItemAudioManager.instance.heavyImpact.Play();
-            CameraManager.instance.ShakeCamera(0.3f, 1f, 150);
-        }
-
         movement.OnCollisionEnter2D(collision);
     }
 
 
     protected override void OnHurt() {
-        EnemyAudioManager.instance.humanHit.Play();
+        EnemyAudioManager.instance.lizard.Play();
     }
 
     protected override void OnDeath() {
         base.OnDeath();
-        EnemyAudioManager.instance.dragonDeath.Play();
+        EnemyAudioManager.instance.lizard.Play();
         animator.SetTrigger("Death");
+    }
+
+
+    protected override void handleMovementStateChange(MovementState movementState) {
+        if (movementState == MovementState.IDLE) animator.SetTrigger("Idle");
+        else animator.SetTrigger("Moving");
     }
 
     protected override void handleFacingDirectionChange(FaceDirection faceDirection) {
