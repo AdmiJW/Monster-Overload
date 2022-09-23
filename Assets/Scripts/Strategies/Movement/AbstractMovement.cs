@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 
 // Abstract movement class to represent all of the different types of movement
@@ -35,6 +36,9 @@ public abstract class AbstractMovement {
 
     // Abstract methods
     public abstract void Move();
+
+    // Override when necessary
+    public virtual void OnCollisionEnter2D(Collision2D collision) {}
 
 
     // Constructors

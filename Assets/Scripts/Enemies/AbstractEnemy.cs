@@ -1,4 +1,5 @@
 using UnityEngine;
+using NaughtyAttributes;
 
 
 // Abstract enemy class, all enemies should inherit from this class and have it attached on them
@@ -10,21 +11,28 @@ using UnityEngine;
 //          > facingDirectionChange in AbstractMovement
 //          > Player enter and exit event from RangeTriggerScript.
 public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvulnerable, IWeapon {
-    [Header("Enemy Settings")]
+    [BoxGroup("Enemy Settings")]
     public float maxHealth = 100f;
+    [BoxGroup("Enemy Settings")]
     public float moveSpeed = 1f;
+    [BoxGroup("Enemy Settings")]
     public float contactDamage = 1f;
+    [BoxGroup("Enemy Settings")]
     public float contactKnockback = 1f;
+    [BoxGroup("Enemy Settings")]
     public float knockbackResistance = 0f;
+    [BoxGroup("Enemy Settings")]
     public bool healthVisibleOnStart = false;
 
 
-    [Header("References")]
+    [BoxGroup("References")]
     public GameObject healthDisplayGroup;
     [SerializeField]
-
+    [BoxGroup("References")]
     private GameObject weaponGameObject = null;
-    public RangeTriggerScript rangeTrigger;
+    [BoxGroup("References")]
+    public AbstractRangeTrigger rangeTrigger;
+    [BoxGroup("References")]
     public DropEmitter dropEmitter;
 
 
@@ -59,14 +67,13 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         movement.faceDirection.onDirectionChange += handleFacingDirectionChange;
         movement.onMovementStateChange += handleMovementStateChange;
 
-        rangeTrigger.onPlayerEnter += OnPlayerEnterRange;
-        rangeTrigger.onPlayerExit += OnPlayerExitRange;
+        rangeTrigger.RegisterEnterEvent(OnPlayerEnterRange);
+        rangeTrigger.RegisterExitEvent(OnPlayerExitRange);
     }
 
     protected virtual void Start() {
         health.OnHurt += OnHurt;
         health.OnDeath += OnDeath;
-        movement.Enabled = false;
     }
 
     protected virtual void FixedUpdate() {
@@ -77,8 +84,8 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
         movement.faceDirection.onDirectionChange -= handleFacingDirectionChange;
         movement.onMovementStateChange -= handleMovementStateChange;
 
-        rangeTrigger.onPlayerEnter -= OnPlayerEnterRange;
-        rangeTrigger.onPlayerExit -= OnPlayerExitRange;
+        rangeTrigger.UnregisterEnterEvent(OnPlayerEnterRange);
+        rangeTrigger.UnregisterExitEvent(OnPlayerExitRange);
     }
 
 
@@ -86,7 +93,7 @@ public abstract class AbstractEnemy : MonoBehaviour, IHealth, IKnockback, IInvul
     //=============================
     // Event Handlers
     //=============================
-    protected void OnCollisionStay2D(Collision2D collision) {
+    protected virtual void OnCollisionStay2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Player")) 
             OnPlayerContact(collision.gameObject);
     }

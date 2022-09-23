@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class RedNinja : AbstractEnemy, IWeapon {
+public class Ninja : AbstractEnemy, IWeapon {
 
     private IEnumerator attackCoroutine;
 
@@ -18,6 +18,11 @@ public class RedNinja : AbstractEnemy, IWeapon {
         contactDamageStrategy = new PhysicalDamage(transform, contactDamage, contactKnockback);
         invulnerability = new NullInvulnerable();
         movement = new ChaseObjectMovement( PlayerManager.instance.player, gameObject, moveSpeed );
+    }
+
+    protected override void Start() {
+        base.Start();
+        movement.Enabled = false;
     }
     
 
@@ -54,17 +59,6 @@ public class RedNinja : AbstractEnemy, IWeapon {
         movement.Enabled = false;
         movement.movementState = MovementState.IDLE;
         StopCoroutine(attackCoroutine);
-    }
-
-
-    public override void OnAttackStart() {
-        base.OnAttackStart();
-        movement.Enabled = false;
-    }
-
-    public override void OnAttackEnd() {
-        base.OnAttackEnd();
-        movement.Enabled = true;
     }
 
 

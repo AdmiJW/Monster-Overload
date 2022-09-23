@@ -1,6 +1,7 @@
+using UnityEngine;
 
 
-public class Slime2 : AbstractEnemy {
+public class Rat : AbstractEnemy {
 
     //=============================
     // Lifecycle
@@ -12,33 +13,37 @@ public class Slime2 : AbstractEnemy {
         knockback = new AddForceKnockback(rb, knockbackResistance);
         contactDamageStrategy = new PhysicalDamage(transform, contactDamage, contactKnockback);
         invulnerability = new NullInvulnerable();        
-        movement = new ChaseObjectMovement( PlayerManager.instance.player, gameObject, moveSpeed );
+        movement = new RandomContinuousMovement(gameObject, moveSpeed);
+    }
+
+
+    // Since facingHandler is only registered in OnEnable, we have to update the first direction ourselves
+    protected override void Start() {
+        base.Start();
+        handleFacingDirectionChange(movement.faceDirection);
     }
 
 
     //=================================
     // Event Handlers
     //=================================
+    protected void OnCollisionEnter2D(Collision2D collision) {
+        movement.OnCollisionEnter2D(collision);
+    }
+
+
     protected override void OnHurt() {
-        EnemyAudioManager.instance.slimeImpact.Play();
+        EnemyAudioManager.instance.rat.Play();
     }
 
     protected override void OnDeath() {
         base.OnDeath();
-        EnemyAudioManager.instance.slimeImpact.Play();
+        EnemyAudioManager.instance.rat.Play();
         animator.SetTrigger("Death");
     }
 
     protected override void handleFacingDirectionChange(FaceDirection faceDirection) {
         animator.SetFloat("Horizontal", faceDirection.unitVector.x);
         animator.SetFloat("Vertical", faceDirection.unitVector.y);
-    }
-
-    protected override void OnPlayerEnterRange() {
-        movement.Enabled = true;
-    }
-
-    protected override void OnPlayerExitRange() {
-        movement.Enabled = false;
     }
 }

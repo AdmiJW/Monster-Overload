@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6492279483126134656}
   - component: {fileID: 6492279483126134657}
-  - component: {fileID: 6492279483126134658}
+  - component: {fileID: 2165969186498334170}
   m_Layer: 0
-  m_Name: RangeTrigger
+  m_Name: NullRangeTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &6492279483126134658
+--- !u!114 &2165969186498334170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,6 +57,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6492279483126134663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e71c2ac61d84824e9c7569c369be4cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a222669285f15f4eb654a4a5dfb34cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

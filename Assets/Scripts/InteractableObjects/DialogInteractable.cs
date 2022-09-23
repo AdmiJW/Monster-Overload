@@ -15,7 +15,7 @@ public class DialogInteractable : MonoBehaviour, IInteractable {
     public List<TextAsset> dialogues;
 
 
-    protected RangeTriggerScript interactIndicatorScript;
+    protected AbstractRangeTrigger interactIndicatorScript;
 
 
 
@@ -24,19 +24,19 @@ public class DialogInteractable : MonoBehaviour, IInteractable {
     //==================================
     protected virtual void Awake() {
         dialogues.Reverse();
-        if (interactIndicator != null) interactIndicatorScript = GetComponentInChildren<RangeTriggerScript>();
+        if (interactIndicator != null) interactIndicatorScript = GetComponentInChildren<LayerRangeTrigger>();
     }
 
     protected virtual void OnEnable() {
         if (interactIndicatorScript == null) return;
-        interactIndicatorScript.onPlayerEnter += OnPlayerEnterInteractionZone;
-        interactIndicatorScript.onPlayerExit += OnPlayerExitInteractionZone;
+        interactIndicatorScript.RegisterEnterEvent(OnPlayerEnterInteractionZone);
+        interactIndicatorScript.RegisterExitEvent(OnPlayerExitInteractionZone);
     }
 
     protected virtual void OnDisable() {
         if (interactIndicatorScript == null) return;
-        interactIndicatorScript.onPlayerEnter -= OnPlayerEnterInteractionZone;
-        interactIndicatorScript.onPlayerExit -= OnPlayerExitInteractionZone;
+        interactIndicatorScript.UnregisterEnterEvent(OnPlayerEnterInteractionZone);
+        interactIndicatorScript.UnregisterExitEvent(OnPlayerExitInteractionZone);
     }
 
 

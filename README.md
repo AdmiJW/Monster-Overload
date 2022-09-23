@@ -59,3 +59,4 @@ Deep appreciation to the creators of these assets used in the game:
 1. 19th Sept - Added heart pickups, object pooling
 1. 20th Sept - Game Over screen and respawning. Centralized input manager.
 1. 21th Sept - Ranged enemies are now possible. Reworked weapon structure.
+1. 22th Sept - Added Magic enemies - Red Ninja

@@ -1,7 +1,4 @@
-
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 // Teleports the player to specificed scene when the player enters the trigger area.
