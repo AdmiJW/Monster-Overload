@@ -83,12 +83,13 @@ public class DialogueManager : AbstractManager<DialogueManager> {
     // Input handlers
     //=============================
     void OnSelectButtonPressed(InputAction.CallbackContext ctx) {
+        if (currentStory == null) return;
         Next();
     }
 
     
     void OnUpButtonPressed(InputAction.CallbackContext ctx) {
-        if (currentChoices == null) return;
+        if (currentStory == null || currentChoices == null) return;
 
         UIAudioManager.instance.menuMove.Play();
         currentChoiceIndex = Mathf.Max(0, currentChoiceIndex - 1);
@@ -97,7 +98,7 @@ public class DialogueManager : AbstractManager<DialogueManager> {
 
 
     void OnDownButtonPressed(InputAction.CallbackContext ctx) {
-        if (currentChoices == null) return;
+        if (currentStory == null || currentChoices == null) return;
 
         UIAudioManager.instance.menuMove.Play();
         currentChoiceIndex = Mathf.Min(currentChoices.Count - 1, currentChoiceIndex + 1);
