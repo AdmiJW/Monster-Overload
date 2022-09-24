@@ -1,8 +1,12 @@
 using UnityEngine;
 using NaughtyAttributes;
 
+
 // A script for gameobjects that will deal damage to other gameobjects. 
-// Eg: Traps, spells, or even enemies.
+// Eg: Traps, spells, arrows, or even enemies
+// 
+// Target layer masks include the layer which the damage object will deal damage to
+// Collide layer masks include the layer which the damage object will react to upon collision. Eg: self destroy, rebounce...
 public abstract class DamageObject : MonoBehaviour {
 
     
@@ -13,7 +17,7 @@ public abstract class DamageObject : MonoBehaviour {
     [SerializeField]
     [ShowIf("initializeFromInspector")]
     [BoxGroup("Initialize")]
-    private LayerMask[] targetLayerMasks, selfDestroyLayerMasks;
+    private LayerMask[] targetLayerMasks, collideLayerMasks;
     [ShowIf("initializeFromInspector")]
     [BoxGroup("Initialize")]
     public float contactDamage;
@@ -24,7 +28,7 @@ public abstract class DamageObject : MonoBehaviour {
 
     protected IDamage damage;
     protected LayerMask targetLayerMask = 0;
-    protected LayerMask selfDestroyLayerMask = 0;
+    protected LayerMask collideLayerMask = 0;
     
     //===========================
     // Public 
@@ -41,12 +45,12 @@ public abstract class DamageObject : MonoBehaviour {
         targetLayerMask &= ~layerMask;
     }
 
-    public void IncludeSelfDestroyTarget(LayerMask layerMask) {
-        selfDestroyLayerMask |= layerMask;
+    public void IncludeCollideTarget(LayerMask layerMask) {
+        collideLayerMask |= layerMask;
     }
 
-    public void ExcludeSelfDestroyTarget(LayerMask layerMask) {
-        selfDestroyLayerMask &= ~layerMask;
+    public void ExcludeCollideTarget(LayerMask layerMask) {
+        collideLayerMask &= ~layerMask;
     }
 
     public void SetDamageStrategy(IDamage damage) {
@@ -62,7 +66,7 @@ public abstract class DamageObject : MonoBehaviour {
         if (!initializeFromInspector) return;
 
         foreach (LayerMask mask in targetLayerMasks) IncludeTarget(mask);
-        foreach (LayerMask mask in selfDestroyLayerMasks) IncludeSelfDestroyTarget(mask);
+        foreach (LayerMask mask in collideLayerMasks) IncludeCollideTarget(mask);
         damage = new PhysicalDamage(transform, contactDamage, contactKnockback);
     }
 }

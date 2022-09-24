@@ -10,4 +10,6 @@ public class ItemAudioManager : AbstractManager<ItemAudioManager> {
     public AudioSource fire;
     public AudioSource spellCharging;
     public AudioSource dash;
+    public AudioSource airLoopFast;
+    public AudioSource airLoopSlow;
 }

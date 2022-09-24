@@ -11,13 +11,13 @@ public class ContactDamageObject : DamageObject {
     //===========================
     protected virtual void OnCollisionEnter2D(Collision2D collision) {
         DamageHandler(collision.gameObject);
-        DestroyHandler(collision.gameObject.layer);
+        CollideHandler(collision.gameObject.layer);
     }
 
 
     protected virtual void OnTriggerEnter2D(Collider2D collider) {
         DamageHandler(collider.gameObject);
-        DestroyHandler(collider.gameObject.layer);
+        CollideHandler(collider.gameObject.layer);
     }
 
 
@@ -30,8 +30,5 @@ public class ContactDamageObject : DamageObject {
     }
 
 
-    protected virtual void DestroyHandler(int layer) {
-        if ( (selfDestroyLayerMask & (1 << layer) ) == 0 ) return;
-        Destroy(gameObject);
-    }
+    protected virtual void CollideHandler(int layer) {}
 }

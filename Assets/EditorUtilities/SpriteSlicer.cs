@@ -9,8 +9,8 @@ using System.Collections.Generic;
 //      3. Run the script via Menu -> Tools -> Sprite Slicer. All sprites inside will be sliced with same width and height
 
 public class SpriteSlicer : MonoBehaviour {
-    private static int sliceWidth = 32;
-    private static int sliceHeight = 32;
+    private static int sliceWidth = 16;
+    private static int sliceHeight = 16;
 
     
 

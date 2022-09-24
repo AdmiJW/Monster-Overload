@@ -2,7 +2,7 @@ using UnityEngine;
 using NaughtyAttributes;
 
 
-public abstract class AbstractRangedWeapon : AbstractWeapon<RangedWeaponData> {
+public abstract class AbstractRangedWeapon<T> : AbstractWeapon<T> where T: RangedWeaponData {
 
     [BoxGroup("References")]
     public GameObject projectilePrefab;
@@ -10,7 +10,7 @@ public abstract class AbstractRangedWeapon : AbstractWeapon<RangedWeaponData> {
     //==============================
     // Abstract method
     //==============================
-    public abstract Projectile GetProjectile();
+    public abstract Projectile<T> GetProjectile();
     
     //===========================
     // Logic

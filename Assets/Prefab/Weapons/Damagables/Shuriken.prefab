@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 377286555892023798}
   - component: {fileID: 2381008114655829433}
   - component: {fileID: 6760316087839447081}
-  - component: {fileID: 8081448227676177968}
   - component: {fileID: 6332938032774562131}
   - component: {fileID: 3236868066755739952}
+  - component: {fileID: 3877285903683685181}
   m_Layer: 0
   m_Name: Shuriken
   m_TagString: Untagged
@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: -1277178879
   m_SortingLayer: -4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 18aa8d555af804243926a24288a0bff6, type: 3}
+  m_Sprite: {fileID: 2937821754324567633, guid: 8a540156955584c4d93fc7b24e979994, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -98,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 377286555892023793}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4ce7d9b5993166943ab57153824be11e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3daab58dca42498438376ae6c2f729c6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -144,18 +144,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!114 &8081448227676177968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377286555892023793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71871443a0201ed419de2517de232036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &6332938032774562131
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4986,3 +4974,20 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &3877285903683685181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377286555892023793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0360e106281d8f34b978a22bd5c80617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initializeFromInspector: 0
+  targetLayerMasks: []
+  collideLayerMasks: []
+  contactDamage: 0
+  contactKnockback: 0

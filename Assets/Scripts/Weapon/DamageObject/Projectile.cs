@@ -1,24 +1,37 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 
+
+// A projectile is a contact damage object that travels in a certain path. Eg: arrow, boomerang...
+// The projectile must process:
+//      - Rigidbody, dynamic or isKinematic based on concrete implementation
+//      - Collider, is trigger.
+
 // Initialization order is important:
-//      1. Target layer & self destroy layer
+//      1. Target layer & collide layer
 //      2. Weapon data
 //      3. Damage strategy
 //      4. Orientation, Impact sound
 // Then call shoot() to fire the projectile with rigidbody
-public class Projectile : ContactDamageObject {
+public abstract class Projectile<T> : ContactDamageObject where T: RangedWeaponData {
 
-    protected RangedWeaponData data;
-    protected AudioSource impactSound;
+    protected T data;
 
     protected ParticleSystem particle;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
+    protected Rigidbody2D rb;
     
+    protected AudioSource travelSound;
+    protected AudioSource impactSound;
 
+
+
+    //============================
+    // Abstract Methods
+    //============================
+    public abstract Projectile<T> Shoot();
 
     //===========================
     // Lifecycle
@@ -29,13 +42,14 @@ public class Projectile : ContactDamageObject {
         particle = GetComponent<ParticleSystem>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
 
     //===================================
     //  Public Projectile Initializers
     //===================================
-    public virtual void SetWeaponData(RangedWeaponData data) {
+    public virtual void SetWeaponData(T data) {
         this.data = data;
         UpdatePiercingProperty();
     }
@@ -44,44 +58,30 @@ public class Projectile : ContactDamageObject {
         impactSound = sound;
     }
 
-    public virtual void OrientProjectile(float angle) {
-        transform.rotation = Quaternion.Euler(0, 0, angle );
+    public virtual void SetTravelSound(AudioSource sound) {
+        travelSound = sound;
     }
 
-    public virtual Projectile Shoot() {
-        GetComponent<Rigidbody2D>().velocity = transform.right * data.projectileSpeed;
-        StartCoroutine( Lifetime() );
-        return this;
+
+    // The projectile will be shoot according to transform.right. So getting the orientation is important
+    public virtual void OrientProjectile(float angle) {
+        transform.rotation = Quaternion.Euler(0, 0, angle );
     }
 
 
     //========================
     //  Logic
     //========================
-    protected override void DestroyHandler(int layer) {
-        if ( (selfDestroyLayerMask & (1 << layer) ) == 0 ) return;
-        
-        if (animator != null) animator.enabled = false;
-        impactSound.Play();
-        spriteRenderer.enabled = false;
-        particle?.Play();
-        Destroy(this);
+    // If a projectile is not piercing, then contact with enemies will result in projectile's collision handler aswell
+    protected void UpdatePiercingProperty() {
+        if (data.isPiercing) ExcludeCollideTarget(targetLayerMask);
+        else IncludeCollideTarget(targetLayerMask);
     }
-
-
-    // If a projectile is not piercing, then contact with enemies will result in projectile's destroy
-    void UpdatePiercingProperty() {
-        if (data.isPiercing) ExcludeSelfDestroyTarget(targetLayerMask);
-        else IncludeSelfDestroyTarget(targetLayerMask);
-    }
-
-
-    
 
     //===========================
     //  Coroutines
     //===========================
-    IEnumerator Lifetime() {
+    protected virtual IEnumerator Lifetime() {
         if (data.projectileLifetime == 0) yield break;
         yield return new WaitForSeconds(data.projectileLifetime);
         Destroy(gameObject);

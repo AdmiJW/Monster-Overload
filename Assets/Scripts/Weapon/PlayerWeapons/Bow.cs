@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class Bow : AbstractRangedWeapon {
+public class Bow : AbstractRangedWeapon<RangedWeaponData> {
 
     private Animator animator;
     private FaceDirection playerFaceDirection;
@@ -31,13 +31,13 @@ public class Bow : AbstractRangedWeapon {
     }
 
 
-    public override Projectile GetProjectile() {
+    public override Projectile<RangedWeaponData> GetProjectile() {
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         IDamage damage = new PhysicalDamage(projectile.transform, weaponData.projectileAttack, weaponData.projectileKnockback);
 
-        Projectile p = projectile.GetComponent<Projectile>();
+        StraightProjectile p = projectile.GetComponent<StraightProjectile>();
         p.IncludeTarget( GameManager.instance.ENEMY_LAYER_MASK );
-        p.IncludeSelfDestroyTarget( GameManager.instance.MAP_LAYER_MASK );
+        p.IncludeCollideTarget( GameManager.instance.MAP_LAYER_MASK );
         p.SetWeaponData(weaponData);
         p.SetImpactSound( ItemAudioManager.instance.arrowImpact );
         p.OrientProjectile( playerFaceDirection.GetAngle() );

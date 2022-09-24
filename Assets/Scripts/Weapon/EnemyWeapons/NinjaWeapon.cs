@@ -2,21 +2,21 @@ using UnityEngine;
 using NaughtyAttributes;
 
 
-public class NinjaWeapon : AbstractRangedWeapon {
+public class NinjaWeapon : AbstractRangedWeapon<RangedWeaponData> {
     
     [BoxGroup("References")]
     public Animator animator;
 
 
-    public override Projectile GetProjectile() {
+    public override Projectile<RangedWeaponData> GetProjectile() {
         Vector2 direction = (PlayerManager.instance.player.transform.position - transform.position).normalized;
 
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         IDamage damage = new PhysicalDamage(projectile.transform, weaponData.projectileAttack, weaponData.projectileKnockback);
 
-        Projectile p = projectile.GetComponent<Projectile>();
+        StraightProjectile p = projectile.GetComponent<StraightProjectile>();
         p.IncludeTarget( GameManager.instance.PLAYER_LAYER_MASK );
-        p.IncludeSelfDestroyTarget( GameManager.instance.MAP_LAYER_MASK );
+        p.IncludeCollideTarget( GameManager.instance.MAP_LAYER_MASK );
         p.SetWeaponData(weaponData);
         p.SetImpactSound( ItemAudioManager.instance.sharpItemHit );
         p.OrientProjectile( Util.GetAngle(direction) );

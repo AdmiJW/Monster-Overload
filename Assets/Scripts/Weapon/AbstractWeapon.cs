@@ -21,8 +21,8 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
     protected LayerMask compositeTargetLayerMask = 0;
     protected ContactFilter2D targetContactFilter; 
     
+    protected IEnumerator cooldownCoroutine = null;
     private bool attackLock = false;
-    private IEnumerator cooldownCoroutine = null;
 
 
     //=========================================================================
@@ -55,7 +55,7 @@ public abstract class AbstractWeapon<T> : MonoBehaviour, IWeapon where T: Weapon
     //===========================
     //  Logic
     //===========================
-    protected IEnumerator Cooldown() {
+    protected virtual IEnumerator Cooldown() {
         yield return new WaitForSeconds(weaponData.attackCooldown);
         cooldownCoroutine = null;
     }

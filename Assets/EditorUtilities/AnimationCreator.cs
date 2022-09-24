@@ -11,13 +11,39 @@ using System.Collections.Generic;
 
 public class AnimationCreator : MonoBehaviour {
 
-    private static float frameRate = 1;
-    private static Func<Sprite, string> getKey = (Sprite sprite) => {
-         // Extract part of sprite name up until '('
-         // Like 'Run_Up' in 'Run_Up(0,0)'
-        return sprite.name.Substring(0, sprite.name.IndexOf('('));   
-    };
+    private class KeyExtractors {
 
+        // Each sprite will have its own animation clip, given their names are different
+        public static Func<Sprite, string> ByWholeString = (Sprite sprite) => {
+            return sprite.name;
+        };
+
+        // Extract part of sprite name up until '('
+        // Like 'Run_Up' in 'Run_Up(0,0)'
+        public static Func<Sprite, string> ByNameUntilBracket = (Sprite sprite) => {
+            return sprite.name.Substring(0, sprite.name.IndexOf(' '));   
+        };
+
+        // By name and direction. The NAME(X,Y) format, X represents the direction, Y represents sequence.
+        public static Func<Sprite, string> ByNameAndDirection = (Sprite sprite) => {
+            string[] parts = sprite.name.Split('(', ',', ')');
+            string name = parts[0];
+            int sequence = int.Parse(parts[2]);
+            
+            return $"{name} {sequence}";
+        };
+    }
+
+
+
+    private static float frameRate = 1;
+    private static Func<Sprite, string> getKey = KeyExtractors.ByNameAndDirection;
+
+
+
+
+
+    //================================================================================================
 
     [MenuItem("Tools/Create Bulk Animation Clip")]
     static void CreateAnimationClip() {
